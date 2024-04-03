@@ -40,7 +40,7 @@ output,instruction,input,original author
         y += dy
     return t",Write a function to compute the mandelbrot set,,
 "    fn is_https(self) -> Bool:
-        return bytes_equal(self.__scheme, strHttps)",,,lightbug_http
+        return bytes_equal(self.__scheme, strHttps)",An instance method called is_https that returns a boolean value if the scheme of the request is HTTPS.,,lightbug_http
 "    fn path_original(self) -> Bytes:
         return self.__path_original",Returns the original path (as Bytes) of the object without any modifications.,,lightbug_http
 "    fn set_path(inout self, path: String) -> Self:
@@ -220,7 +220,7 @@ struct Printer(HTTPService):
         var body = req.body_raw
         print(String(body))
 
-        return OK(body)",,,lightbug_http
+        return OK(body)","Write a struct Printer that takes HTTPService as argument, has a func method that takes an HTTPRequest as input and returns an HTTPResponse OK containing the body of the request as a string.",,lightbug_http
 "@value
 struct Welcome(HTTPService):
     fn func(self, req: HTTPRequest) raises -> HTTPResponse:
@@ -228,7 +228,7 @@ struct Welcome(HTTPService):
         with open(""static/lightbug_welcome.html"", ""r"") as f:
             html = f.read()
 
-        return OK(html.as_bytes(), ""text/html"")",,,lightbug_http
+        return OK(html.as_bytes(), ""text/html"")","Write a struct Welcome that has a method that takes an HTTP request, open a file, reads from it into the html variable and returns OK with the html.",,lightbug_http
 "@value
 struct ExampleRouter(HTTPService):
     fn func(self, req: HTTPRequest) raises -> HTTPResponse:
@@ -1899,9 +1899,9 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         var entries = List[Optional[DictEntry[K, V]]](capacity=reserved)
         for i in range(reserved):
             entries.append(None)
-        return entries",,,modular mojo
+        return entries","Write a function called new_entries, which is a static method, that takes an integer as input and returns a list. ",,modular mojo
 "    fn _insert(inout self, owned key: K, owned value: V):
-        self._insert(DictEntry[K, V](key ^, value ^))",,,modular mojo
+        self._insert(DictEntry[K, V](key ^, value ^))",A method to insert a key and a value to a dictionary structure.,,modular mojo
 "    fn _insert(inout self, owned entry: DictEntry[K, V]):
         self._maybe_resize()
         var found: Bool
@@ -1915,7 +1915,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
             self.size += 1
             self._n_entries += 1",,,modular mojo
 "    fn _get_index(self, slot: Int) -> Int:
-        return self._index.get_index(self._reserved, slot)",,,modular mojo
+        return self._index.get_index(self._reserved, slot)",A method that returns the index of a given slot.,,modular mojo
 "    fn _set_index(inout self, slot: Int, index: Int):
         return self._index.set_index(self._reserved, slot, index)",,,modular mojo
 "    fn _next_index_slot(self, inout slot: Int, inout perturb: Int):
@@ -1933,7 +1933,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         abort(""Dict: no empty index in _find_empty_index"")
         return 0",,,modular mojo
 "    fn _over_load_factor(self) -> Bool:
-        return 3 * self.size > 2 * self._reserved",,,modular mojo
+        return 3 * self.size > 2 * self._reserved",An instance method that returns true if the data structure is more than 150% loaded.,,modular mojo
 "    fn _over_compact_factor(self) -> Bool:
         return 4 * self._n_entries > 3 * self._reserved",,,modular mojo
 "    fn _maybe_resize(inout self):
@@ -2382,8 +2382,8 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         out_neurons=10,
         activation=""sigmoid"",
     ]()",Implement a dense layer with input size of 100 and output size of 10 and that uses the sigmoid activation function.,,voodoo
-"var true_vals = Tensor[TensorShape(batches, 10), Zeros]()",,,voodoo
-" var input = Tensor[TensorShape(batches, channels, width, height), Zeros]()",,,voodoo
+"var true_vals = Tensor[TensorShape(batches, 10), Zeros]()","Create a variable to hold the values of a tensor structure. The tensor is defined with a shape specified by TensorShape(batches, 10) and is filled with zeros.",,voodoo
+" var input = Tensor[TensorShape(batches, channels, width, height), Zeros]()",The tensor is structured with a specific shape and filled with zeros.,,voodoo
 var epoch_start = now(),Create a variable to store the start time of an epoch.,,voodoo
 "    for epoch in range(1, num_epochs + 1):
         for i in range(batches):
@@ -2395,3 +2395,408 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
                     input[i * channels * width * height + j * width + k] = image[
                         j * width + k
                     ].to_int()",,,
+"    @always_inline
+    fn __init__(inout self, value: Scalar[type]):
+
+        self.value = value","Constructs a new atomic value.
+
+        Args:
+            value: Initial value represented as `Scalar[type]` type.
+        ",,modular mojo
+"    @always_inline
+    fn __init__(inout self, value: Int):
+ 
+        self.__init__(Scalar[type](value))","Constructs a new atomic value.
+
+        Args:
+            value: Initial value represented as `mlir.index` type.
+        ",,modular mojo
+"    @staticmethod
+    @always_inline
+    fn _fetch_add(
+        ptr: Pointer[Scalar[type]], rhs: Scalar[type]
+    ) -> Scalar[type]:
+
+        return __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op add>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](
+            bitcast[__mlir_type[`!pop.scalar<`, type.value, `>`]](ptr).address,
+            rhs.value,
+        )","Performs atomic in-place add.
+
+        Atomically replaces the current value with the result of arithmetic
+        addition of the value and arg. That is, it performs atomic
+        post-increment. The operation is a read-modify-write operation. Memory
+        is affected according to the value of order which is sequentially
+        consistent.
+
+        Args:
+            ptr: The source pointer.
+            rhs: Value to add.
+
+        Returns:
+            The original value before addition.
+        ",,modular mojo
+"    @always_inline
+    fn fetch_add(inout self, rhs: Scalar[type]) -> Scalar[type]:
+
+        var value_addr = Pointer.address_of(self.value)
+        return Self._fetch_add(value_addr, rhs)"," Performs atomic in-place add.
+
+        Atomically replaces the current value with the result of arithmetic
+        addition of the value and arg. That is, it performs atomic
+        post-increment. The operation is a read-modify-write operation. Memory
+        is affected according to the value of order which is sequentially
+        consistent.
+
+        Args:
+            rhs: Value to add.
+
+        Returns:
+            The original value before addition.
+        ",,modular mojo
+"    @always_inline
+    fn __iadd__(inout self, rhs: Scalar[type]):
+
+        _ = self.fetch_add(rhs)"," Performs atomic in-place add.
+
+        Atomically replaces the current value with the result of arithmetic
+        addition of the value and arg. That is, it performs atomic
+        post-increment. The operation is a read-modify-write operation. Memory
+        is affected according to the value of order which is sequentially
+        consistent.
+
+        Args:
+            rhs: Value to add.
+        ",,modular mojo
+"    @always_inline
+    fn fetch_sub(inout self, rhs: Scalar[type]) -> Scalar[type]:
+
+        var value_addr = Pointer.address_of(self.value.value)
+        return __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op sub>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](value_addr.address, rhs.value)","Performs atomic in-place sub.
+
+        Atomically replaces the current value with the result of arithmetic
+        subtraction of the value and arg. That is, it performs atomic
+        post-decrement. The operation is a read-modify-write operation. Memory
+        is affected according to the value of order which is sequentially
+        consistent.
+
+        Args:
+            rhs: Value to subtract.
+
+        Returns:
+            The original value before subtraction.
+",,modular mojo
+"    @always_inline
+    fn __isub__(inout self, rhs: Scalar[type]):
+
+        _ = self.fetch_sub(rhs)","Performs atomic in-place sub.
+
+        Atomically replaces the current value with the result of arithmetic
+        subtraction of the value and arg. That is, it performs atomic
+        post-decrement. The operation is a read-modify-write operation. Memory
+        is affected according to the value of order which is sequentially
+        consistent.
+
+        Args:
+            rhs: Value to subtract.
+        ",,modular mojo
+"    @always_inline
+    fn max(inout self, rhs: Scalar[type]):
+
+        constrained[
+            type.is_integral() or type.is_floating_point(),
+            ""the input type must be arithmetic"",
+        ]()
+
+        var value_addr = Pointer.address_of(self.value.value)
+        _ = __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op max>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](value_addr.address, rhs.value)","Performs atomic in-place max.
+
+        Atomically replaces the current value with the result of max of the
+        value and arg. The operation is a read-modify-write operation perform
+        according to sequential consistency semantics.
+
+        Constraints:
+            The input type must be either integral or floating-point type.
+
+
+        Args:
+            rhs: Value to max.
+        ",,modular mojo
+"    @always_inline
+    fn min(inout self, rhs: Scalar[type]):
+
+
+        constrained[
+            type.is_integral() or type.is_floating_point(),
+            ""the input type must be arithmetic"",
+        ]()
+
+        var value_addr = Pointer.address_of(self.value.value)
+        _ = __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op min>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](value_addr.address, rhs.value)","Performs atomic in-place min.
+
+        Atomically replaces the current value with the result of min of the
+        value and arg. The operation is a read-modify-write operation. The
+        operation is a read-modify-write operation perform according to
+        sequential consistency semantics.
+
+        Constraints:
+            The input type must be either integral or floating-point type.
+
+        Args:
+            rhs: Value to min.
+ ",,modular mojo
+"fn setenv(name: String, value: String, overwrite: Bool = True) -> Bool:
+
+    alias os_is_supported = os_is_linux() or os_is_macos()
+    if not os_is_supported:
+        return False
+
+    var status = external_call[""setenv"", Int32](
+        name._as_ptr(), value._as_ptr(), Int32(1 if overwrite else 0)
+    )
+    return status == 0","Changes or adds an environment variable.
+
+    Constraints:
+      The function only works on macOS or Linux and returns False otherwise.
+
+    Args:
+      name: The name of the environment variable.
+      value: The value of the environment variable.
+      overwrite: If an environment variable with the given name already exists,
+        its value is not changed unless `overwrite` is True.
+
+    Returns:
+      False if the name is empty or contains an `=` character. In any other
+      case, True is returned.
+    ",,modular mojo
+"fn getenv(name: String, default: String = """") -> String:
+
+    alias os_is_supported = os_is_linux() or os_is_macos()
+
+    if not os_is_supported:
+        return default
+
+    var ptr = external_call[""getenv"", DTypePointer[DType.int8]](name._as_ptr())
+    if not ptr:
+        return default
+    return String(StringRef(ptr))","Returns the value of the given environment variable.
+
+    Constraints:
+      The function only works on macOS or Linux and returns an empty string
+      otherwise.
+
+    Args:
+      name: The name of the environment variable.
+      default: The default value to return if the environment variable
+        doesn't exist.
+
+    Returns:
+      The value of the environment variable.
+",,modular mojo
+"fn stat[pathlike: os.PathLike](path: pathlike) raises -> stat_result:
+
+    return stat(path.__fspath__())
+","Get the status of a file or a file descriptor.
+
+    Parameters:
+      pathlike: The a type conforming to the os.PathLike trait.
+
+    Args:
+      path: The path to the directory.
+
+    Returns:
+      Returns the stat_result on the path.
+    ",,modular mojo
+"fn list(self) -> List[String]:
+
+
+        @parameter
+        if os_is_linux():
+            return self._list_linux()
+        else:
+            return self._list_macos()","Reads all the data from the handle.
+
+        Returns:
+          A string containing the output of running the command.
+       ",,modular mojo
+"    fn __del__(owned self):
+      
+        _ = external_call[""closedir"", Int32](self._handle)",Closes the handle opened via popen.,,modular mojo
+"fn listdir(path: String = """") raises -> List[String]:
+
+
+    var dir = _DirHandle(path)
+    return dir.list()","Gets the list of entries contained in the path provided.
+
+    Args:
+      path: The path to the directory.
+
+    Returns:
+      Returns the list of entries in the path provided.
+    ",,modular mojo
+"fn listdir[pathlike: os.PathLike](path: pathlike) raises -> List[String]:
+
+    return listdir(path.__fspath__())","Gets the list of entries contained in the path provided.
+
+    Parameters:
+      pathlike: The a type conforming to the os.PathLike trait.
+
+    Args:
+      path: The path to the directory.
+
+
+    Returns:
+      Returns the list of entries in the path provided.
+    ",,modular mojo
+"@always_inline(""nodebug"")
+fn abort[result: Movable = NoneType]() -> result:
+
+
+    __mlir_op.`llvm.intr.trap`()
+
+    return AnyPointer[result]().take_value()","Calls a target dependent trap instruction if available.
+
+    Parameters:
+        result: The result type.
+
+    Returns:
+        A null result type.
+    ",,modular mojo
+"@always_inline(""nodebug"")
+fn abort[
+    result: Movable = NoneType, *, stringable: Stringable
+](message: stringable) -> result:
+ 
+
+    @parameter
+    if not triple_is_nvidia_cuda():
+        print(message, flush=True)
+
+    return abort[result]()","Calls a target dependent trap instruction if available.
+
+    Parameters:
+        result: The result type.
+        stringable: The Stringable type.
+
+    Args:
+        message: The message to include when aborting.
+
+    Returns:
+        A null result type.",,modular mojo
+"    fn __init__(inout self, path: String) raises:
+
+        constrained[
+            not os_is_windows(), ""operation is only available on unix systems""
+        ]()
+
+        if not isdir(path):
+            raise ""the directory '"" + path + ""' does not exist""
+
+        self._handle = external_call[""opendir"", Pointer[NoneType]](
+            path._as_ptr()
+        )
+
+        if not self._handle:
+            raise ""unable to open the directory '"" + path + ""'""","Construct the _DirHandle using the path provided.
+
+        Args:
+          path: The path to open.
+        ",,modular mojo
+"@always_inline
+fn _clock_gettime(clockid: Int) -> _CTimeSpec:
+  
+    var ts = _CTimeSpec()
+
+    # Call libc's clock_gettime.
+    _ = external_call[""clock_gettime"", Int32](
+        Int32(clockid), Pointer.address_of(ts)
+    )
+
+    return ts",Low-level call to the clock_gettime libc function,,modular mojo
+"@always_inline
+fn _realtime_nanoseconds() -> Int:
+   
+    return _gettime_as_nsec_unix(_CLOCK_REALTIME)",Returns the current realtime time in nanoseconds,,modular mojo
+"@always_inline
+fn _monotonic_nanoseconds() -> Int:
+    
+
+    @parameter
+    if os_is_windows():
+        var ft = _FILETIME()
+        external_call[""GetSystemTimePreciseAsFileTime"", NoneType](
+            Pointer.address_of(ft)
+        )
+
+        return ft.as_nanoseconds()
+    else:
+        return _gettime_as_nsec_unix(_CLOCK_MONOTONIC)",Returns the current monotonic time in nanoseconds,,modular mojo
+"@always_inline
+fn _monotonic_raw_nanoseconds() -> Int:
+  
+
+    return _gettime_as_nsec_unix(_CLOCK_MONOTONIC_RAW)",Returns the current monotonic time in nanoseconds,,modular mojo
+"@always_inline
+fn _process_cputime_nanoseconds() -> Int:
+   
+
+    return _gettime_as_nsec_unix(_CLOCK_PROCESS_CPUTIME_ID)",Returns the high-resolution per-process timer from the CPU,,modular mojo
+"@always_inline
+fn now() -> Int:
+
+    return _monotonic_nanoseconds()","Returns the current monotonic time time in nanoseconds. This function
+    queries the current platform's monotonic clock, making it useful for
+    measuring time differences, but the significance of the returned value
+    varies depending on the underlying implementation.
+
+    Returns:
+        The current time in ns.
+   ",,modular mojo
+"@always_inline
+@parameter
+fn time_function[func: fn () capturing -> None]() -> Int:
+
+
+    @parameter
+    if os_is_windows():
+        return _time_function_windows[func]()
+
+    var tic = now()
+    func()
+    var toc = now()
+    return toc - tic","Measures the time spent in the function.
+
+    Parameters:
+        func: The function to time.
+
+    Returns:
+        The time elapsed in the function in ns.
+    ",,modular mojo
+"fn sleep(sec: Int):
+
+
+    @parameter
+    if os_is_windows():
+        # In Windows the argument is in milliseconds.
+        external_call[""Sleep"", NoneType](sec * 1000)
+    else:
+        external_call[""sleep"", NoneType](sec)","Suspends the current thread for the seconds specified.
+
+    Args:
+        sec: The number of seconds to sleep for.
+    ",,modular mojo
