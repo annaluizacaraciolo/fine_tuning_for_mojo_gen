@@ -1,6 +1,6 @@
-output,instruction,input,original author
+output,instruction,input,original author,
 "fn sigmoid(x: Float64) -> Float64:
-    return 1 / (1 + exp(-x))",Write a function to calculate the sigmoid of a given number,,
+    return 1 / (1 + exp(-x))",Write a function to calculate the sigmoid of a given number,,,0
 "fn gradient_descent(start: Float64, learning_rate: Float64, n_iter: Int=50, tolerance: Float64=1e-06) raises:
     let np = Python.import_module('numpy')
     var vector = start
@@ -9,21 +9,21 @@ output,instruction,input,original author
         if np.all(np.abs(diff) <= tolerance):
             break
         vector += diff
-    print(vector)",Write a function that calculates gradient descent,,
+    print(vector)",Write a function that calculates gradient descent,,,
 "fn main():
-    print(""Hello, world!"")",Print hello world in mojo,,
+    print(""Hello, world!"")",Print hello world in mojo,,,
 "fn euclidean_dist(x1: Int64, y1: Int64, x2: Int64, y2: Int64):
     let x = x2 - x1
     let y = y2 - y1
     let euclidean_distance = sqrt(pow(x, 2) + pow(y,2))
-    print(euclidean_distance)",Write a function to calculate the euclideadn distance between two points,,
+    print(euclidean_distance)",Write a function to calculate the euclideadn distance between two points,,,
 "def mandelbrot_kernel(c: ComplexFloat64) -> Int:
     z = c
     for i in range(MAX_ITERS):
         z = z * z + c
         if z.squared_norm() > 4:
             return i
-    return MAX_ITERS",Compute the number of steps to escape.,,
+    return MAX_ITERS",Compute the number of steps to escape.,,,
 "def compute_mandelbrot() -> Tensor[float_type]:
     # create a matrix. Each element of the matrix corresponds to a pixel
     t = Tensor[float_type](height, width)
@@ -38,38 +38,38 @@ output,instruction,input,original author
             t[Index(row, col)] = mandelbrot_kernel(ComplexFloat64(x, y))
             x += dx
         y += dy
-    return t",Write a function to compute the mandelbrot set,,
+    return t",Write a function to compute the mandelbrot set,,,
 "    fn is_https(self) -> Bool:
-        return bytes_equal(self.__scheme, strHttps)",An instance method called is_https that returns a boolean value if the scheme of the request is HTTPS.,,lightbug_http
+        return bytes_equal(self.__scheme, strHttps)",An instance method called is_https that returns a boolean value if the scheme of the request is HTTPS.,,lightbug_http,
 "    fn path_original(self) -> Bytes:
-        return self.__path_original",Returns the original path (as Bytes) of the object without any modifications.,,lightbug_http
+        return self.__path_original",Returns the original path (as Bytes) of the object without any modifications.,,lightbug_http,
 "    fn set_path(inout self, path: String) -> Self:
-        self.__path = normalise_path(path._buffer, self.__path_original)","Sets the object's path to a new value, given as a String. ",,lightbug_http
+        self.__path = normalise_path(path._buffer, self.__path_original)","Sets the object's path to a new value, given as a String. ",,lightbug_http,
 "    fn set_path_sbytes(inout self, path: Bytes) -> Self:
         self.__path = normalise_path(path, self.__path_original)
-        return self","Similar to set_path, but accepts the new path as a Bytes object. It sets the object's path to this new bytes value after normalizing it. Returns the object itself for chaining.",,lightbug_http
+        return self","Similar to set_path, but accepts the new path as a Bytes object. It sets the object's path to this new bytes value after normalizing it. Returns the object itself for chaining.",,lightbug_http,
 "    fn path(self) -> String:
         var processed_path = self.__path
         if len(processed_path) == 0:
             processed_path = strSlash
         return String(processed_path)
-","Retrieves the current path of the object. If the path is empty, it defaults to a predefined slash string (strSlash). The path is returned as a String.",,lightbug_http
+","Retrieves the current path of the object. If the path is empty, it defaults to a predefined slash string (strSlash). The path is returned as a String.",,lightbug_http,
 "    fn set_scheme(inout self, scheme: String) -> Self:
         self.__scheme = scheme._buffer
         return self
-","Sets the object's scheme (e.g., ""http"", ""https"") using a String value.",,lightbug_http
+","Sets the object's scheme (e.g., ""http"", ""https"") using a String value.",,lightbug_http,
 "    fn set_scheme_bytes(inout self, scheme: Bytes) -> Self:
         self.__scheme = scheme
-        return self",Sets the object's scheme using a Bytes object. Returns the object for further method chaining.,,lightbug_http
+        return self",Sets the object's scheme using a Bytes object. Returns the object for further method chaining.,,lightbug_http,
 "    fn scheme(self) -> Bytes:
         var processed_scheme = self.__scheme
         if len(processed_scheme) == 0:
             processed_scheme = strHttp
-        return processed_scheme","Returns the current scheme of the object as a Bytes object. If no scheme is set (i.e., the scheme is empty), it defaults to ""http"".",,lightbug_http
+        return processed_scheme","Returns the current scheme of the object as a Bytes object. If no scheme is set (i.e., the scheme is empty), it defaults to ""http"".",,lightbug_http,
 "    fn is_https(self) -> Bool:
-        return bytes_equal(self.__scheme, strHttps)","Checks if the current scheme is ""https"" by comparing the scheme's bytes to a predefined strHttps bytes object. Returns True if they match, indicating an HTTPS scheme.",,lightbug_http
+        return bytes_equal(self.__scheme, strHttps)","Checks if the current scheme is ""https"" by comparing the scheme's bytes to a predefined strHttps bytes object. Returns True if they match, indicating an HTTPS scheme.",,lightbug_http,
 "    fn is_http(self) -> Bool:
-        return bytes_equal(self.__scheme, strHttp) or len(self.__scheme) == 0","Determines whether the current scheme is ""http"". It checks if the scheme matches a predefined strHttp bytes object or if the scheme is empty, implying a default to ""http"". Returns True if either condition is met.",,lightbug_http
+        return bytes_equal(self.__scheme, strHttp) or len(self.__scheme) == 0","Determines whether the current scheme is ""http"". It checks if the scheme matches a predefined strHttp bytes object or if the scheme is empty, implying a default to ""http"". Returns True if either condition is met.",,lightbug_http,
 "@value
 struct ErrorHandler:
     fn Error(self) -> HTTPResponse:
@@ -78,7 +78,7 @@ struct ErrorHandler:
 
 alias errNeedMore = Error(""need more data: cannot find trailing lf"")
 alias errInvalidName = Error(""invalid header name"")
-alias errSmallBuffer = Error(""small read buffer. Increase ReadBufferSize"")",This code snippet defines an ErrorHandler struct and introduces three error aliases related to handling HTTP errors or issues that might arise during HTTP request processing.,,lightbug_http
+alias errSmallBuffer = Error(""small read buffer. Increase ReadBufferSize"")",This code snippet defines an ErrorHandler struct and introduces three error aliases related to handling HTTP errors or issues that might arise during HTTP request processing.,,lightbug_http,
 "@value
 struct HTTPResponse(Response):
     var header: ResponseHeader
@@ -110,71 +110,25 @@ struct HTTPResponse(Response):
         self.body_raw = body_bytes
         self.skip_reading_writing_body = False
         self.raddr = TCPAddr()
-        self.laddr = TCPAddr()","This code snippet defines an HTTPResponse struct, which is designed to encapsulate the details and functionality of an HTTP response within a server or client application. The struct contains various fields to represent the components of an HTTP response and provides two constructors (__init__ methods) for creating instances with different initializations.",,lightbug_http
+        self.laddr = TCPAddr()","This code snippet defines an HTTPResponse struct, which is designed to encapsulate the details and functionality of an HTTP response within a server or client application. The struct contains various fields to represent the components of an HTTP response and provides two constructors (__init__ methods) for creating instances with different initializations.",,lightbug_http,
 "    fn set_status_code(inout self, status_code: Int) -> Self:
         _ = self.header.set_status_code(status_code)
-        return self",A method of the HTTPResponse struct (or a similar entity) designed to update the status code of the HTTP response.,,lightbug_http
+        return self",A method of the HTTPResponse struct (or a similar entity) designed to update the status code of the HTTP response.,,lightbug_http,
 "    fn status_code(self) -> Int:
-        return self.header.status_code()",A method that returns the status code frin the header of the http response,,lightbug_http
+        return self.header.status_code()",A method that returns the status code frin the header of the http response,,lightbug_http,
 "    fn connection_close(self) -> Bool:
-        return self.header.connection_close()",Define a function that returns a boolean indicating whether the HTTP response should signal the connection to close. It checks this status by accessing a method on the response header object.,,lightbug_http
+        return self.header.connection_close()",Define a function that returns a boolean indicating whether the HTTP response should signal the connection to close. It checks this status by accessing a method on the response header object.,,lightbug_http,
 "fn OK(body: Bytes) -> HTTPResponse:
     return HTTPResponse(
         ResponseHeader(
             True, 200, String(""OK"").as_bytes(), String(""Content-Type: text/plain"").as_bytes()
         ),
         body,
-    )", Implement a function that generates an HTTPResponse object with a 200 OK status code and a default Content-Type: text/plain. It accepts a byte array for the body content and uses default values for other headers.,,lightbug_http
+    )", Implement a function that generates an HTTPResponse object with a 200 OK status code and a default Content-Type: text/plain. It accepts a byte array for the body content and uses default values for other headers.,,lightbug_http,
 "fn OK(body: Bytes, content_type: String) -> HTTPResponse:
     return HTTPResponse(
         ResponseHeader(True, 200, String(""OK"").as_bytes(), content_type.as_bytes()), body
-    )","Write a function that given the body of a message and the content type, returns an HTTP response with the header containing the status 200 and the body",,lightbug_http
-"fn encode(res: HTTPResponse) raises -> Bytes:
-    var res_str = String()
-    var protocol = strHttp11
-    var current_time = String()
-    try:
-        current_time = Morrow.utcnow().__str__()
-    except e:
-        print(""Error getting current time: "" + str(e))
-        current_time = str(now())
-    var builder = StringBuilder()
-    _ = builder.write(protocol)
-    _ = builder.write(String("" ""))
-    _ = builder.write(String(res.header.status_code()))
-    _ = builder.write(String("" ""))
-    _ = builder.write(res.header.status_message())
-    _ = builder.write(String(""\r\n""))
-    _ = builder.write(String(""Server: lightbug_http""))
-    _ = builder.write(String(""\r\n""))
-    _ = builder.write(String(""Content-Type: ""))
-    _ = builder.write(res.header.content_type())
-    # TODO: propagate charset
-    # res_str += String(""; charset=utf-8"")
-    _ = builder.write(String(""\r\n""))
-    _ = builder.write(String(""Content-Length: ""))
-    # TODO: fix this
-    _ = builder.write(
-        String(len(res.body_raw)) 
-    )
-    _ = builder.write(String(""\r\n""))
-    _ = builder.write(String(""Connection: ""))
-    if res.connection_close():
-        _ = builder.write(String(""close""))
-    else:
-        _ = builder.write(String(""keep-alive""))
-    _ = builder.write(String(""\r\n""))
-    _ = builder.write(String(""Date: ""))
-    _ = builder.write(String(current_time))
-    _ = builder.write(String(""\r\n""))
-    _ = builder.write(String(""\r\n""))
-    # _ = builder.write_string(""<div>hello frend</div>"")
-    # _ = builder.write(String(""\r\n""))
-    # _ = builder.write(res.body())
-    _ = builder.write(res.body_raw)
-    
-    # Currently the server is expecting a null terminated string for conn.send().
-    return builder.get_null_terminated_bytes()",,,lightbug_http
+    )","Write a function that given the body of a message and the content type, returns an HTTP response with the header containing the status 200 and the body",,lightbug_http,
 "@value
 struct TCPAddr(Addr):
     var ip: String
@@ -198,11 +152,11 @@ struct TCPAddr(Addr):
         if self.zone != """":
             return join_host_port(String(self.ip) + ""%"" + self.zone, self.port)
         return join_host_port(self.ip, self.port)
-","I need to define a struct to represent a TCP address; The attributes of the structure are the ip as string, port as int and zone as string. I also need constructors for the struct, one setting as default values         self.ip = String(""127.0.0.1""), self.port = 8000 and self.zone = """"  and another one taking custom inputs.",,lightbug_http
+","I need to define a struct to represent a TCP address; The attributes of the structure are the ip as string, port as int and zone as string. I also need constructors for the struct, one setting as default values         self.ip = String(""127.0.0.1""), self.port = 8000 and self.zone = """"  and another one taking custom inputs.",,lightbug_http,
 "fn join_host_port(host: String, port: String) -> String:
     if host.find("":"") != -1:  # must be IPv6 literal
         return ""["" + host + ""]:"" + port
-    return host + "":"" + port","Write a method that receives two strings, a host and a port. If the last character of the host string is not "":"", return  ""["" + host + ""]:"" + port. If it is, return host + "":"" + port.",,lightbug_http
+    return host + "":"" + port","Write a method that receives two strings, a host and a port. If the last character of the host string is not "":"", return  ""["" + host + ""]:"" + port. If it is, return host + "":"" + port.",,lightbug_http,
 "    fn write(self, data: String) raises -> Int:
         var buffer: Str
         with Str(data) as buffer:
@@ -213,14 +167,14 @@ struct TCPAddr(Addr):
             if write_count == -1:
                 raise Error(""Failed to write to file descriptor "" + self.fd.__str__())
 
-            return write_count",,,lightbug_http
+            return write_count","Write an instance method that takes a string as input and returns an integer value. This method make an external call to write to a file and, if no error occurs, returns the number of bytes written.",,lightbug_http,
 "@value
 struct Printer(HTTPService):
     fn func(self, req: HTTPRequest) raises -> HTTPResponse:
         var body = req.body_raw
         print(String(body))
 
-        return OK(body)","Write a struct Printer that takes HTTPService as argument, has a func method that takes an HTTPRequest as input and returns an HTTPResponse OK containing the body of the request as a string.",,lightbug_http
+        return OK(body)","Write a struct Printer that takes HTTPService as argument, has a func method that takes an HTTPRequest as input and returns an HTTPResponse OK containing the body of the request as a string.",,lightbug_http,
 "@value
 struct Welcome(HTTPService):
     fn func(self, req: HTTPRequest) raises -> HTTPResponse:
@@ -228,7 +182,7 @@ struct Welcome(HTTPService):
         with open(""static/lightbug_welcome.html"", ""r"") as f:
             html = f.read()
 
-        return OK(html.as_bytes(), ""text/html"")","Write a struct Welcome that has a method that takes an HTTP request, open a file, reads from it into the html variable and returns OK with the html.",,lightbug_http
+        return OK(html.as_bytes(), ""text/html"")","Write a struct Welcome that has a method that takes an HTTP request, open a file, reads from it into the html variable and returns OK with the html.",,lightbug_http,
 "@value
 struct ExampleRouter(HTTPService):
     fn func(self, req: HTTPRequest) raises -> HTTPResponse:
@@ -244,19 +198,19 @@ struct ExampleRouter(HTTPService):
         elif uri.path() == ""/echo"":
             print(String(body))
 
-        return OK(body)",,,lightbug_http
+        return OK(body)","This struct takes the HTTPService as a parameters and has an instance method. The insntance method takes an HTTP request as input and analyzes the uri: if the uri path is ""/"", then it prints into the console ""I'm on the index path!"", if the uri path is ""/first"" or ""/second"", it prints into the console""I'm on /first!"" or ""I'm on /second!"", respectively. If the uri path is ""/echo"", it prints the body of the request as a string. At the end, this method should return an OK with the body of the message.",,lightbug_http,
 "    @always_inline
     fn __init__() -> Self:
         # allocate a DTypePointer on stack that doesn't need to be freed.
         var data = stack_allocation[width, T]()
         memset_zero(data, width)
-        return Self {data: data}",,,llama2.mojo
+        return Self {data: data}","A constructor method that allocates a pointer in a variable called data, which is initialized with zero, and returns an instance of the class.",,llama2.mojo,
 "    @always_inline
     fn accumulate[_width: Int](inout self, val: SIMD[T, _width]) -> None:
-        # This is a hack to make sure both SIMD have _width length.
-        # SIMD[T, width] += SIMD[T, _width] is always an error.
+ 
         var newVal = self.data.simd_load[_width]() + val
-        self.data.simd_store[_width](newVal)",,,llama2.mojo
+        self.data.simd_store[_width](newVal)","This is a hack to make sure both SIMD have _width length.
+ SIMD[T, width] += SIMD[T, _width] is always an error.",,llama2.mojo,
 "struct TensorSlice:
     var _data: BufferPtrFloat32
     var _shape: TensorShape
@@ -272,20 +226,21 @@ struct ExampleRouter(HTTPService):
             # Compiler complains if _shape not defined
             self._shape = TensorShape(1)
             raise Error(""TensorSlice: rank greater than 3 not implemented."")","Provides a view into a tensor representing a 1D slice on its first or first 2 dimensions.
-Same function signatures as Tensor but without owning the data.",,llama2.mojo
+Same function signatures as Tensor but without owning the data.",,llama2.mojo,
 "    fn simd_load[nelts: Int](self, idx: Int) -> SIMD[DType.float32, nelts]:
-        return self._data.simd_load[nelts](idx)",,,llama2.mojo
+        return self._data.simd_load[nelts](idx)",A function that loads data from an specific index into a SIMD structure that holds a float32 type.,,llama2.mojo,
 "fn read_val_int(inout buf: FileBuf) raises -> Int:
     # DTypePointer[DType.ui8](buf.data).bitcast[DType.ui8]()
     var data = buf.data.offset(buf.get_offset()).bitcast[DType.int32]()
     var result = data.load(0)
     buf.move_offset(4)
-    return result.to_int()",,,llama2.mojo
+    return result.to_int()
+",The read_val_int function reads an integer value from a file buffer (buf) and updates the buffer's offset accordingly and returns the read integer value.,,llama2.mojo,
 "fn read_val_float32(inout buf: FileBuf) raises -> Float32:
     # DTypePointer[DType.ui8](buf.data).bitcast[DType.ui8]()
     var val = buf.data.offset(buf.get_offset()).bitcast[DType.float32]().load(0)
     buf.move_offset(4)
-    return val",,,llama2.mojo
+    return val",The read_val_int function reads an integer value from a file buffer (buf) and updates the buffer's offset accordingly and returns the read float 32 value.,,llama2.mojo,
 "fn read_val_str(inout buf: FileBuf, slen: Int) raises -> PointerString:
     var str = PointerString.alloc(slen + 1)
     for i in range(slen):
@@ -293,7 +248,7 @@ Same function signatures as Tensor but without owning the data.",,llama2.mojo
         buf.move_offset(1)
     str.store(slen, 0)
 
-    return str",,,llama2.mojo
+    return str",The read_val_str reads from a file buffer each character from a string and returns that string.,,llama2.mojo,
 "fn partition(
     inout array: PointerStrings, inout indices: DynamicVector[Int], low: Int, high: Int
 ) -> Int:
@@ -320,31 +275,32 @@ Same function signatures as Tensor but without owning the data.",,llama2.mojo
     indices[high] = tmp_idx
 
     return ii + 1
-",Quicksort helper function to find the partition position,,llama2.mojo
+",Quicksort helper function to find the partition position,,llama2.mojo,
 "fn quicksort(
     inout array: PointerStrings, inout indices: DynamicVector[Int], low: Int, high: Int
 ):
     if low < high:
         var pi = partition(array, indices, low, high)
         quicksort(array, indices, low, pi - 1)
-        quicksort(array, indices, pi + 1, high)",Quicksort function,,llama2.mojo
+        quicksort(array, indices, pi + 1, high)",Quicksort function,,llama2.mojo,
 "    fn move_offset(inout self, size: Int) raises:
         var new_offset = self.offset + size
         if new_offset > self.size:
             raise Error(""Resulting offset will be past the end of the FileBuf"")
         if new_offset < 0:
             raise Error(""Resulting offset will be before the beginning of the FileBuf"")
-        self.offset = new_offset",,,llama2.mojo
+        self.offset = new_offset","The function move_offset takes an instance of a class and a integer, creates a variable called new_offset that is the offset of the instance plus the integer passed as argument and if the new_offset in greater than the original offset or less than zero, is raises an error, and if not, the offset of the instance becomes the value of new_offset.",,llama2.mojo,
 "    fn bitcast_offset_f32(inout self, size: Int) raises -> BufferPtrFloat32:
         var ret = self.data.offset(self.offset).bitcast[DType.float32]()
         self.move_offset(size * sizeof[DType.float32]())
-        return ret",,,llama2.mojo
+        return ret","This function, bitcast_offset_f32, performs a series of operations on a data structure to obtain a buffer pointer with a specific data type, while also updating an offset within the data structure. ",,llama2.mojo,
 "    fn get_offset(self) raises -> Int:
         if self.offset > self.size:
             raise Error(""Offset is past the end of the FileBuf"")
         if self.offset < 0:
             raise Error(""Offset is before the beginning of the FileBuf"")
-        return self.offset",,,llama2.mojo
+        return self.offset
+","This function get_offset is an instance method that returns an integer representing the offset and might raise an error. If the offset of the instance is greater than the size of the instance, if raises an error of ""Offset is past the end of the FileBuf"". If the offset of the instance is less than zero, then it raises an error of ""Offset is before the beginning of the FileBuf"".",,llama2.mojo,
 "fn wrap(token: PointerString) -> PointerString:
     if string_compare(token, str_to_ptr(""\\n"")) == 0:
         return str_to_ptr(""<0x0A>"")
@@ -355,7 +311,7 @@ Same function signatures as Tensor but without owning the data.",,llama2.mojo
     elif string_compare(token, str_to_ptr('""')) == 0:
         return str_to_ptr(""<0x22>"")
     return token
-",,,llama2.mojo
+","The function wrap takes a PointerString as input, which suggests it's working with a pointer to a string or a similar data structure representing text. Its primary purpose is to check if the input string matches certain special characters (newline ""\n"", tab ""\t"", single quote ""'"" and double quote ""\""""), and return a pointer to a string that represents these characters in a hexadecimal escape sequence format. If the input string does not match any of the specified special characters, it simply returns the original input string.",,llama2.mojo,
 "struct Tokenizer:
     var vocab: PointerStrings
     var vocab_scores: BufferPtrFloat32
@@ -379,13 +335,14 @@ Same function signatures as Tensor but without owning the data.",,llama2.mojo
             var slen = read_val_int(buf)
             var token = read_val_str(buf, slen)
             self.store_token(i, token, score)
-        return None",,,llama2.mojo
+        return None","The Tokenizer struct, along with its __init__ method, sets up an environment for tokenization tasks by initializing various components necessary for the tokenizer's operation. The __init__ method specifically prepares the tokenizer with its vocabulary and associated scores, among other settings, from a provided buffer.",,llama2.mojo,
 "    fn __del__(owned self):
         for i in range(0, self.vocab_size):
             self.vocab[i].free()
         self.vocab.free()
         self.vocab_scores.free()
-        self.sorted_vocab.free()",,,llama2.mojo
+        self.sorted_vocab.free()
+",This is an instance method that iterates over a structure (self) and frees the memory that was allocated to that object.,,llama2.mojo,
 "fn sort(inout self) -> None:
         if len(self.sorted_indices) < self.vocab_size:
             self.sorted_indices = DynamicVector[Int](capacity=self.vocab_size)
@@ -396,7 +353,7 @@ Same function signatures as Tensor but without owning the data.",,llama2.mojo
 
         var n = self.vocab_size
         quicksort(self.sorted_vocab, self.sorted_indices, 0, n - 1)
-        return None",Sort vocab by string_compare,,llama2.mojo
+        return None",Sort vocab by string_compare,,llama2.mojo,
 "
     fn find(inout self, token_o: PointerString) -> Int:
         var token = wrap(token_o)
@@ -414,7 +371,7 @@ Same function signatures as Tensor but without owning the data.",,llama2.mojo
                 left = mid + 1
             else:
                 right = mid - 1
-        return -1",Binary search that returns -1 if string is not found,,llama2.mojo
+        return -1",Binary search that returns -1 if string is not found,,llama2.mojo,
 "@always_inline
 fn accum(inout a: TensorF32, b: TensorF32) -> None:
     var size = a.dim(0)
@@ -423,35 +380,10 @@ fn accum(inout a: TensorF32, b: TensorF32) -> None:
     fn _acc[_nelts: Int](j: Int):
         a.simd_store[_nelts](j, a.simd_load[_nelts](j) + b.simd_load[_nelts](j))
 
-    vectorize[_acc, nelts](size)",,,llama2.mojo
-"@always_inline
-fn rmsnorm(
-    inout o: BufferPtrFloat32, x: BufferPtrFloat32, weight: BufferPtrFloat32, size: Int
-) -> None:
-    # Calculate sum of squares
-    var tmp = Accumulator[DType.float32, nelts]()
-
-    @parameter
-    fn _sum2[_nelts: Int](j: Int):
-        tmp.accumulate(x.offset(j).simd_load[_nelts](0) ** 2)
-
-    vectorize[_sum2, nelts](size)
-
-    var ss: Float32 = tmp.total()
-    ss = ss / size + 1e-5
-    ss = 1.0 / math.sqrt(ss)
-
-    # Normalize and scale
-    @parameter
-    fn _norm[_nelts: Int](j: Int):
-        var val = weight.simd_load[_nelts](j) * ss * x.simd_load[_nelts](j)
-        o.offset(j).simd_store[_nelts](0, val)
-
-    vectorize[_norm, nelts](size)
-",,,llama2.mojo
+    vectorize[_acc, nelts](size)",Write a function that takes two tensors of float numbers,,llama2.mojo,
 "@always_inline
 fn softmax(inout x: TensorF32) -> None:
-    softmax(x, 0, x.dim(0))",Activation function softmax,,llama2.mojo
+    softmax(x, 0, x.dim(0))",Activation function softmax,,llama2.mojo,
 "@always_inline
 fn rope_rotation_llama(
     inout state: RunState,
@@ -461,7 +393,7 @@ fn rope_rotation_llama(
 ) -> None:
     # stories model, llama2
     var head_size = config.head_size","Apply RoPE rotation to the q and k vectors for each head
-rotate odd and even dim",,llama2.mojo
+rotate odd and even dim",,llama2.mojo,
 "    @parameter
     fn head_loop(i: Int):
 
@@ -477,9 +409,9 @@ rotate odd and even dim",,llama2.mojo
                 var k1 = state.k[i * head_size + j + 1]
                 state.k[i * head_size + j] = k0 * fcr - k1 * fci
                 state.k[i * head_size + j + 1] = k0 * fci + k1 * fcr","        Simple vectorization with (head_size // 2) steps gave junk transformer output.
-        Maybe because the nelt ranges end up overlapping between the steps.",,llama2.mojo
+        Maybe because the nelt ranges end up overlapping between the steps.",,llama2.mojo,
 "fn argmax(v: TensorF32) -> Int:
-    # return argmax of v
+  
     var max_i: Int = 0
     var max_p: Float32 = v[0]
     for i in range(v.dim(0)):
@@ -487,7 +419,7 @@ rotate odd and even dim",,llama2.mojo
             max_i = i
             max_p = v[i]
     return max_i
-",,,llama2.mojo
+", return argmax of v,,llama2.mojo,
 "fn sample(probabilities: TensorF32) -> Int:
     var n = probabilities.dim(0)
     # Sample index from probabilities, they must sum to 1
@@ -498,7 +430,8 @@ rotate odd and even dim",,llama2.mojo
         cdf += probabilities[i]
         if r[0] < cdf:
             return i
-    return n - 1  # In case of rounding errors",,,llama2.mojo
+    return n - 1  # In case of rounding errors
+","This function takes a Tensor of float32 and returns an integer. It is declared the value n stating the number for sampling. Then the variable r is defined as a random value within (min, max) float32 range and cdf will accumulate the propabilities of the input tensor. If the loop completes without returning (which might occur due to rounding errors in floating-point addition), the function defaults to returning n - 1, the last index. This is a safety net to ensure the function always returns a valid index.",,llama2.mojo,
 "from time import now
 
 from algorithm import sum
@@ -574,7 +507,7 @@ fn main() raises:
     # CHECK: stdlib elements
     bench[stdlib_reduce_sum, size_large, ""stdlib""](large_array)","This sample implements a simple reduction operation on a
 Large array of values to produce a single result.
-Reductions and scans are common algorithm patterns in parallel computing.",,modular mojo
+Reductions and scans are common algorithm patterns in parallel computing.",,modular mojo,
 "
 fn naive_reduce_sum[size: Int](array: Tensor[type]) -> Float32:
     var A = array
@@ -586,7 +519,7 @@ fn naive_reduce_sum[size: Int](array: Tensor[type]) -> Float32:
         c = (t - my_sum) - y
         my_sum = t
     return my_sum","Use the https://en.wikipedia.org/wiki/Kahan_summation_algorithm
-Simple summation of the array elements",,modular mojo
+Simple summation of the array elements",,modular mojo,
 "from sys.info import *
 from sys.info import _current_cpu, _current_target, _triple_attr
 
@@ -633,7 +566,7 @@ def main():
     print(""    Physical Cores : "", num_physical_cores())
     print(""    Logical Cores  : "", num_logical_cores())
     # CHECK: CPU Features
-    print(""    CPU Features   :"", cpu_features)",This sample prints the current host system information using APIs from the sys module.,,modular mojo
+    print(""    CPU Features   :"", cpu_features)",This sample prints the current host system information using APIs from the sys module.,,modular mojo,
 "from math import sqrt
 from benchmark import run, keep
 from collections import List
@@ -820,7 +753,7 @@ def benchmark():
 def main():
     run_system()","This sample implements the nbody benchmarking in
 https://benchmarksgame-team.pages.debian.net/benchmarksgame/performance/nbody.html
-",,modular mojo
+",,modular mojo,
 "@always_inline(""nodebug"")
 fn _digits[type: DType]() -> Int:
 
@@ -865,7 +798,7 @@ fn _digits[type: DType]() -> Int:
 
     Returns:
         The number of digits that can be represented by the type without change.
-",,modular mojo
+",,modular mojo,
 "@always_inline
 fn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:
 
@@ -881,7 +814,7 @@ fn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:
 
     Returns:
         An integer representation of the floating-point value.
- ",,modular mojo
+ ",,modular mojo,
 "@always_inline
 fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
@@ -896,7 +829,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
         value: The value to bitcast.
 
     Returns:
-        A float-point representation of the integer value.",,modular mojo
+        A float-point representation of the integer value.",,modular mojo,
 " @staticmethod
     @always_inline(""nodebug"")
     fn max_exponent() -> Int:
@@ -916,7 +849,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
         return 1024
 ","Returns the max exponent of a floating point type.
 
-",,modular mojo
+",,modular mojo,
 " @staticmethod
     @always_inline(""nodebug"")
     fn exponent_width() -> Int:
@@ -936,7 +869,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
         return 11
 ","Returns the exponent width of a floating point type.
 
- ",,modular mojo
+ ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn mantissa_mask() -> Int:
@@ -946,7 +879,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
             ""dtype must be a floating point type"",
         ]()
         return (1 << Self.mantissa_width()) - 1","Returns the mantissa mask of a floating point type.
-",,modular mojo
+",,modular mojo,
 "    @staticmethod
     @always_inline
     fn exponent_bias() -> Int:
@@ -955,7 +888,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
             type.is_floating_point(),
             ""dtype must be a floating point type"",
         ]()
-        return Self.max_exponent() - 1",Returns the exponent bias of a floating point type.,,modular mojo
+        return Self.max_exponent() - 1",Returns the exponent bias of a floating point type.,,modular mojo,
 "    @staticmethod
     @always_inline
     fn sign_mask() -> Int:
@@ -966,7 +899,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
             ""dtype must be a floating point type"",
         ]()
         return 1 << (Self.exponent_width() + Self.mantissa_width())","Returns the sign mask of a floating point type. It is computed by
-        `1 << (exponent_width + mantissa_mask)`.",,modular mojo
+        `1 << (exponent_width + mantissa_mask)`.",,modular mojo,
 "    @staticmethod
     @always_inline
     fn exponent_mantissa_mask() -> Int:
@@ -977,7 +910,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
             ""dtype must be a floating point type"",
         ]()
         return Self.exponent_mask() + Self.mantissa_mask()","Returns the exponent and mantissa mask of a floating point type. It is
-        computed by `exponent_mask + mantissa_mask`.",,modular mojo
+        computed by `exponent_mask + mantissa_mask`.",,modular mojo,
 "    @staticmethod
     @always_inline
     fn quiet_nan_mask() -> Int:
@@ -999,7 +932,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             The quiet NaN mask.
-",,modular mojo
+",,modular mojo,
 "    @staticmethod
     @always_inline
     fn bitcast_to_integer(value: Scalar[type]) -> Int:
@@ -1011,7 +944,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             An integer representation of the floating-point value.
-    ",,modular mojo
+    ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn bitcast_from_integer(value: Int) -> Scalar[type]:
@@ -1023,7 +956,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             An floating-point representation of the Int.
-       ",,modular mojo
+       ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn get_sign(value: Scalar[type]) -> Bool:
@@ -1037,7 +970,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             Returns True if the sign is set and False otherwise.
- ",,modular mojo
+ ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn set_sign(value: Scalar[type], sign: Bool) -> Scalar[type]:
@@ -1055,7 +988,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             Returns the floating point value with the sign set.
-    ",,modular mojo
+    ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn get_exponent_without_bias(value: Scalar[type]) -> Int:
@@ -1068,7 +1001,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             Returns the exponent bits.
-       ",,modular mojo
+       ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn set_exponent(value: Scalar[type], exponent: Int) -> Scalar[type]:
@@ -1084,7 +1017,7 @@ fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
 
         Returns:
             Returns the floating-point value with the exponent bits set.
-        ",,modular mojo
+        ",,modular mojo,
 "@always_inline(""nodebug"")
 fn isinf[
     type: DType, simd_width: Int
@@ -1112,7 +1045,7 @@ fn isinf[
 
     Returns:
         True if val is infinite and False otherwise.
-   ",,modular mojo
+   ",,modular mojo,
 "@always_inline(""nodebug"")
 fn isnan[
     type: DType, simd_width: Int
@@ -1147,7 +1080,7 @@ fn isnan[
 
     Returns:
         True if val is NaN and False otherwise.
-",,modular mojo
+",,modular mojo,
 "@always_inline
 fn _reduce_and_fn(a: Bool, b: Bool) -> Bool:
 
@@ -1159,7 +1092,7 @@ fn _reduce_and_fn(a: Bool, b: Bool) -> Bool:
 
     Returns:
         The result of AND operation on the inputs.
- ",,modular mojo
+ ",,modular mojo,
 "@always_inline
 fn _int_tuple_binary_apply[
     size: Int,
@@ -1198,7 +1131,7 @@ fn _int_tuple_binary_apply[
 
     Returns:
         Tuple containing the result.
- ",,modular mojo
+ ",,modular mojo,
 "@always_inline
 fn _int_tuple_compare[
     size: Int,
@@ -1239,7 +1172,7 @@ fn _int_tuple_compare[
 
     Returns:
         Tuple containing the result.
-   ",,modular mojo
+   ",,modular mojo,
 " @always_inline
     fn __init__() -> Self:
 
@@ -1248,7 +1181,7 @@ fn _int_tuple_compare[
 
         Returns:
             The constructed tuple.
-       ",,modular mojo
+       ",,modular mojo,
 "    @always_inline
     fn __init__(value: __mlir_type.index) -> Self:
 
@@ -1260,7 +1193,7 @@ fn _int_tuple_compare[
 
         Returns:
             The constructed tuple.
-       ",,modular mojo
+       ",,modular mojo,
 " @always_inline
     fn __init__(elems: Tuple[Int, Int]) -> Self:
 
@@ -1287,7 +1220,7 @@ fn _int_tuple_compare[
 
         Returns:
             The constructed tuple.
-        ",,modular mojo
+        ",,modular mojo,
 "@always_inline
     fn __init__(elems: Tuple[Int, Int, Int, Int]) -> Self:
 
@@ -1315,7 +1248,7 @@ fn _int_tuple_compare[
 
         Returns:
             The constructed tuple.
-        ",,modular mojo
+        ",,modular mojo,
 "@always_inline
 fn Index[
     T0: Intable, T1: Intable, T2: Intable
@@ -1335,7 +1268,7 @@ fn Index[
 
     Returns:
         The constructed StaticIntTuple.
-    ",,modular mojo
+    ",,modular mojo,
 "@always_inline
 fn Index[
     T0: Intable, T1: Intable, T2: Intable, T3: Intable
@@ -1357,7 +1290,7 @@ fn Index[
 
     Returns:
         The constructed StaticIntTuple.
-",,modular mojo
+",,modular mojo,
 "@always_inline
 fn Index[
     T0: Intable, T1: Intable, T2: Intable, T3: Intable, T4: Intable
@@ -1381,7 +1314,7 @@ fn Index[
 
     Returns:
         The constructed StaticIntTuple.
-    ",,modular mojo
+    ",,modular mojo,
 "@always_inline
 fn now() -> Int:
 
@@ -1393,7 +1326,7 @@ fn now() -> Int:
 
     Returns:
         The current time in ns.
-    ",,modular mojo
+    ",,modular mojo,
 "@always_inline
 @parameter
 fn _time_function_windows[func: fn () capturing -> None]() -> Int:
@@ -1420,7 +1353,7 @@ fn _time_function_windows[func: fn () capturing -> None]() -> Int:
 
     # Note: Windows performance counter resolution is in µs.
     var elapsed_time_in_ns = (elapsed_ticks * 1_000_000_000) // ticks_per_sec
-    return int(elapsed_time_in_ns)",Calculates elapsed time in Windows OS,,modular mojo
+    return int(elapsed_time_in_ns)",Calculates elapsed time in Windows OS,,modular mojo,
 "@always_inline
 @parameter
 fn time_function[func: fn () capturing -> None]() -> Int:
@@ -1440,7 +1373,7 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     Returns:
         The time elapsed in the function in ns.
-   ",,modular mojo
+   ",,modular mojo,
 "fn sleep(sec: Float64):
 
     alias NANOSECONDS_IN_SECOND = 1_000_000_000
@@ -1455,7 +1388,7 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     Args:
         sec: The number of seconds to sleep for.
-   ",,modular mojo
+   ",,modular mojo,
 "fn sleep(sec: Int):
 
 
@@ -1468,7 +1401,7 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     Args:
         sec: The number of seconds to sleep for.
-    ",,modular mojo
+    ",,modular mojo,
 "fn b64encode(str: String) -> String:
 
     alias lookup = ""ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/""
@@ -1513,7 +1446,7 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     Returns:
       Base64 encoding of the input string.
- ",,modular mojo
+ ",,modular mojo,
 "@value
 struct _DictKeyIter[
     K: KeyElement,
@@ -1555,7 +1488,7 @@ struct _DictKeyIter[
         V: The value type of the elements in the dictionary.
         dict_mutability: Whether the reference to the vector is mutable.
         dict_lifetime: The lifetime of the List
-  ",,modular mojo
+  ",,modular mojo,
 "@value
 struct _DictValueIter[
     K: KeyElement,
@@ -1595,7 +1528,7 @@ struct _DictValueIter[
         V: The value type of the elements in the dictionary.
         dict_mutability: Whether the reference to the vector is mutable.
         dict_lifetime: The lifetime of the List
-    ",,modular mojo
+    ",,modular mojo,
 "@value
 struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
 
@@ -1622,7 +1555,7 @@ struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
     Parameters:
         K: The key type of the dict. Must be Hashable+EqualityComparable.
         V: The value type of the dict.
-   ",,modular mojo
+   ",,modular mojo,
 "    fn __init__(inout self, reserved: Int):
         if reserved <= 128:
             var data = DTypePointer[DType.int8].alloc(reserved)
@@ -1643,7 +1576,7 @@ struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
             var data = DTypePointer[DType.int64].alloc(reserved)
             for i in range(reserved):
                 data[i] = _EMPTY
-            self.data = data.bitcast[DType.invalid]()",,,modular mojo
+            self.data = data.bitcast[DType.invalid]()","A constructor method that allocates a DTypePointer of size defined by the input reserved, which would represent values of type int8, int16, int32 or int64.",,modular mojo,
 "    fn copy(self, reserved: Int) -> Self:
         var index = Self(reserved)
         if reserved <= 128:
@@ -1662,7 +1595,7 @@ struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
             var data = self.data.bitcast[DType.int64]()
             var new_data = index.data.bitcast[DType.int64]()
             memcpy(new_data, data, reserved)
-        return index ^",A method to create a copy of the object passed as argument and return it.,,modular mojo
+        return index ^",A method to create a copy of the object passed as argument and return it.,,modular mojo,
 "    fn get_index(self, reserved: Int, slot: Int) -> Int:
         if reserved <= 128:
             var data = self.data.bitcast[DType.int8]()
@@ -1675,7 +1608,7 @@ struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
             return data.load(slot % reserved).to_int()
         else:
             var data = self.data.bitcast[DType.int64]()
-            return data.load(slot % reserved).to_int()",,,modular mojo
+            return data.load(slot % reserved).to_int()","This function is used to calculate the position of a given index in a data structure. The method has two integer arguments, reserved and slot. The self.data.bitcast[DType.int8]() is performing a bitcast operation on the data contained in self.data, converting it to an array of signed 8-bit integers (int8), and this is done as well for the 16 bit, 32 bit and 64 bit integers.",,modular mojo,
 "    fn set_index(inout self, reserved: Int, slot: Int, value: Int):
         if reserved <= 128:
             var data = self.data.bitcast[DType.int8]()
@@ -1688,17 +1621,17 @@ struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
             return data.store(slot % reserved, value)
         else:
             var data = self.data.bitcast[DType.int64]()
-            return data.store(slot % reserved, value)",,,modular mojo
-var size: Int,The number of elements currently stored in the dict.,,modular mojo
-var _n_entries: Int,"""The number of entries currently allocated.""",,modular mojo
-var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
+            return data.store(slot % reserved, value)","The set_index function is designed to set a value in a data structure (self.data) at a specified index (slot). The choice of the data type to use for storing the value depends on the reserved parameter, which determines the maximum capacity of the data structure.",,modular mojo,
+var size: Int,The number of elements currently stored in the dict.,,modular mojo,
+var _n_entries: Int,"""The number of entries currently allocated.""",,modular mojo,
+var _reserved: Int,The current reserved size of the dictionary.,,modular mojo,
 "    fn __init__(inout self):
 
         self.size = 0
         self._n_entries = 0
         self._reserved = 8
         self._index = _DictIndex(self._reserved)
-        self._entries = Self._new_entries(self._reserved)",Initialize an empty dictiontary.,,modular mojo
+        self._entries = Self._new_entries(self._reserved)",Initialize an empty dictiontary.,,modular mojo,
 "    fn __init__(inout self, existing: Self):
 
         self.size = existing.size
@@ -1709,7 +1642,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Args:
             existing: The existing dict.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __copyinit__(inout self, existing: Self):
 
         self.size = existing.size
@@ -1720,7 +1653,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Args:
             existing: The existing dict.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __moveinit__(inout self, owned existing: Self):
 
         self.size = existing.size
@@ -1731,7 +1664,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Args:
             existing: The existing dict.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __getitem__(self, key: K) raises -> V:
 
         var value = self.find(key)
@@ -1747,7 +1680,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Raises:
             ""KeyError"" if the key isn't present.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __setitem__(inout self, key: K, value: V):
 
         self._insert(key, value)"," Set a value in the dictionary by key.
@@ -1755,7 +1688,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         Args:
             key: The key to associate with the specified value.
             value: The data to store in the dictionary.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __contains__(self, key: K) -> Bool:
 
         return self.find(key).__bool__()","Check if a given value is in the dictionary or not.
@@ -1765,10 +1698,10 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Returns:
             True if there key exists in the dictionary, False otherwise.
-       ",,modular mojo
+       ",,modular mojo,
 "    fn __len__(self) -> Int:
        
-        return self.size",The number of elements currenly stored in the dictionary.,,modular mojo
+        return self.size",The number of elements currenly stored in the dictionary.,,modular mojo,
 "    fn find(self, key: K) -> Optional[V]:
  
         var hash = hash(key)
@@ -1788,7 +1721,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         Returns:
             An optional value containing a copy of the value if it was present,
             otherwise an empty Optional.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn pop(inout self, key: K, owned default: Optional[V] = None) raises -> V:
  
         var hash = hash(key)
@@ -1819,7 +1752,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         Raises:
             ""KeyError"" if the key was not present in the dictionary and no
             default value was provided.
-       ",,modular mojo
+       ",,modular mojo,
 "    fn __iter__[
         mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
     ](
@@ -1836,7 +1769,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Returns:
             An iterator of immutable references to the dictionary keys.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn keys[
         mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
     ](
@@ -1851,7 +1784,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Returns:
             An iterator of immutable references to the dictionary keys.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn values[
         mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
     ](
@@ -1868,7 +1801,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Returns:
             An iterator of references to the dictionary values.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn items[
         mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
     ](
@@ -1893,15 +1826,15 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
 
         Returns:
             An iterator of immutable references to the dictionary entries.
-      ",,modular mojo
+      ",,modular mojo,
 "    @staticmethod
     fn _new_entries(reserved: Int) -> List[Optional[DictEntry[K, V]]]:
         var entries = List[Optional[DictEntry[K, V]]](capacity=reserved)
         for i in range(reserved):
             entries.append(None)
-        return entries","Write a function called new_entries, which is a static method, that takes an integer as input and returns a list. ",,modular mojo
+        return entries","Write a function called new_entries, which is a static method, that takes an integer as input and returns a list. ",,modular mojo,
 "    fn _insert(inout self, owned key: K, owned value: V):
-        self._insert(DictEntry[K, V](key ^, value ^))",A method to insert a key and a value to a dictionary structure.,,modular mojo
+        self._insert(DictEntry[K, V](key ^, value ^))",A method to insert a key and a value to a dictionary structure.,,modular mojo,
 "    fn _insert(inout self, owned entry: DictEntry[K, V]):
         self._maybe_resize()
         var found: Bool
@@ -1913,15 +1846,17 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         if not found:
             self._set_index(slot, index)
             self.size += 1
-            self._n_entries += 1",,,modular mojo
+            self._n_entries += 1",The _insert method is responsible for inserting a dictionary entry into the data structure.,,modular mojo,
 "    fn _get_index(self, slot: Int) -> Int:
-        return self._index.get_index(self._reserved, slot)",A method that returns the index of a given slot.,,modular mojo
+        return self._index.get_index(self._reserved, slot)",A method that returns the index of a given slot.,,modular mojo,
 "    fn _set_index(inout self, slot: Int, index: Int):
-        return self._index.set_index(self._reserved, slot, index)",,,modular mojo
+        return self._index.set_index(self._reserved, slot, index)","The _set_index function serves as a proxy method to set an index value within another data structure _index by calling its set_index method. Params _reserved: The maximum capacity of the data structure, necessary for determining the appropriate data type for storage.
+slot: The index where the value will be set within the _index data structure.
+index: The integer value to be stored at the specified slot.",,modular mojo,
 "    fn _next_index_slot(self, inout slot: Int, inout perturb: Int):
         alias PERTURB_SHIFT = 5
         perturb >>= PERTURB_SHIFT
-        slot = ((5 * slot) + perturb + 1) % self._reserved",,,modular mojo
+        slot = ((5 * slot) + perturb + 1) % self._reserved","The _next_index_slot method is responsible for computing the next index slot within the data structure, considering the current slot and perturbation value.",,modular mojo,
 "    fn _find_empty_index(self, hash: Int) -> Int:
         var slot = hash % self._reserved
         var perturb = hash
@@ -1931,11 +1866,11 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
                 return slot
             self._next_index_slot(slot, perturb)
         abort(""Dict: no empty index in _find_empty_index"")
-        return 0",,,modular mojo
+        return 0",The _find_empty_index method is responsible for locating an empty index within the data structure based on a given hash value. ,,modular mojo,
 "    fn _over_load_factor(self) -> Bool:
-        return 3 * self.size > 2 * self._reserved",An instance method that returns true if the data structure is more than 150% loaded.,,modular mojo
+        return 3 * self.size > 2 * self._reserved",An instance method that returns true if the data structure is more than 150% loaded.,,modular mojo,
 "    fn _over_compact_factor(self) -> Bool:
-        return 4 * self._n_entries > 3 * self._reserved",,,modular mojo
+        return 4 * self._n_entries > 3 * self._reserved",An instance method that returns a boolean value if the object's attribute _n_entries is greater than 3/4 of the reserved size of the structure.,,modular mojo,
 "    fn _maybe_resize(inout self):
         if not self._over_load_factor():
             if self._over_compact_factor():
@@ -1951,7 +1886,7 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
         for i in range(len(old_entries)):
             var entry = old_entries.__get_ref(i)[]
             if entry:
-                self._insert(entry.value())",,,modular mojo
+                self._insert(entry.value())","The _maybe_resize method is responsible for potentially resizing the data structure if it exceeds certain load or compact factors.The method first checks whether the load factor exceeds a certain threshold by calling the _over_load_factor method. If it doesn't, it proceeds to check the compact factor. If the load factor is acceptable but the compact factor is exceeded, it calls the _compact method to compact the data structure. If the load factor is exceeded, the method doubles the reserved capacity (self._reserved *= 2), effectively increasing the space available for entries. It resets the size and number of entries and it transfers the old data to the new entries.",,modular mojo,
 "    fn _compact(inout self):
         self._index = _DictIndex(self._reserved)
         var right = 0
@@ -1967,15 +1902,15 @@ var _reserved: Int,The current reserved size of the dictionary.,,modular mojo
                 self._entries[left] = entry
                 self._entries[right] = None
 
-        self._n_entries = self.size",,,modular mojo
-var data: AnyPointer[T],The underlying storage for the list.,,modular mojo
-var size: Int,The number of elements in the list.,,modular mojo
-var capacity: Int,The amount of elements that can fit in the list without resizing it.,,modular mojo
+        self._n_entries = self.size",The _compact method is responsible for compacting the data structure by removing any gaps caused by previously removed or overwritten entries. ,,modular mojo,
+var data: AnyPointer[T],The underlying storage for the list.,,modular mojo,
+var size: Int,The number of elements in the list.,,modular mojo,
+var capacity: Int,The amount of elements that can fit in the list without resizing it.,,modular mojo,
 "    fn __init__(inout self):
        
         self.data = AnyPointer[T]()
         self.size = 0
-        self.capacity = 0",Constructs an empty list.,,modular mojo
+        self.capacity = 0",Constructs an empty list.,,modular mojo,
 "    fn __init__(inout self, existing: Self):
 
         self.__init__(capacity=existing.capacity)
@@ -1984,7 +1919,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             existing: The list to copy.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __init__(inout self, *, capacity: Int):
 
         self.data = AnyPointer[T].alloc(capacity)
@@ -1993,7 +1928,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             capacity: The requested capacity of the list.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __init__(inout self, *values: T):
 
         self = Self(capacity=len(values))
@@ -2001,7 +1936,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
             self.append(value[])","Constructs a list from the given values.
 
         Args:
-            values: The values to populate the list with.",,modular mojo
+            values: The values to populate the list with.",,modular mojo,
 "    fn __moveinit__(inout self, owned existing: Self):
  
         self.data = existing.data
@@ -2010,7 +1945,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             existing: The existing list.
-",,modular mojo
+",,modular mojo,
 "    fn __copyinit__(inout self, existing: Self):
 
         self = Self(capacity=existing.capacity)
@@ -2019,20 +1954,20 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             existing: The list to copy.
-",,modular mojo
+",,modular mojo,
 "    fn __del__(owned self):
 
         for i in range(self.size):
             _ = (self.data + i).take_value()
         if self.data:
-            self.data.free()",Destroy all elements in the list and free its memory.,,modular mojo
+            self.data.free()",Destroy all elements in the list and free its memory.,,modular mojo,
 "    fn __len__(self) -> Int:
 
         return self.size","Gets the number of elements in the list.
 
         Returns:
             The number of elements in the list.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn _realloc(inout self, new_capacity: Int):
         var new_data = AnyPointer[T].alloc(new_capacity)
 
@@ -2042,7 +1977,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         if self.data:
             self.data.free()
         self.data = new_data
-        self.capacity = new_capacity",,,modular mojo
+        self.capacity = new_capacity",he _realloc method is responsible for reallocating memory for the data structure to accommodate a new capacity. ,,modular mojo,
 "    fn append(inout self, owned value: T):
 
         if self.size >= self.capacity:
@@ -2052,7 +1987,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             value: The value to append.
-",,modular mojo
+",,modular mojo,
 "    fn pop_back(inout self) -> T:
 
         var ret_val = (self.data + (self.size - 1)).take_value()
@@ -2064,7 +1999,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Returns:
             The popped value.
-",,modular mojo
+",,modular mojo,
 "    fn reserve(inout self, new_capacity: Int):
 
         if self.capacity >= new_capacity:
@@ -2076,12 +2011,12 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             new_capacity: The new capacity.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn reverse(inout self):
-          self._reverse()",Reverses the elements of the list.,,modular mojo
+          self._reverse()",Reverses the elements of the list.,,modular mojo,
 "    fn clear(inout self):        for i in range(self.size):
             _ = (self.data + i).take_value()
-        self.size = 0",Clears the elements in the list.,,modular mojo
+        self.size = 0",Clears the elements in the list.,,modular mojo,
 "    fn steal_data(inout self) -> AnyPointer[T]:
 
         var ptr = self.data
@@ -2092,7 +2027,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Returns:
             The underlying data.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __setitem__(inout self, i: Int, owned value: T):
        
         debug_assert(-self.size <= i < self.size, ""index must be within bounds"")
@@ -2107,7 +2042,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Args:
             i: The index of the element.
             value: The value to assign.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn _adjust_span(self, span: Slice) -> Slice:
       
@@ -2126,7 +2061,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
             adjusted_span.end = adjusted_span.start - 1
             adjusted_span.start = tmp - 1
 
-        return adjusted_span",Adjusts the span based on the list length.,,modular mojo
+        return adjusted_span",Adjusts the span based on the list length.,,modular mojo,
 "    @always_inline
     fn __getitem__(self, span: Slice) -> Self:
         
@@ -2148,7 +2083,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Returns:
             A new list containing the list at the specified span.
-",,modular mojo
+",,modular mojo,
 "    fn __iter__[
         mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
     ](
@@ -2161,9 +2096,9 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Returns:
             An iterator of immutable references to the list elements.
-",,modular mojo
+",,modular mojo,
 "struct Set[T: KeyElement](Sized, EqualityComparable, Hashable, Boolable):
-    ",A set data type.,,modular mojo
+    ",A set data type.,,modular mojo,
 "fn __init__(inout self, *ts: T):
 
         self._data = Dict[T, NoneType]()
@@ -2172,7 +2107,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             ts: Variadic of elements to add to the set.
-",,modular mojo
+",,modular mojo,
 "    fn __init__(inout self, elements: Self):
  
         self.__init__()
@@ -2181,7 +2116,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             elements: An existing set to copy.
-",,modular mojo
+",,modular mojo,
 "    fn __init__(inout self, elements: List[T]):
 
         self.__init__()
@@ -2191,14 +2126,14 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             elements: A vector of elements to add to the set.
-",,modular mojo
+",,modular mojo,
 "    fn __moveinit__(inout self, owned other: Self):
 
         self._data = other._data ^","Move constructor.
 
         Args:
             other: The existing Set instance to move from.
-",,modular mojo
+",,modular mojo,
 "    fn __contains__(self, t: T) -> Bool:
  
         return t in self._data","Whether or not the set contains an element.
@@ -2208,14 +2143,14 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Returns:
             Whether or not the set contains the element.
- ",,modular mojo
+ ",,modular mojo,
 "    fn __bool__(self) -> Bool:
 
         return len(self).__bool__()","Whether the set is non-empty or not.
 
         Returns:
             True if the set is non-empty, False if it is empty.
-       ",,modular mojo
+       ",,modular mojo,
 "    fn __hash__(self) -> Int:
 
         var hash_value = 0
@@ -2229,7 +2164,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Returns:
             A hash value of the set suitable for non-cryptographic purposes.
-   ",,modular mojo
+   ",,modular mojo,
 "    fn __and__(self, other: Self) -> Self:
 
         return self.intersection(other)","The set intersection operator.
@@ -2240,7 +2175,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Returns:
             A new set containing only the elements which appear in both
             this set and the `other` set.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __or__(self, other: Self) -> Self:
        
         return self.union(other)","The set union operator.
@@ -2251,7 +2186,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Returns:
             A new set containing any elements which appear in either
             this set or the `other` set.
-",,modular mojo
+",,modular mojo,
 "    fn __ior__(inout self, other: Self):
 
         for e in other:
@@ -2262,7 +2197,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             other: Another Set instance to union with this one.
- ",,modular mojo
+ ",,modular mojo,
 "    fn __sub__(self, other: Self) -> Self:
 
         var result = Set[T]()
@@ -2278,7 +2213,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Returns:
             A new set containing elements of this set, but not containing
             any elements which were in the `other` set.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn __isub__(inout self, other: Self):
 
         self.remove_all(other)","In-place set subtraction.
@@ -2287,14 +2222,14 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             other: Another Set instance to subtract from this one.
-       ",,modular mojo
+       ",,modular mojo,
 "    fn add(inout self, t: T):
 
         self._data[t] = None","Add an element to the set.
 
         Args:
             t: The element to add to the set.
-        ",,modular mojo
+        ",,modular mojo,
 "    fn remove(inout self, t: T) raises:
         self._data.pop(t)","Remove an element from the set.
 
@@ -2304,7 +2239,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Raises:
             If the element isn't in the set to remove.
 
-",,modular mojo
+",,modular mojo,
 "    fn pop(inout self) raises -> T:
 
         if not self:
@@ -2323,7 +2258,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Raises:
             If the set is empty.
-",,modular mojo
+",,modular mojo,
 "    fn union(self, other: Self) -> Self:
 
         var result = Set(self)
@@ -2338,7 +2273,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Returns:
             A new set containing any elements which appear in either
             this set or the `other` set.
-",,modular mojo
+",,modular mojo,
 "    fn intersection(self, other: Self) -> Self:
 
         var result = Set[T]()
@@ -2354,7 +2289,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         Returns:
             A new set containing only the elements which appear in both
             this set and the `other` set.
-",,modular mojo
+",,modular mojo,
 "    fn remove_all(inout self, other: Self):
 
         for o in other:
@@ -2367,7 +2302,7 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
 
         Args:
             other: Another Set instance to subtract from this one.
-",,modular mojo
+",,modular mojo,
 "    var conv_layer_one = Conv2D[
         in_channels=1,
         kernel_width=3,
@@ -2376,15 +2311,15 @@ var capacity: Int,The amount of elements that can fit in the list without resizi
         padding=0,
         weight_initializer = HeUniform[1],
         activation=""relu"",
-    ]()","Create a 2D convolutional layer with kernel of 3, stride of 1, padding of 0 and relu activation function.",,voodoo
+    ]()","Create a 2D convolutional layer with kernel of 3, stride of 1, padding of 0 and relu activation function.",,voodoo,
 "    var dense2 = Dense[
         in_neurons=100,
         out_neurons=10,
         activation=""sigmoid"",
-    ]()",Implement a dense layer with input size of 100 and output size of 10 and that uses the sigmoid activation function.,,voodoo
-"var true_vals = Tensor[TensorShape(batches, 10), Zeros]()","Create a variable to hold the values of a tensor structure. The tensor is defined with a shape specified by TensorShape(batches, 10) and is filled with zeros.",,voodoo
-" var input = Tensor[TensorShape(batches, channels, width, height), Zeros]()",The tensor is structured with a specific shape and filled with zeros.,,voodoo
-var epoch_start = now(),Create a variable to store the start time of an epoch.,,voodoo
+    ]()",Implement a dense layer with input size of 100 and output size of 10 and that uses the sigmoid activation function.,,voodoo,
+"var true_vals = Tensor[TensorShape(batches, 10), Zeros]()","Create a variable to hold the values of a tensor structure. The tensor is defined with a shape specified by TensorShape(batches, 10) and is filled with zeros.",,voodoo,
+" var input = Tensor[TensorShape(batches, channels, width, height), Zeros]()",The tensor is structured with a specific shape and filled with zeros.,,voodoo,
+var epoch_start = now(),Create a variable to store the start time of an epoch.,,voodoo,
 "    for epoch in range(1, num_epochs + 1):
         for i in range(batches):
             var image = dataset.train_images[i + epoch * batches]
@@ -2394,7 +2329,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
                 for k in range(height):
                     input[i * channels * width * height + j * width + k] = image[
                         j * width + k
-                    ].to_int()",,,
+                    ].to_int()","A for loop that iterates over the number if epochs, then another another for loop to iterate over the batches. A variable called image is declared and initialized with the training image data corresponding to the current index in the dataset for the current epoch. The true_vals are the true values of the train set. The two inner most loops iterate over each pixel of the image and convert it to an integer value.",,,
 "    @always_inline
     fn __init__(inout self, value: Scalar[type]):
 
@@ -2402,7 +2337,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Args:
             value: Initial value represented as `Scalar[type]` type.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn __init__(inout self, value: Int):
  
@@ -2410,7 +2345,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Args:
             value: Initial value represented as `mlir.index` type.
-        ",,modular mojo
+        ",,modular mojo,
 "    @staticmethod
     @always_inline
     fn _fetch_add(
@@ -2438,7 +2373,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Returns:
             The original value before addition.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn fetch_add(inout self, rhs: Scalar[type]) -> Scalar[type]:
 
@@ -2456,7 +2391,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Returns:
             The original value before addition.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn __iadd__(inout self, rhs: Scalar[type]):
 
@@ -2470,7 +2405,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Args:
             rhs: Value to add.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn fetch_sub(inout self, rhs: Scalar[type]) -> Scalar[type]:
 
@@ -2492,7 +2427,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Returns:
             The original value before subtraction.
-",,modular mojo
+",,modular mojo,
 "    @always_inline
     fn __isub__(inout self, rhs: Scalar[type]):
 
@@ -2506,7 +2441,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Args:
             rhs: Value to subtract.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn max(inout self, rhs: Scalar[type]):
 
@@ -2532,7 +2467,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Args:
             rhs: Value to max.
-        ",,modular mojo
+        ",,modular mojo,
 "    @always_inline
     fn min(inout self, rhs: Scalar[type]):
 
@@ -2559,7 +2494,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Args:
             rhs: Value to min.
- ",,modular mojo
+ ",,modular mojo,
 "fn setenv(name: String, value: String, overwrite: Bool = True) -> Bool:
 
     alias os_is_supported = os_is_linux() or os_is_macos()
@@ -2583,7 +2518,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
     Returns:
       False if the name is empty or contains an `=` character. In any other
       case, True is returned.
-    ",,modular mojo
+    ",,modular mojo,
 "fn getenv(name: String, default: String = """") -> String:
 
     alias os_is_supported = os_is_linux() or os_is_macos()
@@ -2607,7 +2542,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
     Returns:
       The value of the environment variable.
-",,modular mojo
+",,modular mojo,
 "fn stat[pathlike: os.PathLike](path: pathlike) raises -> stat_result:
 
     return stat(path.__fspath__())
@@ -2621,7 +2556,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
     Returns:
       Returns the stat_result on the path.
-    ",,modular mojo
+    ",,modular mojo,
 "fn list(self) -> List[String]:
 
 
@@ -2633,10 +2568,10 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
         Returns:
           A string containing the output of running the command.
-       ",,modular mojo
+       ",,modular mojo,
 "    fn __del__(owned self):
       
-        _ = external_call[""closedir"", Int32](self._handle)",Closes the handle opened via popen.,,modular mojo
+        _ = external_call[""closedir"", Int32](self._handle)",Closes the handle opened via popen.,,modular mojo,
 "fn listdir(path: String = """") raises -> List[String]:
 
 
@@ -2648,7 +2583,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
     Returns:
       Returns the list of entries in the path provided.
-    ",,modular mojo
+    ",,modular mojo,
 "fn listdir[pathlike: os.PathLike](path: pathlike) raises -> List[String]:
 
     return listdir(path.__fspath__())","Gets the list of entries contained in the path provided.
@@ -2662,7 +2597,7 @@ var epoch_start = now(),Create a variable to store the start time of an epoch.,,
 
     Returns:
       Returns the list of entries in the path provided.
-    ",,modular mojo
+    ",,modular mojo,
 "@always_inline(""nodebug"")
 fn abort[result: Movable = NoneType]() -> result:
 
@@ -2676,7 +2611,7 @@ fn abort[result: Movable = NoneType]() -> result:
 
     Returns:
         A null result type.
-    ",,modular mojo
+    ",,modular mojo,
 "@always_inline(""nodebug"")
 fn abort[
     result: Movable = NoneType, *, stringable: Stringable
@@ -2697,7 +2632,7 @@ fn abort[
         message: The message to include when aborting.
 
     Returns:
-        A null result type.",,modular mojo
+        A null result type.",,modular mojo,
 "    fn __init__(inout self, path: String) raises:
 
         constrained[
@@ -2716,7 +2651,7 @@ fn abort[
 
         Args:
           path: The path to open.
-        ",,modular mojo
+        ",,modular mojo,
 "@always_inline
 fn _clock_gettime(clockid: Int) -> _CTimeSpec:
   
@@ -2727,11 +2662,11 @@ fn _clock_gettime(clockid: Int) -> _CTimeSpec:
         Int32(clockid), Pointer.address_of(ts)
     )
 
-    return ts",Low-level call to the clock_gettime libc function,,modular mojo
+    return ts",Low-level call to the clock_gettime libc function,,modular mojo,
 "@always_inline
 fn _realtime_nanoseconds() -> Int:
    
-    return _gettime_as_nsec_unix(_CLOCK_REALTIME)",Returns the current realtime time in nanoseconds,,modular mojo
+    return _gettime_as_nsec_unix(_CLOCK_REALTIME)",Returns the current realtime time in nanoseconds,,modular mojo,
 "@always_inline
 fn _monotonic_nanoseconds() -> Int:
     
@@ -2745,17 +2680,17 @@ fn _monotonic_nanoseconds() -> Int:
 
         return ft.as_nanoseconds()
     else:
-        return _gettime_as_nsec_unix(_CLOCK_MONOTONIC)",Returns the current monotonic time in nanoseconds,,modular mojo
+        return _gettime_as_nsec_unix(_CLOCK_MONOTONIC)",Returns the current monotonic time in nanoseconds,,modular mojo,
 "@always_inline
 fn _monotonic_raw_nanoseconds() -> Int:
   
 
-    return _gettime_as_nsec_unix(_CLOCK_MONOTONIC_RAW)",Returns the current monotonic time in nanoseconds,,modular mojo
+    return _gettime_as_nsec_unix(_CLOCK_MONOTONIC_RAW)",Returns the current monotonic time in nanoseconds,,modular mojo,
 "@always_inline
 fn _process_cputime_nanoseconds() -> Int:
    
 
-    return _gettime_as_nsec_unix(_CLOCK_PROCESS_CPUTIME_ID)",Returns the high-resolution per-process timer from the CPU,,modular mojo
+    return _gettime_as_nsec_unix(_CLOCK_PROCESS_CPUTIME_ID)",Returns the high-resolution per-process timer from the CPU,,modular mojo,
 "@always_inline
 fn now() -> Int:
 
@@ -2766,7 +2701,7 @@ fn now() -> Int:
 
     Returns:
         The current time in ns.
-   ",,modular mojo
+   ",,modular mojo,
 "@always_inline
 @parameter
 fn time_function[func: fn () capturing -> None]() -> Int:
@@ -2786,7 +2721,7 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     Returns:
         The time elapsed in the function in ns.
-    ",,modular mojo
+    ",,modular mojo,
 "fn sleep(sec: Int):
 
 
@@ -2799,4 +2734,15 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     Args:
         sec: The number of seconds to sleep for.
-    ",,modular mojo
+    ",,modular mojo,
+"    @always_inline(""nodebug"")
+    fn __lt__(self, rhs: Self) -> Bool:
+
+        return int(self) < int(rhs)","Returns True if this pointer represents a lower address than rhs.
+
+        Args:
+            rhs: The value of the other pointer.
+
+        Returns:
+            True if this pointer represents a lower address and False otherwise.
+        ",,modular mojo,
