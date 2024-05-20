@@ -296,25 +296,16 @@ fn _bool_tuple_reduce[
     unroll[do_reduce, size]()
 
     return c</s>"
-"<s>[INST] A base struct that implements size agnostic index functions.
-
-    Parameters:
-        size: The size of the tuple.
-    [/INST]@value
+"<s>[INST] Write a base struct that implements size agnostic index functions. It constructs a static int tuple of the given size.[/INST]@value
 @register_passable(""trivial"")
 struct StaticIntTuple[size: Int](Sized, Stringable, EqualityComparable):
 
 
     var data: StaticTuple[Int, size]
-    """"""The underlying storage of the tuple value.""""""
 
     @always_inline
     fn __init__() -> Self:
-        """"""Constructs a static int tuple of the given size.
 
-        Returns:
-            The constructed tuple.
-        """"""
         return 0</s>"
 "<s>[INST] Constructs a sized 1 static int tuple of given the element value.
 
@@ -379,26 +370,16 @@ struct StaticIntTuple[size: Int](Sized, Stringable, EqualityComparable):
             tup[idx] = elems[idx]
 
         return tup</s>"
-"<s>[INST] Creates a tuple constant using the specified values.
-
-        Args:
-            values: The list of values.
-
-        Returns:
-            A tuple with the values filled in.
+"<s>[INST] Create and return a tuple constant using the specified values.
 [/INST]    @always_inline
     fn __init__(values: VariadicList[Int]) -> Self:
 
         constrained[size > 0]()
         return Self {data: values}
 
-    @always_inline(""nodebug"")
+</s>"
+"<s>[INST] Write a function that returns the size of the tuple.[/INST]    @always_inline(""nodebug"")
     fn __len__(self) -> Int:
-        """"""Returns the size of the tuple.
-
-        Returns:
-            The tuple size.
-        """"""
         return size</s>"
 "<s>[INST] Bitcasts the floating-point value to an integer.
 

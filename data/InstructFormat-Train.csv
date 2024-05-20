@@ -1063,32 +1063,6 @@ fn now() -> Int:
 
     return _monotonic_nanoseconds()
 </s>"
-"<s>[INST] Calculates elapsed time in Windows OS[/INST]@always_inline
-@parameter
-fn _time_function_windows[func: fn () capturing -> None]() -> Int:
-
-
-    var ticks_per_sec: _WINDOWS_LARGE_INTEGER = 0
-    var ticks_per_sec_ptr = Pointer[_WINDOWS_LARGE_INTEGER].address_of(
-        ticks_per_sec
-    )
-    external_call[""QueryPerformanceFrequency"", NoneType](ticks_per_sec_ptr)
-
-    var starting_tick_count: _WINDOWS_LARGE_INTEGER = 0
-    var start_ptr = Pointer[_WINDOWS_LARGE_INTEGER].address_of(
-        starting_tick_count
-    )
-    var ending_tick_count: _WINDOWS_LARGE_INTEGER = 0
-    var end_ptr = Pointer[_WINDOWS_LARGE_INTEGER].address_of(ending_tick_count)
-
-    external_call[""QueryPerformanceCounter"", NoneType](start_ptr)
-    func()
-    external_call[""QueryPerformanceCounter"", NoneType](end_ptr)
-
-    var elapsed_ticks = ending_tick_count - starting_tick_count
-
-    var elapsed_time_in_ns = (elapsed_ticks * 1_000_000_000) // ticks_per_sec
-    return int(elapsed_time_in_ns)</s>"
 "<s>[INST] Measures the time spent in the function.
 
     Parameters:
@@ -1263,29 +1237,20 @@ struct _DictValueIter[
 
     fn __len__(self) -> Int:
         return self.iter.__len__()</s>"
-"<s>[INST] Store a key-value pair entry inside a dictionary.
+"<s>[INST] Create an entry from a key and value, computing the hash and storing the key-value pair entry inside a dictionary.
 
     Parameters:
         K: The key type of the dict. Must be Hashable+EqualityComparable.
         V: The value type of the dict.
-   [/INST]@value
+[/INST]@value
 struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
 
-
     var hash: Int
-    """"""`key.__hash__()`, stored so hashing isn't re-computed during dict lookup.""""""
-    var key: K
-    """"""The unique key for the entry.""""""
+    var key: K 
     var value: V
-    """"""The value associated with the key.""""""
+  
 
     fn __init__(inout self, owned key: K, owned value: V):
-        """"""Create an entry from a key and value, computing the hash.
-
-        Args:
-            key: The key of the entry.
-            value: The value of the entry.
-        """"""
         self.hash = hash(key)
         self.key = key ^
         self.value = value ^
@@ -2465,7 +2430,19 @@ fn time_function[func: fn () capturing -> None]() -> Int:
 
     @parameter
     if os_is_windows():
-        # In Windows the argument is in milliseconds.
         external_call[""Sleep"", NoneType](sec * 1000)
     else:
         external_call[""sleep"", NoneType](sec)</s>"
+"<s>[INST] Returns True if this pointer represents a lower address than rhs.
+
+        Args:
+            rhs: The value of the other pointer.
+
+        Returns:
+            True if this pointer represents a lower address and False otherwise.
+        [/INST]    @always_inline(""nodebug"")
+    fn __lt__(self, rhs: Self) -> Bool:
+
+        return int(self) < int(rhs)</s>"
+"<s>[INST] Create a function that calculates a base number raised to the power of a given exponent.[/INST]fn pow(base: Int, exp: Int = 2) -> Int:
+    return base ** exp</s>"

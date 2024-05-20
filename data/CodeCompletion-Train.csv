@@ -1,0 +1,1688 @@
+text
+"fn sigmoid(x: Float64) -> Float64:
+    return 1 / (1 + exp(-x))"
+"fn gradient_descent(start: Float64, learning_rate: Float64, n_iter: Int=50, tolerance: Float64=1e-06) raises:
+    let np = Python.import_module('numpy')
+    var vector = start
+    for _ in range(n_iter):
+        let diff = -learning_rate * 2 * vector
+        if np.all(np.abs(diff) <= tolerance):
+            break
+        vector += diff
+    print(vector)"
+"fn main():
+    print(""Hello, world!"")"
+"fn euclidean_dist(x1: Int64, y1: Int64, x2: Int64, y2: Int64):
+    let x = x2 - x1
+    let y = y2 - y1
+    let euclidean_distance = sqrt(pow(x, 2) + pow(y,2))
+    print(euclidean_distance)"
+"def mandelbrot_kernel(c: ComplexFloat64) -> Int:
+    z = c
+    for i in range(MAX_ITERS):
+        z = z * z + c
+        if z.squared_norm() > 4:
+            return i
+    return MAX_ITERS"
+"def compute_mandelbrot() -> Tensor[float_type]:
+    # create a matrix. Each element of the matrix corresponds to a pixel
+    t = Tensor[float_type](height, width)
+
+    dx = (max_x - min_x) / width
+    dy = (max_y - min_y) / height
+
+    y = min_y
+    for row in range(height):
+        x = min_x
+        for col in range(width):
+            t[Index(row, col)] = mandelbrot_kernel(ComplexFloat64(x, y))
+            x += dx
+        y += dy
+    return t"
+"    fn is_https(self) -> Bool:
+        return bytes_equal(self.__scheme, strHttps)"
+"    fn path_original(self) -> Bytes:
+        return self.__path_original"
+"    fn set_path(inout self, path: String) -> Self:
+        self.__path = normalise_path(path._buffer, self.__path_original)"
+"    fn set_path_sbytes(inout self, path: Bytes) -> Self:
+        self.__path = normalise_path(path, self.__path_original)
+        return self"
+"    fn path(self) -> String:
+        var processed_path = self.__path
+        if len(processed_path) == 0:
+            processed_path = strSlash
+        return String(processed_path)
+"
+"    fn set_scheme(inout self, scheme: String) -> Self:
+        self.__scheme = scheme._buffer
+        return self
+"
+"    fn set_scheme_bytes(inout self, scheme: Bytes) -> Self:
+        self.__scheme = scheme
+        return self"
+"    fn scheme(self) -> Bytes:
+        var processed_scheme = self.__scheme
+        if len(processed_scheme) == 0:
+            processed_scheme = strHttp
+        return processed_scheme"
+"    fn is_https(self) -> Bool:
+        return bytes_equal(self.__scheme, strHttps)"
+"    fn is_http(self) -> Bool:
+        return bytes_equal(self.__scheme, strHttp) or len(self.__scheme) == 0"
+"@value
+struct ErrorHandler:
+    fn Error(self) -> HTTPResponse:
+        return HTTPResponse(ResponseHeader(), String(""TODO"").as_bytes())
+
+
+alias errNeedMore = Error(""need more data: cannot find trailing lf"")
+alias errInvalidName = Error(""invalid header name"")
+alias errSmallBuffer = Error(""small read buffer. Increase ReadBufferSize"")"
+"@value
+struct HTTPResponse(Response):
+    var header: ResponseHeader
+    var stream_immediate_header_flush: Bool
+    var stream_body: Bool
+    var body_raw: Bytes
+    var skip_reading_writing_body: Bool
+    var raddr: TCPAddr
+    var laddr: TCPAddr
+
+    fn __init__(inout self, header: ResponseHeader, body_bytes: Bytes):
+        self.header = header
+        self.stream_immediate_header_flush = False
+        self.stream_body = False
+        self.body_raw = body_bytes
+        self.skip_reading_writing_body = False
+        self.raddr = TCPAddr()
+        self.laddr = TCPAddr()"
+"    fn set_status_code(inout self, status_code: Int) -> Self:
+        _ = self.header.set_status_code(status_code)
+        return self"
+"    fn status_code(self) -> Int:
+        return self.header.status_code()"
+"    fn connection_close(self) -> Bool:
+        return self.header.connection_close()"
+"fn OK(body: Bytes) -> HTTPResponse:
+    return HTTPResponse(
+        ResponseHeader(
+            True, 200, String(""OK"").as_bytes(), String(""Content-Type: text/plain"").as_bytes()
+        ),
+        body,
+    )"
+"fn OK(body: Bytes, content_type: String) -> HTTPResponse:
+    return HTTPResponse(
+        ResponseHeader(True, 200, String(""OK"").as_bytes(), content_type.as_bytes()), body
+    )"
+"@value
+struct TCPAddr(Addr):
+    var ip: String
+    var port: Int
+    var zone: String  # IPv6 addressing zone
+
+    fn __init__(inout self):
+        self.ip = String(""127.0.0.1"")
+        self.port = 8000
+        self.zone = """"
+
+    fn __init__(inout self, ip: String, port: Int):
+        self.ip = ip
+        self.port = port
+        self.zone = """"
+
+    fn network(self) -> String:
+        return NetworkType.tcp.value
+
+    fn string(self) -> String:
+        if self.zone != """":
+            return join_host_port(String(self.ip) + ""%"" + self.zone, self.port)
+        return join_host_port(self.ip, self.port)
+"
+"fn join_host_port(host: String, port: String) -> String:
+    if host.find("":"") != -1:  # must be IPv6 literal
+        return ""["" + host + ""]:"" + port
+    return host + "":"" + port"
+"    fn write(self, data: String) raises -> Int:
+        var buffer: Str
+        with Str(data) as buffer:
+            var write_count: c_ssize_t = external_call[
+                ""write"", c_ssize_t, c_int, char_pointer, c_size_t
+            ](self.fd, buffer.vector.data, data.__len__())
+
+            if write_count == -1:
+                raise Error(""Failed to write to file descriptor "" + self.fd.__str__())
+
+            return write_count"
+"@value
+struct Printer(HTTPService):
+    fn func(self, req: HTTPRequest) raises -> HTTPResponse:
+        var body = req.body_raw
+        print(String(body))
+
+        return OK(body)"
+"@value
+struct Welcome(HTTPService):
+    fn func(self, req: HTTPRequest) raises -> HTTPResponse:
+        var html: String
+        with open(""static/lightbug_welcome.html"", ""r"") as f:
+            html = f.read()
+
+        return OK(html.as_bytes(), ""text/html"")"
+"@value
+struct ExampleRouter(HTTPService):
+    fn func(self, req: HTTPRequest) raises -> HTTPResponse:
+        var body = req.body_raw
+        var uri = req.uri()
+
+        if uri.path() == ""/"":
+            print(""I'm on the index path!"")
+        if uri.path() == ""/first"":
+            print(""I'm on /first!"")
+        elif uri.path() == ""/second"":
+            print(""I'm on /second!"")
+        elif uri.path() == ""/echo"":
+            print(String(body))
+
+        return OK(body)"
+"    @always_inline
+    fn __init__() -> Self:
+        # allocate a DTypePointer on stack that doesn't need to be freed.
+        var data = stack_allocation[width, T]()
+        memset_zero(data, width)
+        return Self {data: data}"
+"    @always_inline
+    fn accumulate[_width: Int](inout self, val: SIMD[T, _width]) -> None:
+ 
+        var newVal = self.data.simd_load[_width]() + val
+        self.data.simd_store[_width](newVal)"
+"struct TensorSlice:
+    var _data: BufferPtrFloat32
+    var _shape: TensorShape
+
+    fn __init__(inout self, t: TensorF32, layer: Int) raises:
+        var elements_per_layer = t.num_elements() // t.dim(0)
+        self._data = t.data().offset(layer * elements_per_layer)
+        if t.rank() == 2:
+            self._shape = TensorShape(t.dim(1))
+        elif t.rank() == 3:
+            self._shape = TensorShape(t.dim(1), t.dim(2))
+        else:
+            # Compiler complains if _shape not defined
+            self._shape = TensorShape(1)
+            raise Error(""TensorSlice: rank greater than 3 not implemented."")"
+"    fn simd_load[nelts: Int](self, idx: Int) -> SIMD[DType.float32, nelts]:
+        return self._data.simd_load[nelts](idx)"
+"fn read_val_int(inout buf: FileBuf) raises -> Int:
+    # DTypePointer[DType.ui8](buf.data).bitcast[DType.ui8]()
+    var data = buf.data.offset(buf.get_offset()).bitcast[DType.int32]()
+    var result = data.load(0)
+    buf.move_offset(4)
+    return result.to_int()
+"
+"fn read_val_float32(inout buf: FileBuf) raises -> Float32:
+    # DTypePointer[DType.ui8](buf.data).bitcast[DType.ui8]()
+    var val = buf.data.offset(buf.get_offset()).bitcast[DType.float32]().load(0)
+    buf.move_offset(4)
+    return val"
+"fn read_val_str(inout buf: FileBuf, slen: Int) raises -> PointerString:
+    var str = PointerString.alloc(slen + 1)
+    for i in range(slen):
+        str.store(i, buf.data.load(buf.get_offset()))
+        buf.move_offset(1)
+    str.store(slen, 0)
+
+    return str"
+"fn partition(
+    inout array: PointerStrings, inout indices: DynamicVector[Int], low: Int, high: Int
+) -> Int:
+    var pivot = array[high]
+    var ii = low - 1
+    for jj in range(low, high):
+        if string_compare(pivot, array[jj]) == 1:
+            # If element smaller than pivot, swap
+            ii = ii + 1
+
+            var tmp = array[ii]
+            var tmp_idx = indices[ii]
+            array.store(ii, array[jj])
+            indices[ii] = indices[jj]
+            array.store(jj, tmp)
+            indices[jj] = tmp_idx
+
+    # Swap the pivot element
+    var tmp = array[ii + 1]
+    var tmp_idx = indices[ii + 1]
+    array.store(ii + 1, array[high])
+    indices[ii + 1] = indices[high]
+    array.store(high, tmp)
+    indices[high] = tmp_idx
+
+    return ii + 1
+"
+"fn quicksort(
+    inout array: PointerStrings, inout indices: DynamicVector[Int], low: Int, high: Int
+):
+    if low < high:
+        var pi = partition(array, indices, low, high)
+        quicksort(array, indices, low, pi - 1)
+        quicksort(array, indices, pi + 1, high)"
+"    fn move_offset(inout self, size: Int) raises:
+        var new_offset = self.offset + size
+        if new_offset > self.size:
+            raise Error(""Resulting offset will be past the end of the FileBuf"")
+        if new_offset < 0:
+            raise Error(""Resulting offset will be before the beginning of the FileBuf"")
+        self.offset = new_offset"
+"    fn bitcast_offset_f32(inout self, size: Int) raises -> BufferPtrFloat32:
+        var ret = self.data.offset(self.offset).bitcast[DType.float32]()
+        self.move_offset(size * sizeof[DType.float32]())
+        return ret"
+"    fn get_offset(self) raises -> Int:
+        if self.offset > self.size:
+            raise Error(""Offset is past the end of the FileBuf"")
+        if self.offset < 0:
+            raise Error(""Offset is before the beginning of the FileBuf"")
+        return self.offset
+"
+"struct Tokenizer:
+    var vocab: PointerStrings
+    var vocab_scores: BufferPtrFloat32
+    var max_token_length: Int
+    var vocab_size: Int
+    var sorted_vocab: PointerStrings
+    var sorted_indices: DynamicVector[Int]
+
+    fn __init__(inout self, vocab_size: Int, inout buf: FileBuf) raises -> None:
+        self.vocab_size = vocab_size
+        self.max_token_length = read_val_int(buf)
+        self.vocab_scores = BufferPtrFloat32.alloc(self.vocab_size)
+        self.vocab = PointerStrings.alloc(self.vocab_size)
+        self.sorted_vocab = PointerStrings.alloc(0)
+        self.sorted_indices = DynamicVector[Int]()
+
+        for i in range(0, self.vocab_size):
+            var score = read_val_float32(buf)
+            var slen = read_val_int(buf)
+            var token = read_val_str(buf, slen)
+            self.store_token(i, token, score)
+        return None"
+"    fn __del__(owned self):
+        for i in range(0, self.vocab_size):
+            self.vocab[i].free()
+        self.vocab.free()
+        self.vocab_scores.free()
+        self.sorted_vocab.free()
+"
+"fn sort(inout self) -> None:
+        if len(self.sorted_indices) < self.vocab_size:
+            self.sorted_indices = DynamicVector[Int](capacity=self.vocab_size)
+            self.sorted_vocab = PointerStrings.alloc(self.vocab_size)
+            for ii in range(self.vocab_size):
+                self.sorted_vocab.store(ii, self.vocab[ii])
+                self.sorted_indices.push_back(ii)
+
+        var n = self.vocab_size
+        quicksort(self.sorted_vocab, self.sorted_indices, 0, n - 1)
+        return None"
+"
+    fn find(inout self, token_o: PointerString) -> Int:
+        var token = wrap(token_o)
+        var n = self.vocab_size
+        if len(self.sorted_indices) < n:
+            self.sort()
+        var left = 0
+        var right = n - 1
+        while left <= right:
+            var mid = left + (right - left) // 2
+            var comparison = string_compare(self.sorted_vocab[mid], token)
+            if comparison == 0:
+                return self.sorted_indices[mid]
+            if comparison < 0:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return -1"
+"@always_inline
+fn accum(inout a: TensorF32, b: TensorF32) -> None:
+    var size = a.dim(0)
+
+    @parameter
+    fn _acc[_nelts: Int](j: Int):
+        a.simd_store[_nelts](j, a.simd_load[_nelts](j) + b.simd_load[_nelts](j))
+
+    vectorize[_acc, nelts](size)"
+"@always_inline
+fn softmax(inout x: TensorF32) -> None:
+    softmax(x, 0, x.dim(0))"
+"@always_inline
+fn rope_rotation_llama(
+    inout state: RunState,
+    freq_cis_real_row: TensorSlice,
+    freq_cis_imag_row: TensorSlice,
+    config: Config,
+) -> None:
+    # stories model, llama2
+    var head_size = config.head_size"
+"    @parameter
+    fn head_loop(i: Int):
+
+        for j in range(0, config.head_size, 2):
+            var fcr = freq_cis_real_row[j // 2]
+            var fci = freq_cis_imag_row[j // 2]
+            var q0 = state.q[i * head_size + j]
+            var q1 = state.q[i * head_size + j + 1]
+            state.q[i * head_size + j] = q0 * fcr - q1 * fci
+            state.q[i * head_size + j + 1] = q0 * fci + q1 * fcr
+            if i < config.n_kv_heads:
+                var k0 = state.k[i * head_size + j]
+                var k1 = state.k[i * head_size + j + 1]
+                state.k[i * head_size + j] = k0 * fcr - k1 * fci
+                state.k[i * head_size + j + 1] = k0 * fci + k1 * fcr"
+"fn argmax(v: TensorF32) -> Int:
+  
+    var max_i: Int = 0
+    var max_p: Float32 = v[0]
+    for i in range(v.dim(0)):
+        if v[i] > max_p:
+            max_i = i
+            max_p = v[i]
+    return max_i
+"
+"fn sample(probabilities: TensorF32) -> Int:
+    var n = probabilities.dim(0)
+    # Sample index from probabilities, they must sum to 1
+    # get random value within (min, max) float32 range
+    var r = rand[DType.float32](1)
+    var cdf: Float32 = 0.0
+    for i in range(n):
+        cdf += probabilities[i]
+        if r[0] < cdf:
+            return i
+    return n - 1  # In case of rounding errors
+"
+"from time import now
+
+from algorithm import sum
+from benchmark import Unit, benchmark, keep
+from buffer import Buffer
+from tensor import Tensor
+from python import Python
+from tensor import rand
+
+alias size_small: Int = 1 << 21
+alias size_large: Int = 1 << 27
+alias type = DType.float32
+
+
+fn stdlib_reduce_sum[size: Int](array: Tensor[type]) -> Float32:
+    var my_sum = sum(array._to_buffer())
+    return my_sum
+
+
+fn bench[
+    func: fn[size: Int] (array: Tensor[type]) -> Float32,
+    size: Int,
+    name: StringLiteral,
+](array: Tensor[type]) raises:
+    @parameter
+    fn runner():
+        var result = func[size](array)
+        keep(result)
+
+    var ms = benchmark.run[runner](max_runtime_secs=0.5).mean(Unit.ms)
+    pretty_print(name, size, ms)
+
+
+fn main() raises:
+    var small_array = rand[type](size_small)
+    var large_array = rand[type](size_large)
+
+    bench[naive_reduce_sum, size_small, ""naive""](small_array)
+    bench[naive_reduce_sum, size_large, ""naive""](large_array)
+
+    bench[stdlib_reduce_sum, size_small, ""stdlib""](small_array)
+    bench[stdlib_reduce_sum, size_large, ""stdlib""](large_array)"
+"fn pretty_print(name: StringLiteral, elements: Int, time: Float64) raises:
+    var py = Python.import_module(""builtins"")
+    _ = py.print(
+        py.str(""{:<16} {:>11,} {:>8.2f}ms"").format(
+            String(name) + "" elements:"", elements, time
+        )
+    )"
+"
+fn naive_reduce_sum[size: Int](array: Tensor[type]) -> Float32:
+    var A = array
+    var my_sum = array[0]
+    var c: Float32 = 0.0
+    for i in range(array.dim(0)):
+        var y = array[i] - c
+        var t = my_sum + y
+        c = (t - my_sum) - y
+        my_sum = t
+    return my_sum"
+"from sys.info import *
+from sys.info import _current_cpu, _current_target, _triple_attr
+
+
+def main():
+    var os = """"
+    if os_is_linux():
+        os = ""linux""
+    elif os_is_macos():
+        os = ""macOS""
+    else:
+        os = ""windows""
+    var cpu = String(_current_cpu())
+    var arch = String(_triple_attr())
+
+    print(""System information: "")
+    print(""    OS             : "", os)
+    print(""    CPU            : "", cpu)
+    print(""    Arch           : "", arch)
+
+  
+"
+"@always_inline(""nodebug"")
+fn _digits[type: DType]() -> Int:
+
+    alias mlir_type = __mlir_type[`!pop.scalar<`, type.value, `>`]
+
+    @parameter
+    if type == DType.bool:
+        return 1
+
+    @parameter
+    if type.is_integral():
+        var bitwidth = bitwidthof[mlir_type]()
+        return bitwidth - 1 if type.is_signed() else bitwidth
+
+    @parameter
+    if type == DType.float16:
+        return 11
+
+    @parameter
+    if type == DType.bfloat16:
+        return 8
+
+    @parameter
+    if type == DType.float32:
+        return 24
+
+    @parameter
+    if type == DType.float64:
+        return 53
+    # Unreachable.
+    return -1"
+"@always_inline
+fn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:
+
+    alias integer_type = _integral_type_of[type]()
+    return int(bitcast[integer_type, 1](value))
+"
+"@always_inline
+fn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:
+
+    alias integer_type = _integral_type_of[type]()
+    var int_val = SIMD[integer_type, 1](value)
+    return bitcast[type, 1](int_val)"
+" @staticmethod
+    @always_inline(""nodebug"")
+    fn max_exponent() -> Int:
+
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+
+        @parameter
+        if type == DType.float16:
+            return 16
+        elif type == DType.float32 or type == DType.bfloat16:
+            return 128
+
+        debug_assert(type == DType.float64, ""must be float64"")
+        return 1024
+"
+" @staticmethod
+    @always_inline(""nodebug"")
+    fn exponent_width() -> Int:
+        
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+
+        @parameter
+        if type == DType.float16:
+            return 5
+        elif type == DType.float32 or type == DType.bfloat16:
+            return 8
+
+        debug_assert(type == DType.float64, ""must be float64"")
+        return 11
+"
+"    @staticmethod
+    @always_inline
+    fn mantissa_mask() -> Int:
+
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+        return (1 << Self.mantissa_width()) - 1"
+"    @staticmethod
+    @always_inline
+    fn exponent_bias() -> Int:
+
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+        return Self.max_exponent() - 1"
+"    @staticmethod
+    @always_inline
+    fn sign_mask() -> Int:
+
+
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+        return 1 << (Self.exponent_width() + Self.mantissa_width())"
+"    @staticmethod
+    @always_inline
+    fn exponent_mantissa_mask() -> Int:
+
+
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+        return Self.exponent_mask() + Self.mantissa_mask()"
+"    @staticmethod
+    @always_inline
+    fn quiet_nan_mask() -> Int:
+
+        constrained[
+            type.is_floating_point(),
+            ""dtype must be a floating point type"",
+        ]()
+        var mantissa_width_val = Self.mantissa_width()
+        return (1 << Self.exponent_width() - 1) << mantissa_width_val + (
+            1 << (mantissa_width_val - 1)
+        )"
+"    @staticmethod
+    @always_inline
+    fn bitcast_to_integer(value: Scalar[type]) -> Int:
+
+        return _fp_bitcast_to_integer[type](value)"
+"    @staticmethod
+    @always_inline
+    fn bitcast_from_integer(value: Int) -> Scalar[type]:
+
+        return _fp_bitcast_from_integer[type](value)"
+"    @staticmethod
+    @always_inline
+    fn get_sign(value: Scalar[type]) -> Bool:
+
+
+        return (Self.bitcast_to_integer(value) & Self.sign_mask()) != 0"
+"    @staticmethod
+    @always_inline
+    fn set_sign(value: Scalar[type], sign: Bool) -> Scalar[type]:
+
+        var bits = Self.bitcast_to_integer(value)
+        var sign_bits = Self.sign_mask()
+        bits &= ~sign_bits
+        if sign:
+            bits |= sign_bits
+        return Self.bitcast_from_integer(bits)"
+"    @staticmethod
+    @always_inline
+    fn get_exponent_without_bias(value: Scalar[type]) -> Int:
+
+
+        return Self.get_exponent(value) - Self.exponent_bias()"
+"    @staticmethod
+    @always_inline
+    fn set_exponent(value: Scalar[type], exponent: Int) -> Scalar[type]:
+
+        var bits = Self.bitcast_to_integer(value)
+        bits &= ~Self.exponent_mask()
+        bits |= (exponent << Self.mantissa_width()) & Self.exponent_mask()
+        return Self.bitcast_from_integer(bits)"
+"@always_inline(""nodebug"")
+fn isinf[
+    type: DType, simd_width: Int
+](val: SIMD[type, simd_width]) -> SIMD[DType.bool, simd_width]:
+
+
+    @parameter
+    if not type.is_floating_point():
+        return False
+
+    alias negative_infinity_test: UInt32 = 0x0004
+    alias positive_infinity_test: UInt32 = 0x0200
+    return llvm_intrinsic[""llvm.is.fpclass"", SIMD[DType.bool, simd_width]](
+        val.value, (negative_infinity_test | positive_infinity_test).value
+    )"
+"@always_inline(""nodebug"")
+fn isnan[
+    type: DType, simd_width: Int
+](val: SIMD[type, simd_width]) -> SIMD[DType.bool, simd_width]:
+
+
+    @parameter
+    if not type.is_floating_point():
+        return False
+
+    @parameter
+    if type == DType.bfloat16:
+        alias int_dtype = _integral_type_of[type]()
+        var int_val = bitcast[int_dtype, simd_width](val)
+        return int_val & SIMD[int_dtype, simd_width](0x7FFF) > SIMD[
+            int_dtype, simd_width
+        ](0x7F80)
+
+    alias signaling_nan_test: UInt32 = 0x0001
+    alias quiet_nan_test: UInt32 = 0x0002
+    return llvm_intrinsic[""llvm.is.fpclass"", SIMD[DType.bool, simd_width]](
+        val.value, (signaling_nan_test | quiet_nan_test).value
+    )
+"
+"@always_inline
+fn _reduce_and_fn(a: Bool, b: Bool) -> Bool:
+
+    return a and b"
+"@always_inline
+fn _int_tuple_binary_apply[
+    size: Int,
+    binary_fn: fn (Int, Int) -> Int,
+](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[
+    Int, size
+]:
+
+
+    var c = StaticTuple[Int, size]()
+
+    @always_inline
+    @parameter
+    fn do_apply[idx: Int]():
+        var a_elem: Int = a.__getitem__[idx]()
+        var b_elem: Int = b.__getitem__[idx]()
+        c.__setitem__[idx](binary_fn(a_elem, b_elem))
+
+    unroll[do_apply, size]()
+
+    return c"
+"@always_inline
+fn _int_tuple_compare[
+    size: Int,
+    comp_fn: fn (Int, Int) -> Bool,
+](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[
+    mlir_bool,
+    size,
+]:
+
+
+    var c = StaticTuple[mlir_bool, size]()
+
+    @always_inline
+    @parameter
+    fn do_compare[idx: Int]():
+        var a_elem: Int = a.__getitem__[idx]()
+        var b_elem: Int = b.__getitem__[idx]()
+        c.__setitem__[idx](comp_fn(a_elem, b_elem).value)
+
+    unroll[do_compare, size]()
+
+    return c
+"
+" @always_inline
+    fn __init__() -> Self:
+
+        return 0
+"
+"    @always_inline
+    fn __init__(value: __mlir_type.index) -> Self:
+
+        constrained[size == 1]()
+        return Int(value)"
+" @always_inline
+    fn __init__(elems: Tuple[Int, Int]) -> Self:
+
+
+        var num_elements = len(elems)
+
+        debug_assert(
+            size == num_elements,
+            ""[StaticIntTuple] mismatch in the number of elements"",
+        )
+
+        var tup = Self()
+
+        @parameter
+        fn fill[idx: Int]():
+            tup[idx] = elems.get[idx, Int]()
+
+        unroll[fill, 2]()
+
+        return tup"
+"@always_inline
+    fn __init__(elems: Tuple[Int, Int, Int, Int]) -> Self:
+
+
+        var num_elements = len(elems)
+
+        debug_assert(
+            size == num_elements,
+            ""[StaticIntTuple] mismatch in the number of elements"",
+        )
+
+        var tup = Self()
+
+        @parameter
+        fn fill[idx: Int]():
+            tup[idx] = elems.get[idx, Int]()
+
+        unroll[fill, 4]()
+
+        return tup
+"
+"@always_inline
+fn Index[
+    T0: Intable, T1: Intable, T2: Intable
+](x: T0, y: T1, z: T2) -> StaticIntTuple[3]:
+
+    return StaticIntTuple[3](int(x), int(y), int(z))"
+"@always_inline
+fn Index[
+    T0: Intable, T1: Intable, T2: Intable, T3: Intable
+](x: T0, y: T1, z: T2, w: T3) -> StaticIntTuple[4]:
+
+    return StaticIntTuple[4](int(x), int(y), int(z), int(w))"
+"@always_inline
+fn Index[
+    T0: Intable, T1: Intable, T2: Intable, T3: Intable, T4: Intable
+](x: T0, y: T1, z: T2, w: T3, v: T4) -> StaticIntTuple[5]:
+
+    return StaticIntTuple[5](int(x), int(y), int(z), int(w), int(v))"
+"@always_inline
+fn now() -> Int:
+
+    return _monotonic_nanoseconds()
+"
+"@always_inline
+@parameter
+fn time_function[func: fn () capturing -> None]() -> Int:
+
+
+    @parameter
+    if os_is_windows():
+        return _time_function_windows[func]()
+
+    var tic = now()
+    func()
+    var toc = now()
+    return toc - tic"
+"fn sleep(sec: Float64):
+
+    alias NANOSECONDS_IN_SECOND = 1_000_000_000
+    var total_secs = _floor(sec)
+    var tv_spec = _CTimeSpec(
+        int(total_secs.cast[DType.index]()),
+        int((sec - total_secs) * NANOSECONDS_IN_SECOND),
+    )
+    var req = Pointer[_CTimeSpec].address_of(tv_spec)
+    var rem = Pointer[_CTimeSpec].get_null()
+    _ = external_call[""nanosleep"", Int32](req, rem)"
+"fn sleep(sec: Int):
+
+
+    @parameter
+    if os_is_windows():
+        # In Windows the argument is in milliseconds.
+        external_call[""Sleep"", NoneType](sec * 1000)
+    else:
+        external_call[""sleep"", NoneType](sec)"
+"fn b64encode(str: String) -> String:
+
+    alias lookup = ""ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/""
+    var b64chars = lookup.data()
+
+    var length = len(str)
+    var out = List[Int8](capacity=length + 1)
+
+    @parameter
+    @always_inline
+    fn s(idx: Int) -> Int:
+        return int(str._buffer[idx])
+
+    var end = length - (length % 3)
+    for i in range(0, end, 3):
+        var si = s(i)
+        var si_1 = s(i + 1)
+        var si_2 = s(i + 2)
+        out.append(b64chars.load(si // 4))
+        out.append(b64chars.load(((si * 16) % 64) + si_1 // 16))
+        out.append(b64chars.load(((si_1 * 4) % 64) + si_2 // 64))
+        out.append(b64chars.load(si_2 % 64))
+
+    var i = end
+    if i < length:
+        var si = s(i)
+        out.append(b64chars.load(si // 4))
+        if i == length - 1:
+            out.append(b64chars.load((si * 16) % 64))
+            out.append(ord(""=""))
+        elif i == length - 2:
+            var si_1 = s(i + 1)
+            out.append(b64chars.load(((si * 16) % 64) + si_1 // 16))
+            out.append(b64chars.load((si_1 * 4) % 64))
+        out.append(ord(""=""))
+    out.append(0)
+    return String(out ^)"
+"@value
+struct _DictKeyIter[
+    K: KeyElement,
+    V: CollectionElement,
+    dict_mutability: __mlir_type.`i1`,
+    dict_lifetime: AnyLifetime[dict_mutability].type,
+]:
+
+
+    alias imm_dict_lifetime = __mlir_attr[
+        `#lit.lifetime.mutcast<`, dict_lifetime, `> : !lit.lifetime<1>`
+    ]
+    alias ref_type = Reference[K, __mlir_attr.`0: i1`, Self.imm_dict_lifetime]
+
+    var iter: _DictEntryIter[K, V, dict_mutability, dict_lifetime]
+
+    fn __iter__(self) -> Self:
+        return self
+
+    fn __next__(inout self) -> Self.ref_type:
+        var entry_ref = self.iter.__next__()
+        var mlir_ptr = __mlir_op.`lit.ref.to_pointer`(
+            Reference(entry_ref[].key).value
+        )
+        var key_ptr = AnyPointer[K] {
+            value: __mlir_op.`pop.pointer.bitcast`[
+                _type = AnyPointer[K].pointer_type
+            ](mlir_ptr)
+        }
+        return __mlir_op.`lit.ref.from_pointer`[
+            _type = Self.ref_type.mlir_ref_type
+        ](key_ptr.value)
+
+    fn __len__(self) -> Int:
+        return self.iter.__len__()"
+"@value
+struct _DictValueIter[
+    K: KeyElement,
+    V: CollectionElement,
+    dict_mutability: __mlir_type.`i1`,
+    dict_lifetime: AnyLifetime[dict_mutability].type,
+]:
+
+
+    alias ref_type = Reference[V, dict_mutability, dict_lifetime]
+
+    var iter: _DictEntryIter[K, V, dict_mutability, dict_lifetime]
+
+    fn __iter__(self) -> Self:
+        return self
+
+    fn __next__(inout self) -> Self.ref_type:
+        var entry_ref = self.iter.__next__()
+        var mlir_ptr = __mlir_op.`lit.ref.to_pointer`(
+            Reference(entry_ref[].value).value
+        )
+        var value_ptr = AnyPointer[V] {
+            value: __mlir_op.`pop.pointer.bitcast`[
+                _type = AnyPointer[V].pointer_type
+            ](mlir_ptr)
+        }
+        return __mlir_op.`lit.ref.from_pointer`[
+            _type = Self.ref_type.mlir_ref_type
+        ](value_ptr.value)
+
+    fn __len__(self) -> Int:
+        return self.iter.__len__()"
+"@value
+struct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):
+
+    var hash: Int
+    var key: K 
+    var value: V
+  
+
+    fn __init__(inout self, owned key: K, owned value: V):
+        self.hash = hash(key)
+        self.key = key ^
+        self.value = value ^
+"
+"    fn __init__(inout self, reserved: Int):
+        if reserved <= 128:
+            var data = DTypePointer[DType.int8].alloc(reserved)
+            for i in range(reserved):
+                data[i] = _EMPTY
+            self.data = data.bitcast[DType.invalid]()
+        elif reserved <= 2**16 - 2:
+            var data = DTypePointer[DType.int16].alloc(reserved)
+            for i in range(reserved):
+                data[i] = _EMPTY
+            self.data = data.bitcast[DType.invalid]()
+        elif reserved <= 2**32 - 2:
+            var data = DTypePointer[DType.int32].alloc(reserved)
+            for i in range(reserved):
+                data[i] = _EMPTY
+            self.data = data.bitcast[DType.invalid]()
+        else:
+            var data = DTypePointer[DType.int64].alloc(reserved)
+            for i in range(reserved):
+                data[i] = _EMPTY
+            self.data = data.bitcast[DType.invalid]()"
+"    fn copy(self, reserved: Int) -> Self:
+        var index = Self(reserved)
+        if reserved <= 128:
+            var data = self.data.bitcast[DType.int8]()
+            var new_data = index.data.bitcast[DType.int8]()
+            memcpy(new_data, data, reserved)
+        elif reserved <= 2**16 - 2:
+            var data = self.data.bitcast[DType.int16]()
+            var new_data = index.data.bitcast[DType.int16]()
+            memcpy(new_data, data, reserved)
+        elif reserved <= 2**32 - 2:
+            var data = self.data.bitcast[DType.int32]()
+            var new_data = index.data.bitcast[DType.int32]()
+            memcpy(new_data, data, reserved)
+        else:
+            var data = self.data.bitcast[DType.int64]()
+            var new_data = index.data.bitcast[DType.int64]()
+            memcpy(new_data, data, reserved)
+        return index ^"
+"    fn get_index(self, reserved: Int, slot: Int) -> Int:
+        if reserved <= 128:
+            var data = self.data.bitcast[DType.int8]()
+            return data.load(slot % reserved).to_int()
+        elif reserved <= 2**16 - 2:
+            var data = self.data.bitcast[DType.int16]()
+            return data.load(slot % reserved).to_int()
+        elif reserved <= 2**32 - 2:
+            var data = self.data.bitcast[DType.int32]()
+            return data.load(slot % reserved).to_int()
+        else:
+            var data = self.data.bitcast[DType.int64]()
+            return data.load(slot % reserved).to_int()"
+"    fn set_index(inout self, reserved: Int, slot: Int, value: Int):
+        if reserved <= 128:
+            var data = self.data.bitcast[DType.int8]()
+            return data.store(slot % reserved, value)
+        elif reserved <= 2**16 - 2:
+            var data = self.data.bitcast[DType.int16]()
+            return data.store(slot % reserved, value)
+        elif reserved <= 2**32 - 2:
+            var data = self.data.bitcast[DType.int32]()
+            return data.store(slot % reserved, value)
+        else:
+            var data = self.data.bitcast[DType.int64]()
+            return data.store(slot % reserved, value)"
+var size: Int
+var _n_entries: Int
+var _reserved: Int
+"    fn __init__(inout self):
+
+        self.size = 0
+        self._n_entries = 0
+        self._reserved = 8
+        self._index = _DictIndex(self._reserved)
+        self._entries = Self._new_entries(self._reserved)"
+"    fn __init__(inout self, existing: Self):
+
+        self.size = existing.size
+        self._n_entries = existing._n_entries
+        self._reserved = existing._reserved
+        self._index = existing._index.copy(existing._reserved)
+        self._entries = existing._entries"
+"    fn __copyinit__(inout self, existing: Self):
+
+        self.size = existing.size
+        self._n_entries = existing._n_entries
+        self._reserved = existing._reserved
+        self._index = existing._index.copy(existing._reserved)
+        self._entries = existing._entries"
+"    fn __moveinit__(inout self, owned existing: Self):
+
+        self.size = existing.size
+        self._n_entries = existing._n_entries
+        self._reserved = existing._reserved
+        self._index = existing._index ^
+        self._entries = existing._entries ^"
+"    fn __getitem__(self, key: K) raises -> V:
+
+        var value = self.find(key)
+        if value:
+            return value.value()
+        raise ""KeyError"""
+"    fn __setitem__(inout self, key: K, value: V):
+
+        self._insert(key, value)"
+"    fn __contains__(self, key: K) -> Bool:
+
+        return self.find(key).__bool__()"
+"    fn __len__(self) -> Int:
+       
+        return self.size"
+"    fn find(self, key: K) -> Optional[V]:
+ 
+        var hash = hash(key)
+        var found: Bool
+        var slot: Int
+        var index: Int
+        found, slot, index = self._find_index(hash, key)
+        if found:
+            var ev = self._entries.__get_ref(index)[]
+            debug_assert(ev.__bool__(), ""entry in index must be full"")
+            return ev.value().value
+        return None"
+"    fn pop(inout self, key: K, owned default: Optional[V] = None) raises -> V:
+ 
+        var hash = hash(key)
+        var found: Bool
+        var slot: Int
+        var index: Int
+        found, slot, index = self._find_index(hash, key)
+        if found:
+            self._set_index(slot, Self.REMOVED)
+            var entry = self._entries.__get_ref(index)[]
+            self._entries[index] = None
+            self.size -= 1
+            debug_assert(entry.__bool__(), ""entry in index must be full"")
+            return entry.value().value
+        elif default:
+            return default.value()
+        raise ""KeyError"""
+"    fn __iter__[
+        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
+    ](
+        self: Reference[Self, mutability, self_life].mlir_ref_type,
+    ) -> _DictKeyIter[K, V, mutability, self_life]:
+
+        return _DictKeyIter(
+            _DictEntryIter[K, V, mutability, self_life](0, 0, Reference(self))
+        )"
+"    fn keys[
+        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
+    ](
+        self: Reference[Self, mutability, self_life].mlir_ref_type,
+    ) -> _DictKeyIter[K, V, mutability, self_life]:
+
+        return Self.__iter__(self)"
+"    fn values[
+        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
+    ](
+        self: Reference[Self, mutability, self_life].mlir_ref_type,
+    ) -> _DictValueIter[K, V, mutability, self_life]:
+
+        return _DictValueIter(
+            _DictEntryIter[K, V, mutability, self_life](0, 0, Reference(self))
+        )"
+"    fn items[
+        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
+    ](
+        self: Reference[Self, mutability, self_life].mlir_ref_type,
+    ) -> _DictEntryIter[K, V, mutability, self_life]:
+
+        return _DictEntryIter[K, V, mutability, self_life](
+            0, 0, Reference(self)
+        )"
+"    @staticmethod
+    fn _new_entries(reserved: Int) -> List[Optional[DictEntry[K, V]]]:
+        var entries = List[Optional[DictEntry[K, V]]](capacity=reserved)
+        for i in range(reserved):
+            entries.append(None)
+        return entries"
+"    fn _insert(inout self, owned key: K, owned value: V):
+        self._insert(DictEntry[K, V](key ^, value ^))"
+"    fn _insert(inout self, owned entry: DictEntry[K, V]):
+        self._maybe_resize()
+        var found: Bool
+        var slot: Int
+        var index: Int
+        found, slot, index = self._find_index(entry.hash, entry.key)
+
+        self._entries[index] = entry ^
+        if not found:
+            self._set_index(slot, index)
+            self.size += 1
+            self._n_entries += 1"
+"    fn _get_index(self, slot: Int) -> Int:
+        return self._index.get_index(self._reserved, slot)"
+"    fn _set_index(inout self, slot: Int, index: Int):
+        return self._index.set_index(self._reserved, slot, index)"
+"    fn _next_index_slot(self, inout slot: Int, inout perturb: Int):
+        alias PERTURB_SHIFT = 5
+        perturb >>= PERTURB_SHIFT
+        slot = ((5 * slot) + perturb + 1) % self._reserved"
+"    fn _find_empty_index(self, hash: Int) -> Int:
+        var slot = hash % self._reserved
+        var perturb = hash
+        for _ in range(self._reserved):
+            var index = self._get_index(slot)
+            if index == Self.EMPTY:
+                return slot
+            self._next_index_slot(slot, perturb)
+        abort(""Dict: no empty index in _find_empty_index"")
+        return 0"
+"    fn _over_load_factor(self) -> Bool:
+        return 3 * self.size > 2 * self._reserved"
+"    fn _over_compact_factor(self) -> Bool:
+        return 4 * self._n_entries > 3 * self._reserved"
+"    fn _maybe_resize(inout self):
+        if not self._over_load_factor():
+            if self._over_compact_factor():
+                self._compact()
+            return
+        self._reserved *= 2
+        self.size = 0
+        self._n_entries = 0
+        self._index = _DictIndex(self._reserved)
+        var old_entries = self._entries ^
+        self._entries = self._new_entries(self._reserved)
+
+        for i in range(len(old_entries)):
+            var entry = old_entries.__get_ref(i)[]
+            if entry:
+                self._insert(entry.value())"
+"    fn _compact(inout self):
+        self._index = _DictIndex(self._reserved)
+        var right = 0
+        for left in range(self.size):
+            while not self._entries.__get_ref(right)[]:
+                right += 1
+                debug_assert(right < self._reserved, ""Invalid dict state"")
+            var entry = self._entries.__get_ref(right)[]
+            debug_assert(entry.__bool__(), ""Logic error"")
+            var slot = self._find_empty_index(entry.value().hash)
+            self._set_index(slot, left)
+            if left != right:
+                self._entries[left] = entry
+                self._entries[right] = None
+
+        self._n_entries = self.size"
+var data: AnyPointer[T]
+var size: Int
+var capacity: Int
+"    fn __init__(inout self):
+       
+        self.data = AnyPointer[T]()
+        self.size = 0
+        self.capacity = 0"
+"    fn __init__(inout self, existing: Self):
+
+        self.__init__(capacity=existing.capacity)
+        for e in existing:
+            self.append(e[])"
+"    fn __init__(inout self, *, capacity: Int):
+
+        self.data = AnyPointer[T].alloc(capacity)
+        self.size = 0
+        self.capacity = capacity"
+"    fn __init__(inout self, *values: T):
+
+        self = Self(capacity=len(values))
+        for value in values:
+            self.append(value[])"
+"    fn __moveinit__(inout self, owned existing: Self):
+ 
+        self.data = existing.data
+        self.size = existing.size
+        self.capacity = existing.capacity"
+"    fn __copyinit__(inout self, existing: Self):
+
+        self = Self(capacity=existing.capacity)
+        for i in range(len(existing)):
+            self.append(existing[i])"
+"    fn __del__(owned self):
+
+        for i in range(self.size):
+            _ = (self.data + i).take_value()
+        if self.data:
+            self.data.free()"
+"    fn __len__(self) -> Int:
+
+        return self.size"
+"    fn _realloc(inout self, new_capacity: Int):
+        var new_data = AnyPointer[T].alloc(new_capacity)
+
+        for i in range(self.size):
+            (new_data + i).emplace_value((self.data + i).take_value())
+
+        if self.data:
+            self.data.free()
+        self.data = new_data
+        self.capacity = new_capacity"
+"    fn append(inout self, owned value: T):
+
+        if self.size >= self.capacity:
+            self._realloc(_max(1, self.capacity * 2))
+        (self.data + self.size).emplace_value(value ^)
+        self.size += 1"
+"    fn pop_back(inout self) -> T:
+
+        var ret_val = (self.data + (self.size - 1)).take_value()
+        self.size -= 1
+        if self.size * 4 < self.capacity:
+            if self.capacity > 1:
+                self._realloc(self.capacity // 2)
+        return ret_val ^"
+"    fn reserve(inout self, new_capacity: Int):
+
+        if self.capacity >= new_capacity:
+            return
+        self._realloc(new_capacity)"
+"    fn reverse(inout self):
+          self._reverse()"
+"    fn clear(inout self):        for i in range(self.size):
+            _ = (self.data + i).take_value()
+        self.size = 0"
+"    fn steal_data(inout self) -> AnyPointer[T]:
+
+        var ptr = self.data
+        self.data = AnyPointer[T]()
+        self.size = 0
+        self.capacity = 0
+        return ptr"
+"    fn __setitem__(inout self, i: Int, owned value: T):
+       
+        debug_assert(-self.size <= i < self.size, ""index must be within bounds"")
+
+        var normalized_idx = i
+        if i < 0:
+            normalized_idx += len(self)
+
+        _ = (self.data + normalized_idx).take_value()
+        (self.data + normalized_idx).emplace_value(value ^)"
+"    @always_inline
+    fn _adjust_span(self, span: Slice) -> Slice:
+      
+        var adjusted_span = span
+
+        if adjusted_span.start < 0:
+            adjusted_span.start = len(self) + adjusted_span.start
+
+        if not adjusted_span._has_end():
+            adjusted_span.end = len(self)
+        elif adjusted_span.end < 0:
+            adjusted_span.end = len(self) + adjusted_span.end
+
+        if span.step < 0:
+            var tmp = adjusted_span.end
+            adjusted_span.end = adjusted_span.start - 1
+            adjusted_span.start = tmp - 1
+
+        return adjusted_span"
+"    @always_inline
+    fn __getitem__(self, span: Slice) -> Self:
+        
+
+        var adjusted_span = self._adjust_span(span)
+        var adjusted_span_len = len(adjusted_span)
+
+        if not adjusted_span_len:
+            return Self()
+
+        var res = Self(capacity=len(adjusted_span))
+        for i in range(len(adjusted_span)):
+            res.append(self[adjusted_span[i]])
+
+        return res ^"
+"    fn __iter__[
+        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type
+    ](
+        self: Reference[Self, mutability, self_life].mlir_ref_type,
+    ) -> _ListIter[
+        T, mutability, self_life
+    ]:
+       
+        return _ListIter[T, mutability, self_life](0, Reference(self))"
+"struct Set[T: KeyElement](Sized, EqualityComparable, Hashable, Boolable):
+    "
+"fn __init__(inout self, *ts: T):
+
+        self._data = Dict[T, NoneType]()
+        for t in ts:
+            self.add(t[])"
+"    fn __init__(inout self, elements: Self):
+ 
+        self.__init__()
+        for e in elements:
+            self.add(e[])"
+"    fn __init__(inout self, elements: List[T]):
+
+        self.__init__()
+        for e in elements:
+            self.add(e[])
+"
+"    fn __moveinit__(inout self, owned other: Self):
+
+        self._data = other._data ^"
+"    fn __contains__(self, t: T) -> Bool:
+ 
+        return t in self._data"
+"    fn __bool__(self) -> Bool:
+
+        return len(self).__bool__()"
+"    fn __hash__(self) -> Int:
+
+        var hash_value = 0
+        # Hash combination needs to be commutative so iteration order
+        # doesn't impact the hash value.
+        for e in self:
+            hash_value ^= hash(e[])
+        return hash_value"
+"    fn __and__(self, other: Self) -> Self:
+
+        return self.intersection(other)"
+"    fn __or__(self, other: Self) -> Self:
+       
+        return self.union(other)"
+"    fn __ior__(inout self, other: Self):
+
+        for e in other:
+            self.add(e[])"
+"    fn __sub__(self, other: Self) -> Self:
+
+        var result = Set[T]()
+        for e in self:
+            if e[] not in other:
+                result.add(e[])
+        return result ^
+"
+"    fn __isub__(inout self, other: Self):
+
+        self.remove_all(other)"
+"    fn add(inout self, t: T):
+
+        self._data[t] = None"
+"    fn remove(inout self, t: T) raises:
+        self._data.pop(t)"
+"    fn pop(inout self) raises -> T:
+
+        if not self:
+            raise ""Pop on empty set""
+        var iter = self.__iter__()
+        var first = iter.__next__()[]
+        self.remove(first)
+        return first"
+"    fn union(self, other: Self) -> Self:
+
+        var result = Set(self)
+        for o in other:
+            result.add(o[])
+
+        return result ^"
+"    fn intersection(self, other: Self) -> Self:
+
+        var result = Set[T]()
+        for v in self:
+            if v[] in other:
+                result.add(v[])
+
+        return result ^"
+"    fn remove_all(inout self, other: Self):
+
+        for o in other:
+            try:
+                self.remove(o[])
+            except:
+                pass"
+"    var conv_layer_one = Conv2D[
+        in_channels=1,
+        kernel_width=3,
+        kernel_height=3,
+        stride=1,
+        padding=0,
+        weight_initializer = HeUniform[1],
+        activation=""relu"",
+    ]()"
+"    var dense2 = Dense[
+        in_neurons=100,
+        out_neurons=10,
+        activation=""sigmoid"",
+    ]()"
+"var true_vals = Tensor[TensorShape(batches, 10), Zeros]()"
+" var input = Tensor[TensorShape(batches, channels, width, height), Zeros]()"
+var epoch_start = now()
+"    for epoch in range(1, num_epochs + 1):
+        for i in range(batches):
+            var image = dataset.train_images[i + epoch * batches]
+            var label = dataset.train_labels[i + epoch * batches].to_int()
+            true_vals[i * 10 + label] = 1.0
+            for j in range(width):
+                for k in range(height):
+                    input[i * channels * width * height + j * width + k] = image[
+                        j * width + k
+                    ].to_int()"
+"    @always_inline
+    fn __init__(inout self, value: Scalar[type]):
+
+        self.value = value"
+"    @always_inline
+    fn __init__(inout self, value: Int):
+ 
+        self.__init__(Scalar[type](value))"
+"    @staticmethod
+    @always_inline
+    fn _fetch_add(
+        ptr: Pointer[Scalar[type]], rhs: Scalar[type]
+    ) -> Scalar[type]:
+
+        return __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op add>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](
+            bitcast[__mlir_type[`!pop.scalar<`, type.value, `>`]](ptr).address,
+            rhs.value,
+        )"
+"    @always_inline
+    fn fetch_add(inout self, rhs: Scalar[type]) -> Scalar[type]:
+
+        var value_addr = Pointer.address_of(self.value)
+        return Self._fetch_add(value_addr, rhs)"
+"    @always_inline
+    fn __iadd__(inout self, rhs: Scalar[type]):
+
+        _ = self.fetch_add(rhs)"
+"    @always_inline
+    fn fetch_sub(inout self, rhs: Scalar[type]) -> Scalar[type]:
+
+        var value_addr = Pointer.address_of(self.value.value)
+        return __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op sub>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](value_addr.address, rhs.value)"
+"    @always_inline
+    fn __isub__(inout self, rhs: Scalar[type]):
+
+        _ = self.fetch_sub(rhs)"
+"    @always_inline
+    fn max(inout self, rhs: Scalar[type]):
+
+        constrained[
+            type.is_integral() or type.is_floating_point(),
+            ""the input type must be arithmetic"",
+        ]()
+
+        var value_addr = Pointer.address_of(self.value.value)
+        _ = __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op max>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](value_addr.address, rhs.value)"
+"    @always_inline
+    fn min(inout self, rhs: Scalar[type]):
+
+
+        constrained[
+            type.is_integral() or type.is_floating_point(),
+            ""the input type must be arithmetic"",
+        ]()
+
+        var value_addr = Pointer.address_of(self.value.value)
+        _ = __mlir_op.`pop.atomic.rmw`[
+            bin_op = __mlir_attr.`#pop<bin_op min>`,
+            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,
+            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],
+        ](value_addr.address, rhs.value)"
+"fn setenv(name: String, value: String, overwrite: Bool = True) -> Bool:
+
+    alias os_is_supported = os_is_linux() or os_is_macos()
+    if not os_is_supported:
+        return False
+
+    var status = external_call[""setenv"", Int32](
+        name._as_ptr(), value._as_ptr(), Int32(1 if overwrite else 0)
+    )
+    return status == 0"
+"fn getenv(name: String, default: String = """") -> String:
+
+    alias os_is_supported = os_is_linux() or os_is_macos()
+
+    if not os_is_supported:
+        return default
+
+    var ptr = external_call[""getenv"", DTypePointer[DType.int8]](name._as_ptr())
+    if not ptr:
+        return default
+    return String(StringRef(ptr))"
+"fn stat[pathlike: os.PathLike](path: pathlike) raises -> stat_result:
+
+    return stat(path.__fspath__())
+"
+"fn list(self) -> List[String]:
+
+
+        @parameter
+        if os_is_linux():
+            return self._list_linux()
+        else:
+            return self._list_macos()"
+"    fn __del__(owned self):
+      
+        _ = external_call[""closedir"", Int32](self._handle)"
+"fn listdir(path: String = """") raises -> List[String]:
+
+
+    var dir = _DirHandle(path)
+    return dir.list()"
+"fn listdir[pathlike: os.PathLike](path: pathlike) raises -> List[String]:
+
+    return listdir(path.__fspath__())"
+"@always_inline(""nodebug"")
+fn abort[result: Movable = NoneType]() -> result:
+
+
+    __mlir_op.`llvm.intr.trap`()
+
+    return AnyPointer[result]().take_value()"
+"@always_inline(""nodebug"")
+fn abort[
+    result: Movable = NoneType, *, stringable: Stringable
+](message: stringable) -> result:
+ 
+
+    @parameter
+    if not triple_is_nvidia_cuda():
+        print(message, flush=True)
+
+    return abort[result]()"
+"    fn __init__(inout self, path: String) raises:
+
+        constrained[
+            not os_is_windows(), ""operation is only available on unix systems""
+        ]()
+
+        if not isdir(path):
+            raise ""the directory '"" + path + ""' does not exist""
+
+        self._handle = external_call[""opendir"", Pointer[NoneType]](
+            path._as_ptr()
+        )
+
+        if not self._handle:
+            raise ""unable to open the directory '"" + path + ""'"""
+"@always_inline
+fn _clock_gettime(clockid: Int) -> _CTimeSpec:
+  
+    var ts = _CTimeSpec()
+
+    # Call libc's clock_gettime.
+    _ = external_call[""clock_gettime"", Int32](
+        Int32(clockid), Pointer.address_of(ts)
+    )
+
+    return ts"
+"@always_inline
+fn _realtime_nanoseconds() -> Int:
+   
+    return _gettime_as_nsec_unix(_CLOCK_REALTIME)"
+"@always_inline
+fn _monotonic_nanoseconds() -> Int:
+    
+
+    @parameter
+    if os_is_windows():
+        var ft = _FILETIME()
+        external_call[""GetSystemTimePreciseAsFileTime"", NoneType](
+            Pointer.address_of(ft)
+        )
+
+        return ft.as_nanoseconds()
+    else:
+        return _gettime_as_nsec_unix(_CLOCK_MONOTONIC)"
+"@always_inline
+fn _monotonic_raw_nanoseconds() -> Int:
+  
+
+    return _gettime_as_nsec_unix(_CLOCK_MONOTONIC_RAW)"
+"@always_inline
+fn _process_cputime_nanoseconds() -> Int:
+   
+
+    return _gettime_as_nsec_unix(_CLOCK_PROCESS_CPUTIME_ID)"
+"@always_inline
+fn now() -> Int:
+
+    return _monotonic_nanoseconds()"
+"@always_inline
+@parameter
+fn time_function[func: fn () capturing -> None]() -> Int:
+
+
+    @parameter
+    if os_is_windows():
+        return _time_function_windows[func]()
+
+    var tic = now()
+    func()
+    var toc = now()
+    return toc - tic"
+"fn sleep(sec: Int):
+
+
+    @parameter
+    if os_is_windows():
+        external_call[""Sleep"", NoneType](sec * 1000)
+    else:
+        external_call[""sleep"", NoneType](sec)"
+"    @always_inline(""nodebug"")
+    fn __lt__(self, rhs: Self) -> Bool:
+
+        return int(self) < int(rhs)"
+"fn pow(base: Int, exp: Int = 2) -> Int:
+    return base ** exp"
