@@ -1,0 +1,599 @@
+[
+    {
+        "text": "fn sigmoid(x: Float64<FILL_ME>eturn 1 / (1 + exp(-x))"
+    },
+    {
+        "text": "fn gradient<FILL_ME>\r\n    for _ in range(n_iter):\r\n        let diff = -learning_rate * 2 * vector\r\n        if np.all(np.abs(diff) <= tolerance):\r\n            break\r\n        vector += diff\r\n    print(vector)"
+    },
+    {
+        "text": "fn main():\r\n <FILL_ME>nt(\"Hello, world!\")"
+    },
+    {
+        "text": "fn euclidean_dist(x1: Int64, y1: Int64, x2: Int64, y2: Int64):\r\n    let x = x2 - x1\r\n    let y = y2 - y1\r\n    let euclidean_distance<FILL_ME>,2))\r\n    print(euclidean_distance)"
+    },
+    {
+        "text": "def mandelbrot_kernel(c: ComplexFloat64) -> Int:\r\n    z = c\r\n    for <FILL_ME>\n    return MAX_ITERS"
+    },
+    {
+        "text": "def compute_mandelbrot() -> Tensor[float_type]:\n    # create a matrix. Each element of the matrix co<FILL_ME>y\n    for row in range(height):\n        x = min_x\n        for col in range(width):\n            t[Index(row, col)] = mandelbrot_kernel(ComplexFloat64(x, y))\n            x += dx\n        y += dy\n    return t"
+    },
+    {
+        "text": "   <FILL_ME>tps(self) -> Bool:\r\n        return bytes_equal(self.__scheme, strHttps)"
+    },
+    {
+        "text": "    fn path_original(self) -> Bytes:\r\n        retu<FILL_ME>l"
+    },
+    {
+        "text": "    fn set_path(inout self, path: String) -> Self:\r\n        self.__path = normalise_path(path._buffer,<FILL_ME>riginal)"
+    },
+    {
+        "text": "    fn <FILL_ME>self.__path = normalise_path(path, self.__path_original)\r\n        return self"
+    },
+    {
+        "text": "    fn path(self) -> String:\n        var processed_path = self.__path\n  <FILL_ME>th)\n"
+    },
+    {
+        "text": "    fn set_scheme(inout self, scheme: String) -> Self:\r\n        <FILL_ME>cheme._buffer\r\n        return self\r\n\r"
+    },
+    {
+        "text": "    fn se<FILL_ME>return self"
+    },
+    {
+        "text": "    fn scheme(self) -> Bytes:\r\n        var processed_sche<FILL_ME>self.__scheme\r\n        if len(processed_scheme) == 0:\r\n            processed_scheme = strHttp\r\n        return processed_scheme\r"
+    },
+    {
+        "text": "    fn is_https(self) -> Bool:\r\n    <FILL_ME>eturn bytes_equal(self.__scheme, strHttps)"
+    },
+    {
+        "text": "    fn is_http(self) -> Bo<FILL_ME>     return bytes_equal(self.__scheme, strHttp) or len(self.__scheme) == 0"
+    },
+    {
+        "text": "@value\r\nstruct ErrorHandler:\r\n    fn Error(self) -> HTTPR<FILL_ME>SmallBuffer = Error(\"small read buffer. Increase ReadBufferSize\")"
+    },
+    {
+        "text": "@value\nstruct HTTPResponse(Response):\n    var header: ResponseHeader\n    var stream_immediate_header_flush: Bool\n    var stream_body: Bool\n    var body_raw: Bytes\n    var skip_reading_writing_body: Bool\n    var raddr: TCPAddr\n    var laddr: TCPAddr\n\n    fn __init__(in<FILL_ME>se\n        self.body_raw = body_bytes\n        self.skip_reading_writing_body = False\n        self.raddr = TCPAddr()\n        self.laddr = TCPAddr()"
+    },
+    {
+        "text": "    fn set_status_code(ino<FILL_ME>urn self"
+    },
+    {
+        "text": "    fn sta<FILL_ME>code()"
+    },
+    {
+        "text": "    fn connection_close(self) -> Bool:\r\n  <FILL_ME>lose()"
+    },
+    {
+        "text": "fn OK(body: <FILL_ME>tent-Type: text/plain\").as_bytes()\r\n        ),\r\n        body,\r\n    )"
+    },
+    {
+        "text": "fn OK(body: Bytes, content_type: String) -> HTTPResponse:\r\n    return HTTPResponse(\r\n        Response<FILL_ME>s()), body\r\n    )"
+    },
+    {
+        "text": "@value\nstruct TCPAddr(Addr):\n    var ip: String\n    var port: Int\n    var zone: String  # IPv6 addressing zone\n\n    fn __init__(inout self):\n        self.ip = String(\"127.0.0.1\")\n        self.port = 8000\n        self.zone = \"\"\n\n    fn __init__(inout self, ip: String, port: Int):\n        self.ip = ip\n        self.port = port\n        self.zone = \"\"\n\n    fn network(self) -> String:\n        return NetworkType.tcp.value\n\n    fn string(self) -<FILL_ME>rt)\n"
+    },
+    {
+        "text": "fn join_host_port(host: String, port: Str<FILL_ME> host + \":\" + port"
+    },
+    {
+        "text": "    fn write(self, data: String) raises -> Int:\r\n        var buffer: Str\r\n        with Str(data) as buffer:\r\n          <FILL_ME>e Error(\"Failed to write to file descriptor \" + self.fd.__str__())\r\n\r\n            return write_count"
+    },
+    {
+        "text": "@value\r\nstruct Printer(HTTPService):\r\n    fn func(self, req: HTTPRequest) raises -> H<FILL_ME>\r\n\r\n        return OK(body)"
+    },
+    {
+        "text": "@value\r\nstruct Welcome(HTTPService):\r\n    fn func(self, req: HTTPRequest) raises -> HTTPResponse:\r\n<FILL_ME>lightbug_welcome.html\", \"r\") as f:\r\n            html = f.read()\r\n\r\n        return OK(html.as_bytes(), \"text/html\")"
+    },
+    {
+        "text": "@value\nstruct ExampleRouter(HTTPService):\n    fn func(self, req: HTTPRequest) raises -> HTTPResponse:\n        var body = req.body_raw\n     <FILL_ME>irst\":\n            print(\"I'm on /first!\")\n        elif uri.path() == \"/second\":\n            print(\"I'm on /second!\")\n        elif uri.path() == \"/echo\":\n            print(String(body))\n\n        return OK(body)"
+    },
+    {
+        "text": "    @always_i<FILL_ME>oesn't need to be freed.\n        var data = stack_allocation[width, T]()\n        memset_zero(data, width)\n        return Self {data: data}"
+    },
+    {
+        "text": "    @always_inline\n    fn accu<FILL_ME>h: Int](inout self, val: SIMD[T, _width]) -> None:\n \n        var newVal = self.data.simd_load[_width]() + val\n        self.data.simd_store[_width](newVal)"
+    },
+    {
+        "text": "struct TensorSlice:\r\n    var _data: BufferPtrFloat32\r\n    var _shape: TensorShape\r\n\r\n    fn __init__(ino<FILL_ME> = TensorShape(1)\r\n            raise Error(\"TensorSlice: rank greater than 3 not implemented.\")"
+    },
+    {
+        "text": "    fn simd_load[nelts: Int](self, idx: <FILL_ME>elf._data.simd_load[nelts](idx)"
+    },
+    {
+        "text": "fn read_val_int(inout buf: FileBuf) raises -> Int:\n    # DTypePointer[DType.ui8](b<FILL_ME>lt.to_int()\n"
+    },
+    {
+        "text": "fn read_val_float32(inout buf: FileBuf) raises -> Float32:\r\n    # DTypePointer[DType.ui8](buf.data).bitcast[DTyp<FILL_ME>\n    buf.move_offset(4)\r\n    return val"
+    },
+    {
+        "text": "fn read_val_str(inout buf: FileBuf,<FILL_ME>load(buf.get_offset()))\r\n        buf.move_offset(1)\r\n    str.store(slen, 0)\r\n\r\n    return str"
+    },
+    {
+        "text": "fn partition(\n    inout array: PointerStrings, inout indices: DynamicVector[Int]<FILL_ME>y[high])\n    indices[ii + 1] = indices[high]\n    array.store(high, tmp)\n    indices[high] = tmp_idx\n\n    return ii + 1\n"
+    },
+    {
+        "text": "fn quicksort(\n    inout array: PointerStrings, inout indices: DynamicVector[Int], lo<FILL_ME>ices, low, high)\n        quicksort(array, indices, low, pi - 1)\n        quicksort(array, indices, pi + 1, high)"
+    },
+    {
+        "text": "    fn move_offset(inout self, size: Int) raises:\r\n        var new_offset = self.offset + size\r\n        if new_offset > self.si<FILL_ME>new_offset"
+    },
+    {
+        "text": " <FILL_ME>size: Int) raises -> BufferPtrFloat32:\r\n        var ret = self.data.offset(self.offset).bitcast[DType.float32]()\r\n        self.move_offset(size * sizeof[DType.float32]())\r\n        return ret"
+    },
+    {
+        "text": "    fn get_offset(self) raises -><FILL_ME>\"Offset is past the end of the FileBuf\")\n        if self.offset < 0:\n            raise Error(\"Offset is before the beginning of the FileBuf\")\n        return self.offset\n"
+    },
+    {
+        "text": "struct Tokenizer:\n    var vocab: PointerStrings\n    var vocab_scores: BufferPtrFloat32\n    var max_token_length: Int\n    var vocab_size: Int\n    var sorted_vocab: PointerStrings\n    var sorted_indices: DynamicVector[Int]\n\n    fn __init__(inout self, vocab_size: Int, inout buf: FileBuf) raises -> None:\n        self.vocab_size = vocab_size\n        self.max_token_length = read_val_int(buf)\n<FILL_ME>vocab = PointerStrings.alloc(0)\n        self.sorted_indices = DynamicVector[Int]()\n\n        for i in range(0, self.vocab_size):\n            var score = read_val_float32(buf)\n            var slen = read_val_int(buf)\n            var token = read_val_str(buf, slen)\n            self.store_token(i, token, score)\n        return None"
+    },
+    {
+        "text": "    fn __del__(owned self):\n        for i in range(0, self.v<FILL_ME>i].free()\n        self.vocab.free()\n        self.vocab_scores.free()\n        self.sorted_vocab.free()\n"
+    },
+    {
+        "text": "fn sort(inout self) -> None:\r\n        if len(self.sorted_indices) < self.vocab_size:\r\n            self.sorted_indices = DynamicVector[Int](capacity=self.vocab_size)\r\n            self.sorted_vocab = PointerStrings<FILL_ME>    var n = self.vocab_size\r\n        quicksort(self.sorted_vocab, self.sorted_indices, 0, n - 1)\r\n        return None"
+    },
+    {
+        "text": "\r\n    fn find(inout self, token_o: PointerString) -> Int:\r\n        var token = wrap(token_o)\r\n        var n = self.vocab_size\r\n        if len(self.sorted_indices) < n:\r\n            self.sort()\r\n        var left = 0\r\n        var right = n - 1\r\n        while left <= right:\r\n            var mid = left + (right - left) // 2\r\n            var comparison = string_compare(self.sorted_vocab[mid], token)\r\n            if comparison == 0:\r\n                return self.sorted_indices[mid]\r\n            if comparison < 0:\r\n                left = m<FILL_ME>              right = mid - 1\r\n        return -1"
+    },
+    {
+        "text": "@always_inline\nfn accum(inout a: TensorF32, b: Tens<FILL_ME> + b.simd_load[_nelts](j))\n\n    vectorize[_acc, nelts](size)"
+    },
+    {
+        "text": "@always_inline\r\nfn sof<FILL_ME>ut x: TensorF32) -> None:\r\n    softmax(x, 0, x.dim(0))"
+    },
+    {
+        "text": "@always_inline\nfn rope_rotation_llama(\n  <FILL_ME>nfig,\n) -> None:\n    # stories model, llama2\n    var head_size = config.head_size"
+    },
+    {
+        "text": "    @parameter\n    fn head_loop(i: Int):\n\n        for j in range(0, config.head_size, 2):\n            var fcr = freq_cis_real_row[j // 2]\n            var fci = freq_cis_imag_row[j // 2]\n            var q0 = state.q[i * head_size + j]\n            var q1 = state.q[i * head_size + j + 1]\n            state.q[i * head_size + j] = q0 * fcr - q1 * fci\n <FILL_ME>                var k0 = state.k[i * head_size + j]\n                var k1 = state.k[i * head_size + j + 1]\n                state.k[i * head_size + j] = k0 * fcr - k1 * fci\n                state.k[i * head_size + j + 1] = k0 * fci + k1 * fcr"
+    },
+    {
+        "text": "fn argmax(v: TensorF32) -> Int:\n  \n    var max_i: Int = 0\n    var max_p: Float32 = v[0]\n    for i in range(v.dim(0)):\n      <FILL_ME>max_p = v[i]\n    return max_i\n"
+    },
+    {
+        "text": "fn sample(probabilities: TensorF32) -> Int:\n    var n = probabilities.dim(0)\n    # Sample index from probabilities, they must sum to 1\n    # get random value within (min, max) float32 range\n    var r = rand[DType.float32](1)\n    v<FILL_ME>rounding errors\n"
+    },
+    {
+        "text": "from time import now\n\nfrom algorithm import sum\nfrom benchmark import Unit, benchmark, keep\nfrom buffer import Buffer\nfrom tensor imp<FILL_ME>_runtime_secs=0.5).mean(Unit.ms)\n    pretty_print(name, size, ms)\n\n\nfn main() raises:\n    var small_array = rand[type](size_small)\n    var large_array = rand[type](size_large)\n\n    bench[naive_reduce_sum, size_small, \"naive\"](small_array)\n    bench[naive_reduce_sum, size_large, \"naive\"](large_array)\n\n    bench[stdlib_reduce_sum, size_small, \"stdlib\"](small_array)\n    bench[stdlib_reduce_sum, size_large, \"stdlib\"](large_array)"
+    },
+    {
+        "text": "fn pretty_print(na<FILL_ME>        py.str(\"{:<16} {:>11,} {:>8.2f}ms\").format(\r\n            String(name) + \" elements:\", elements, time\r\n        )\r\n    )"
+    },
+    {
+        "text": "\nfn nai<FILL_ME>ray: Tensor[type]) -> Float32:\n    var A = array\n    var my_sum = array[0]\n    var c: Float32 = 0.0\n    for i in range(array.dim(0)):\n        var y = array[i] - c\n        var t = my_sum + y\n        c = (t - my_sum) - y\n        my_sum = t\n    return my_sum"
+    },
+    {
+        "text": "from sys.info import *<FILL_ME>os = \"macOS\"\n    else:\n        os = \"windows\"\n    var cpu = String(_current_cpu())\n    var arch = String(_triple_attr())\n\n    print(\"System information: \")\n    print(\"    OS             : \", os)\n    print(\"    CPU            : \", cpu)\n    print(\"    Arch           : \", arch)\n\n  \n"
+    },
+    {
+        "text": "@always_inline(\"nodebug\")\r\nfn _digits[type: DType]() -> Int:\r\n\r\n    alias mlir_type = __mlir_typ<FILL_ME>ameter\r\n    if type == DType.float64:\r\n        return 53\r\n    # Unreachable.\r\n    return -1"
+    },
+    {
+        "text": "@always_inline\r\nfn _fp_bitcast_to_integer[type: <FILL_ME>value: Scalar[type]) -> Int:\r\n\r\n    alias integer_type = _integral_type_of[type]()\r\n    return int(bitcast[integer_type, 1](value))\r\n"
+    },
+    {
+        "text": "@always_inline\r\nfn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:\r\n\r\n    alias integer_type = _<FILL_ME>pe_of[type]()\r\n    var int_val = SIMD[integer_type, 1](value)\r\n    return bitcast[type, 1](int_val)"
+    },
+    {
+        "text": " @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    fn max_exponent() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n\r\n        @parameter\r\n        i<FILL_ME> return 16\r\n        elif type == DType.float32 or type == DType.bfloat16:\r\n            return 128\r\n\r\n        debug_assert(type == DType.float64, \"must be float64\")\r\n        return 1024\r\n"
+    },
+    {
+        "text": " @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    fn exponent_width() -> Int:\r\n     <FILL_ME>     return 8\r\n\r\n        debug_assert(type == DType.float64, \"must be float64\")\r\n        return 11\r\n"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn mantissa_mask() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating <FILL_ME>_width()) - 1"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n  <FILL_ME>ype.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.max_exponent() - 1"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn sign_mask()<FILL_ME>pe.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return 1 << (Self.exponent_width() + Self.mantissa_width())"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inlin<FILL_ME>type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.exponent_mask() + Self.mantissa_mask()"
+    },
+    {
+        "text": "    @<FILL_ME>  constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        var mantissa_width_val = Self.mantissa_width()\r\n        return (1 << Self.exponent_width() - 1) << mantissa_width_val + (\r\n            1 << (mantissa_width_val - 1)\r\n        )"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    <FILL_ME>e](value)"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn bit<FILL_ME>type]:\r\n\r\n        return _fp_bitcast_from_integer[type](value)"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn get_sign(value: Scalar[type]) -<FILL_ME>er(value) & Self.sign_mask()) != 0"
+    },
+    {
+        "text": "    @staticmethod\r\n    <FILL_ME>s = Self.sign_mask()\r\n        bits &= ~sign_bits\r\n        if sign:\r\n            bits |= sign_bits\r\n        return Self.bitcast_from_integer(bits)"
+    },
+    {
+        "text": "    @staticmethod\r\n <FILL_ME>      return Self.get_exponent(value) - Self.exponent_bias()"
+    },
+    {
+        "text": "    @staticmethod\n    @always_inline\n    fn set_exponent(value: Scalar[type], exponent: Int) -> S<FILL_ME>h()) & Self.exponent_mask()\n        return Self.bitcast_from_integer(bits)"
+    },
+    {
+        "text": "@always_inline(\"nodebug\")\r\nfn isinf[\r\n    type: DType, simd_width: Int\r\n](val: SIMD[type, simd_width]) -> SIMD[DType.bool, simd_width]:\r\n\r\n\r\n    @parameter\r\n    if not type.is_floating_point():\r\n        return False\r\n\r\n    alias negative_infinity_test: UInt32 = 0x0004\r\n    alias positive_infinity_test: UInt32 = 0x0200\r\n    return llvm_intrinsic[\"llvm.is.fpclass\", SI<FILL_ME>ity_test).value\r\n    )"
+    },
+    {
+        "text": "@always_inline(\"nodebug\")\r\n<FILL_ME>est).value\r\n    )\r\n"
+    },
+    {
+        "text": "@always<FILL_ME> _reduce_and_fn(a: Bool, b: Bool) -> Bool:\n\n    return a and b"
+    },
+    {
+        "text": "@always_inline\r\nfn _int_tuple_binary_apply[\r\n    size: Int,\r\n    binary_fn: fn (Int, Int) -> Int,\r\n](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[\r\n    Int, size\r\n]:\r\n\r\n\r\n    var c = StaticTuple[Int, size]()\r\n\r\n    @always_inline\r\n    @paramet<FILL_ME> size]()\r\n\r\n    return c"
+    },
+    {
+        "text": "@always_inline\r\nfn _int_tuple_compare[\r\n    size: In<FILL_ME>[\r\n    mlir_bool,\r\n    size,\r\n]:\r\n\r\n\r\n    var c = StaticTuple[mlir_bool, size]()\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_compare[idx: Int]():\r\n        var a_elem: Int = a.__getitem__[idx]()\r\n        var b_elem: Int = b.__getitem__[idx]()\r\n        c.__setitem__[idx](comp_fn(a_elem, b_elem).value)\r\n\r\n    unroll[do_compare, size]()\r\n\r\n    return c\r\n"
+    },
+    {
+        "text": " @always_inline\n    fn __init__<FILL_ME>    return 0\n"
+    },
+    {
+        "text": "    @always_inline\r\n    fn __init__(value: __mlir_type.index) -> Self:\r\n\r\n        c<FILL_ME>ined[size == 1]()\r\n        return Int(value)"
+    },
+    {
+        "text": " @always_inline\r\n    fn __init__(elems: Tuple[Int, Int]) -> Self:\r\n\r\n\r\n        var num_elemen<FILL_ME>ms)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @parameter\r\n        fn fill[idx: Int]():\r\n            tup[idx] = elems.get[idx, Int]()\r\n\r\n        unroll[fill, 2]()\r\n\r\n        return tup"
+    },
+    {
+        "text": "@always_inline\r\n    fn __init__<FILL_ME>nroll[fill, 4]()\r\n\r\n        return tup\r\n"
+    },
+    {
+        "text": "@always_inline\nfn Index[\n    T0: Intable, T1: Intable, T2: Intable\n](x: T0, y: T1<FILL_ME>t(z))"
+    },
+    {
+        "text": "@always_inline\nfn Index[\n    T0: Intable, T1: Intable, T2: Intable, T3: Intable\n](x: T0, y: T1, z: T2, w: T3) -> StaticIntTuple[4]:\n\n    return StaticIntT<FILL_ME>le[4](int(x), int(y), int(z), int(w))"
+    },
+    {
+        "text": "@always_inline\r\nfn Index[\r\n    T0:<FILL_ME>le[5](int(x), int(y), int(z), int(w), int(v))"
+    },
+    {
+        "text": "@always_inline\r\nfn now() -> Int:\r\n\r\n    return _<FILL_ME>ic_nanoseconds()\r\n"
+    },
+    {
+        "text": "@always_inline\r\n@parameter\r\nfn time_function[func: fn () capturing -> None]() -> Int:<FILL_ME>oc - tic"
+    },
+    {
+        "text": "fn sleep(sec: Float64):\r\n\r\n    alias NANOSECONDS_IN_SECOND = 1_000_000_000\r\n    var total_secs = _floor(sec)\r\n    var tv_spec = _CTimeSpec(\r\n        int(total_secs.cast[DType.index]()),\r\n        int((sec -<FILL_ME>(req, rem)"
+    },
+    {
+        "text": "fn sleep(sec: Int<FILL_ME>lse:\r\n        external_call[\"sleep\", NoneType](sec)"
+    },
+    {
+        "text": "fn b64encode(str: String) -> String:\n\n    alias lookup = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\"\n    var b64chars = lookup.data()\n\n    var length = len(str)\n    var out = List[Int8](capacity=length + 1)\n\n    @parameter\n    @always_inline\n    fn s(idx: Int) -> Int:\n        return int(str._buffer[idx])\n\n    var end = length - (length % 3)\n    for i in range(0, end, 3):\n        var si = s(i)\n        var si_1 = s(i + 1)\n        var si_2 = s(i + 2)\n        out.append(b64chars.load(si // 4))\n        out.append(b64chars.load(((si * 16) % 64) + si_1 // 16))\n        out.append(b64chars.load(((si_1 * 4) % 64) + si_2 // 64))\n        out.append(b64chars.load(si_2 % 64))\n\n    var i = end\n    if i < length:\n        var si = s(i)\n        out.append(b64chars.load(si // 4))\n        if i == length - 1:\n            out.append(b64chars.load((si * 16) % 64))\n            out.append(ord(\"=\"))\n        elif i == length - 2:\n            var si_1 = s(i + 1)\n            out.append(b64chars.load(((si * 16) % 64) + si_1 // 16))\n            out.append(<FILL_ME>turn String(out ^)"
+    },
+    {
+        "text": "@value\nstruct _DictKeyIter[\n    K: KeyElement,\n    V: CollectionElement,\n    dict_mutability: __mlir_type.`i1`,\n    dict_lifetime: AnyLifetime[dict_mutability].type,\n]:\n\n\n    alias imm_dict_lifetime = __mlir_attr[\n        `#lit.lifetime.mutcast<`, dict_lifetime, `> : !lit.lifetime<1>`\n    ]\n    alias ref_type = Reference[K, __mlir_attr.`0: i1`, Self.imm_dict_lifetime]\n\n    var iter: _DictEntryIter[K, V, dict_mutability, dict_lifetime]\n\n    fn __iter__(self) -> Self:\n        return self\n\n    fn __next__(inout self) -> Self.ref_type:\n        var entry_ref = self.iter.__next__()\n        var mlir_ptr = __mlir_op.`lit.ref<FILL_ME>op.`pop.pointer.bitcast`[\n                _type = AnyPointer[K].pointer_type\n            ](mlir_ptr)\n        }\n        return __mlir_op.`lit.ref.from_pointer`[\n            _type = Self.ref_type.mlir_ref_type\n        ](key_ptr.value)\n\n    fn __len__(self) -> Int:\n        return self.iter.__len__()"
+    },
+    {
+        "text": "@value\nstruct _DictValueIter[\n    K: KeyElement,\n    V: CollectionElement,\n    dict_mutability: __mlir_type.`i1`,\n    dict_lifetime:<FILL_ME> self\n\n    fn __next__(inout self) -> Self.ref_type:\n        var entry_ref = self.iter.__next__()\n        var mlir_ptr = __mlir_op.`lit.ref.to_pointer`(\n            Reference(entry_ref[].value).value\n        )\n        var value_ptr = AnyPointer[V] {\n            value: __mlir_op.`pop.pointer.bitcast`[\n                _type = AnyPointer[V].pointer_type\n            ](mlir_ptr)\n        }\n        return __mlir_op.`lit.ref.from_pointer`[\n            _type = Self.ref_type.mlir_ref_type\n        ](value_ptr.value)\n\n    fn __len__(self) -> Int:\n        return self.iter.__len__()"
+    },
+    {
+        "text": "@value\nstruct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):\n\n    var hash: Int\n    var key: K \n    var value: V\n  \n\n    fn __init__(inout self, owned key: K, owned value: V):\n        sel<FILL_ME>^\n        self.value = value ^\n"
+    },
+    {
+        "text": "    fn __init__(inout self, reserved: Int):\n        if reserved <= 128:\n            var data = DTypePointer[DType.int8].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()\n        elif reserved <= 2**16 - 2:\n            var data = DTypePointer[DType.int16].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()\n       <FILL_ME>[DType.invalid]()\n        else:\n            var data = DTypePointer[DType.int64].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()"
+    },
+    {
+        "text": "    fn copy(self, reserved: Int) -> Self:\n        var index = Self(reserved)\n        if reserved <= 128:\n            var data = self.data.bitcast[DType.int8]()\n            var new_data = index.data.bitcast[DType.int8]()\n            memcpy(new_data, data, reserved)\n        elif reserved <= 2**16 - 2:\n            var data = self.data.bitcast[DType.int16]()\n            var new_data = index.data.bitcast[DType.int16]()\n            memcpy(new_data, data, reserved)\n        elif reserved <= 2**32 - 2:\n            var data = self.data.bitcast[DType.int32]()\n            var new_data = index.data.bitcast[DTyp<FILL_ME>a.bitcast[DType.int64]()\n            var new_data = index.data.bitcast[DType.int64]()\n            memcpy(new_data, data, reserved)\n        return index ^"
+    },
+    {
+        "text": "    fn get_index(self, reserved: Int, slot: Int) -> Int:\n        if reserved <= 128:\n            var data = self.data.bitcast[DType.int8]()\n         <FILL_ME>         return data.load(slot % reserved).to_int()\n        elif reserved <= 2**32 - 2:\n            var data = self.data.bitcast[DType.int32]()\n            return data.load(slot % reserved).to_int()\n        else:\n            var data = self.data.bitcast[DType.int64]()\n            return data.load(slot % reserved).to_int()"
+    },
+    {
+        "text": "    fn set_index(inout self, reserved: Int, slot: Int, value: Int):\r\n        if reserved <= 128:\r\n            var data = self.data.bitcast[DType.int8]()\r\n            return data.store(slot % reserved, value)\r\n        elif reserved <= 2**16 - 2:\r\n            var data = self.data.bitcast[DType.int16]()\r\n            return data.store(slot % reserved, value)\r\n        elif reserved <= 2**32 - 2:\r\n            var data = self.data.bitcast[DType.int32]()\r\n      <FILL_ME>ue)"
+    },
+    {
+        "text": "var siz<FILL_ME>: Int"
+    },
+    {
+        "text": "var<FILL_ME>t"
+    },
+    {
+        "text": "v<FILL_ME>nt"
+    },
+    {
+        "text": "    fn __init__(inout self):\n\n        self.size = 0\n        self._n_entries = 0\n        self._re<FILL_ME>_entries = Self._new_entries(self._reserved)"
+    },
+    {
+        "text": "    fn __init__(inout self, existing: Self):\n\n        self.size = existing.size<FILL_ME>existing._reserved\n        self._index = existing._index.copy(existing._reserved)\n        self._entries = existing._entries"
+    },
+    {
+        "text": "    fn __copyinit__(inout self, existing: Self):\n\n        self.size = existing.size\n      <FILL_ME>      self._entries = existing._entries"
+    },
+    {
+        "text": "    fn __moveinit__(inout self,<FILL_ME>\n        self._n_entries = existing._n_entries\n        self._reserved = existing._reserved\n        self._index = existing._index ^\n        self._entries = existing._entries ^"
+    },
+    {
+        "text": "    fn __getitem__(self, key: K) raises -> V:\n\n <FILL_ME>  var value = self.find(key)\n        if value:\n            return value.value()\n        raise \"KeyError\""
+    },
+    {
+        "text": "    f<FILL_ME>lue: V):\r\n\r\n        self._insert(key, value)"
+    },
+    {
+        "text": "    fn __contains__(self, key: K) -> <FILL_ME>urn self.find(key).__bool__()"
+    },
+    {
+        "text": "    fn __len__(self) -> Int:\r\n       \r\n        <FILL_ME>size"
+    },
+    {
+        "text": "    fn find(self, key: K) -> Optional[V]:\r\n \r\n        var hash = hash(key)\r\n        var found: Bool\r\n        var slot: Int\r\n        var index: Int\r\n        found, slot, index = self._find_index(hash, key)\r\n        if found:\r<FILL_ME>ne"
+    },
+    {
+        "text": "    fn pop(inout self, key: K, owned default: Optional[V] = None) raises -> V:\r\n \r\n        var hash = hash(key)\r\n        var found: Bool\r\n        var slot: Int\r\n        var index: Int\r\n        found, slot, index = self._find_index(hash, key)\r\n        if found:\r\n            self._set_index(slot, Self.REMOVED)\r\n            var entry = self._entries.__get_ref(index)[]\r\n            self._entries[index] = None\r\n            self.size -= 1\r\n            debug_assert(entry.<FILL_ME>   raise \"KeyError\""
+    },
+    {
+        "text": "    fn __iter__[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _DictKeyIter[K, V, mutability, self_life]:\r\n\r\n        return _DictKeyIter(\r\n            _DictEntryIter[K, V, mutabil<FILL_ME>(self))\r\n        )"
+    },
+    {
+        "text": "    fn keys[\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\n    ](\n <FILL_ME>.mlir_ref_type,\n    ) -> _DictKeyIter[K, V, mutability, self_life]:\n\n        return Self.__iter__(self)"
+    },
+    {
+        "text": "    fn values[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _DictValueIter[K, <FILL_ME>erence(self))\r\n        )"
+    },
+    {
+        "text": "    fn items[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _DictEntryIter[K, V, mutability, self_life]:\r\n\r\n        return _DictEntryIter[K<FILL_ME>ference(self)\r\n        )"
+    },
+    {
+        "text": "    @staticmethod\r\n    fn _new_entries(reserved: Int) -> L<FILL_ME>ity=reserved)\r\n        for i in range(reserved):\r\n            entries.append(None)\r\n        return entries"
+    },
+    {
+        "text": "    fn _insert(inout self, owned key: K, <FILL_ME> value ^))"
+    },
+    {
+        "text": "    fn _insert(inout self, own<FILL_ME> if not found:\r\n            self._set_index(slot, index)\r\n            self.size += 1\r\n            self._n_entries += 1"
+    },
+    {
+        "text": "    <FILL_ME>slot: Int) -> Int:\r\n        return self._index.get_index(self._reserved, slot)"
+    },
+    {
+        "text": "    fn _set_index(inout self, slot: In<FILL_ME> self._index.set_index(self._reserved, slot, index)"
+    },
+    {
+        "text": "    fn _next_index_s<FILL_ME>        perturb >>= PERTURB_SHIFT\r\n        slot = ((5 * slot) + perturb + 1) % self._reserved"
+    },
+    {
+        "text": "    fn _find_empty_index(self, hash: Int) -> Int:\r\n        var slot = hash % self._reserved\r\n        var perturb = hash\r\n        for _ in range(self._reserved):\r\n            var index = self._get_index(slot)\r\n            if index == Self.EMPTY:\r\n                return slot\r\n            self._next_index_slot(slot, perturb)\r\n        abort(\"Dict: no empty index i<FILL_ME>0\r"
+    },
+    {
+        "text": "    fn _over_load_fact<FILL_ME>_reserved\r"
+    },
+    {
+        "text": "    fn _over_compact_factor(self) -> Boo<FILL_ME>s > 3 * self._reserved"
+    },
+    {
+        "text": "    fn _maybe_resize(inout self):\n        if not self._over_load_factor():\n            if self._over_compact_factor():\n                self._compa<FILL_ME>_entries = self._entries ^\n        self._entries = self._new_entries(self._reserved)\n\n        for i in range(len(old_entries)):\n            var entry = old_entries.__get_ref(i)[]\n            if entry:\n                self._insert(entry.value())"
+    },
+    {
+        "text": "    fn _compact(inout self):\n        self._index = _DictIndex(self._reserved)\n        var right = 0\n   <FILL_ME>ed, \"Invalid dict state\")\n            var entry = self._entries.__get_ref(right)[]\n            debug_assert(entry.__bool__(), \"Logic error\")\n            var slot = self._find_empty_index(entry.value().hash)\n            self._set_index(slot, left)\n            if left != right:\n                self._entries[left] = entry\n                self._entries[right] = None\n\n        self._n_entries = self.size"
+    },
+    {
+        "text": "var data: Any<FILL_ME>[T]"
+    },
+    {
+        "text": "v<FILL_ME>: Int"
+    },
+    {
+        "text": "var c<FILL_ME>ity: Int"
+    },
+    {
+        "text": "    fn __init__(inout self):<FILL_ME>capacity = 0"
+    },
+    {
+        "text": "   <FILL_ME>, existing: Self):\r\n\r\n        self.__init__(capacity=existing.capacity)\r\n        for e in existing:\r\n            self.append(e[])"
+    },
+    {
+        "text": "    fn __init__(inout self, *, capacity: Int):\n\n        self.data = AnyPointer[T].alloc(capacity)\n        sel<FILL_ME>= capacity"
+    },
+    {
+        "text": "    fn __ini<FILL_ME>capacity=len(values))\r\n        for value in values:\r\n            self.append(value[])"
+    },
+    {
+        "text": "    fn __moveinit__(inou<FILL_ME>   self.data = existing.data\n        self.size = existing.size\n        self.capacity = existing.capacity"
+    },
+    {
+        "text": "    fn __copyinit__(inout self, existing: Self):\r\n\r\n        self = Self(capacity=exi<FILL_ME>ing.capacity)\r\n        for i in range(len(existing)):\r\n            self.append(existing[i])"
+    },
+    {
+        "text": "    fn __del__(owned self):\r\n\r\n        for i in range(self.size):\r\n            _ = (self.data + i).take_value()\r<FILL_ME>        if self.data:\r\n            self.data.free()"
+    },
+    {
+        "text": "    fn __len__(<FILL_ME>Int:\r\n\r\n        return self.size"
+    },
+    {
+        "text": "    fn _realloc(inout self, new_capacity: Int):\r\n        var new_data = AnyPointer[T].alloc(new_capacity)\r\n\r\n        for i in range(<FILL_ME>        self.capacity = new_capacity"
+    },
+    {
+        "text": "    fn append(inout self, owned value: T<FILL_ME>      self.size += 1"
+    },
+    {
+        "text": "    fn pop_back(inout self) -> T:\r\n\r\n  <FILL_ME>\r\n        return ret_val ^"
+    },
+    {
+        "text": "    fn reserve(inout self, new_capacity: Int):\r\n\r\n        if self.capacity >= <FILL_ME>       self._realloc(new_capacity)"
+    },
+    {
+        "text": "    fn reverse(inout<FILL_ME>)"
+    },
+    {
+        "text": "    fn clear(inout self):        for i in range(self.size<FILL_ME>(self.data + i).take_value()\n        self.size = 0"
+    },
+    {
+        "text": "    fn s<FILL_ME>ize = 0\r\n        self.capacity = 0\r\n        return ptr"
+    },
+    {
+        "text": " <FILL_ME>ue: T):\r\n       \r\n        debug_assert(-self.size <= i < self.size, \"index must be within bounds\")\r\n\r\n        var normalized_idx = i\r\n        if i < 0:\r\n            normalized_idx += len(self)\r\n\r\n        _ = (self.data + normalized_idx).take_value()\r\n        (self.data + normalized_idx).emplace_value(value ^)"
+    },
+    {
+        "text": "    @always_inline\r\n    fn _adjust_span(self, span: Slice) -> Slice:\r\n      \r\n        var adjusted_span = span\r\n\r\n        if adjusted_span.start < 0:\r\n       <FILL_ME>.end = len(self)\r\n        elif adjusted_span.end < 0:\r\n            adjusted_span.end = len(self) + adjusted_span.end\r\n\r\n        if span.step < 0:\r\n            var tmp = adjusted_span.end\r\n            adjusted_span.end = adjusted_span.start - 1\r\n            adjusted_span.start = tmp - 1\r\n\r\n        return adjusted_span"
+    },
+    {
+        "text": "    @always_inline\r\n    fn __getitem__(self, span: Slice) -> Self:\r\n        \r\n\r\n        var adjus<FILL_ME>an = self._adjust_span(span)\r\n        var adjusted_span_len = len(adjusted_span)\r\n\r\n        if not adjusted_span_len:\r\n            return Self()\r\n\r\n        var res = Self(capacity=len(adjusted_span))\r\n        for i in range(len(adjusted_span)):\r\n            res.append(self[adjusted_span[i]])\r\n\r\n        return res ^"
+    },
+    {
+        "text": "    fn __iter__[\r\n        mutability:<FILL_ME>   ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _ListIter[\r\n        T, mutability, self_life\r\n    ]:\r\n       \r\n        return _ListIter[T, mutability, self_life](0, Reference(self))"
+    },
+    {
+        "text": "struct Set[T: KeyEle<FILL_ME>omparable, Hashable, Boolable):\r\n    "
+    },
+    {
+        "text": "fn __init__(inout self, *ts: T):\r\n\r\n <FILL_ME>(t[])"
+    },
+    {
+        "text": "    fn __init__(inout self, <FILL_ME>      for e in elements:\r\n            self.add(e[])"
+    },
+    {
+        "text": "   <FILL_ME>)\r\n"
+    },
+    {
+        "text": "    fn __moveinit__(inout self, o<FILL_ME>other: Self):\r\n\r\n        self._data = other._data ^"
+    },
+    {
+        "text": "    fn __contains__(self, t: T) -> Bool:\r\n \r\n        <FILL_ME>turn t in self._data"
+    },
+    {
+        "text": "    fn __bool__(self) -> Boo<FILL_ME>    return len(self).__bool__()"
+    },
+    {
+        "text": "    fn __hash__(self) -> Int:\n\n        var hash_value = 0\n        # Hash combinati<FILL_ME>h_value"
+    },
+    {
+        "text": "    fn __and__(self, other: Self) -> Self:\n\n        return self.in<FILL_ME>r)"
+    },
+    {
+        "text": "    fn __or__(self, other: Self) -> Self:\r\n       \r\n <FILL_ME>      return self.union(other)"
+    },
+    {
+        "text": "   <FILL_ME>er:\r\n            self.add(e[])"
+    },
+    {
+        "text": "    fn __sub__(self, other: Self) -> Self:\r\n\r\n        var re<FILL_ME>       result.add(e[])\r\n        return result ^\r\n"
+    },
+    {
+        "text": "    fn __isub<FILL_ME>ove_all(other)"
+    },
+    {
+        "text": "    fn add(inout self, t: T):<FILL_ME>data[t] = None"
+    },
+    {
+        "text": "  <FILL_ME>ata.pop(t)"
+    },
+    {
+        "text": "    fn pop(inout self) raises -> T:\n\n        if not self:\n            raise \"Pop on empty set\"\n        var iter = self.__iter__()\n        var first = iter.__next__()[]\n      <FILL_ME>first)\n        return first"
+    },
+    {
+        "text": "    f<FILL_ME>other:\n            result.add(o[])\n\n        return result ^"
+    },
+    {
+        "text": "    fn intersection(self, other: Self) -> Self:\n\n        var result = Set[T]()\n        for v in self:\n            if v[] in other:\n                resul<FILL_ME>[])\n\n        return result ^"
+    },
+    {
+        "text": "    fn remov<FILL_ME>                pass"
+    },
+    {
+        "text": "    var conv_layer_one = Conv2D[\r\n       <FILL_ME>elu\",\r\n    ]()"
+    },
+    {
+        "text": "    var dense2 = Dense[\r\n        in_neurons=100,\r\n        out_neurons=10,\r\n<FILL_ME>ation=\"sigmoid\",\r\n    ]()"
+    },
+    {
+        "text": "var true_vals = Te<FILL_ME>, Zeros]()"
+    },
+    {
+        "text": " va<FILL_ME>ght), Zeros]()"
+    },
+    {
+        "text": "var epoch<FILL_ME>now()"
+    },
+    {
+        "text": "    for epoch in range(<FILL_ME>int()\n            true_vals[i * 10 + label] = 1.0\n            for j in range(width):\n                for k in range(height):\n                    input[i * channels * width * height + j * width + k] = image[\n                        j * width + k\n                    ].to_int()"
+    },
+    {
+        "text": "    @always_inlin<FILL_ME>r[type]):\n\n        self.value = value"
+    },
+    {
+        "text": "    @a<FILL_ME>lue))"
+    },
+    {
+        "text": "    @staticmethod\n    @always_inline\n    fn _fetch_add(\n        ptr: Pointer[Scalar[type]], rhs: Scalar[type]\n    ) -> Scalar[type]:\n\n        return __mlir_op.`pop.atomic.rmw`[\n            <FILL_ME>        )"
+    },
+    {
+        "text": "    @always_inline\r\n    fn fetch_add(inout self, rhs: Scalar[type]) -> Scalar[type]:\r\n\r\n        var value_addr = Pointer.address_of(self.value)\r\n        <FILL_ME>_addr, rhs)"
+    },
+    {
+        "text": "    <FILL_ME>_inline\r\n    fn __iadd__(inout self, rhs: Scalar[type]):\r\n\r\n        _ = self.fetch_add(rhs)"
+    },
+    {
+        "text": "    @always_inline\r\n    fn fetch_sub(inout self, rhs: Scalar[type]) -> Scalar[type]:\r\n\r\n        var value_addr = Pointer.address_of(self.value.value)\r\n        return __mlir_op<FILL_ME>r.address, rhs.value)"
+    },
+    {
+        "text": "    @always_inline\r\n    fn __isub__(inout self, rhs: Scalar[type]):\r\n\r\n        _ = se<FILL_ME>.fetch_sub(rhs)"
+    },
+    {
+        "text": "    @always_inline\r\n    fn max(inout self, rhs: Scalar[type]):\r\n\r\n        constrained[\r\n            type.is_integral() or type.is_floating_point(),\r\n            \"the<FILL_ME>_mlir_attr.`#pop<bin_op max>`,\r\n            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,\r\n            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],\r\n        ](value_addr.address, rhs.value)"
+    },
+    {
+        "text": "    @always_inline\r\n    fn min(inout self, rhs: Scalar[type]):\r\n\r\n\r\n        constrained[\r\n            type.is_integral() or type.is_floating_point(),\r\n            \"the input<FILL_ME>       _type = __mlir_type[`!pop.scalar<`, type.value, `>`],\r\n        ](value_addr.address, rhs.value)"
+    },
+    {
+        "text": "fn setenv(name: String, value: String, overwrite: Bool = True) -> Bool:\r\n\r\n    alias os_is_supported = os_is_linux() or os_<FILL_ME>   return False\r\n\r\n    var status = external_call[\"setenv\", Int32](\r\n        name._as_ptr(), value._as_ptr(), Int32(1 if overwrite else 0)\r\n    )\r\n    return status == 0"
+    },
+    {
+        "text": "fn<FILL_ME>\n    var ptr = external_call[\"getenv\", DTypePointer[DType.int8]](name._as_ptr())\r\n    if not ptr:\r\n        return default\r\n    return String(StringRef(ptr))"
+    },
+    {
+        "text": "fn stat[pathlike: os.PathLike](path: pathlike) ra<FILL_ME>  return stat(path.__fspath__())\r\n"
+    },
+    {
+        "text": "fn list(self) -> List[String]:\r\n\r\n\r\n        @pa<FILL_ME>      else:\r\n            return self._list_macos()"
+    },
+    {
+        "text": "    fn __del__(owned self):\r\n      \r\n     <FILL_ME>dle)"
+    },
+    {
+        "text": "fn listdir(path: String = \"\") raises -> List[String]:\r\n\r\n\r\n    var dir = _DirHan<FILL_ME>    return dir.list()"
+    },
+    {
+        "text": "fn listdir[pathlike: os.PathLike](path: pathlike) raises -> List[String]:\r\n\r\n   <FILL_ME>)"
+    },
+    {
+        "text": "@always_inline(\"nodebug<FILL_ME>__mlir_op.`llvm.intr.trap`()\r\n\r\n    return AnyPointer[result]().take_value()"
+    },
+    {
+        "text": "@always_inline(\"nodeb<FILL_ME>: Movable = NoneType, *, stringable: Stringable\r\n](message: stringable) -> result:\r\n \r\n\r\n    @parameter\r\n    if not triple_is_nvidia_cuda():\r\n        print(message, flush=True)\r\n\r\n    return abort[result]()"
+    },
+    {
+        "text": "    fn __init__(inout self, path: String) rais<FILL_ME>ailable on unix systems\"\n        ]()\n\n        if not isdir(path):\n            raise \"the directory '\" + path + \"' does not exist\"\n\n        self._handle = external_call[\"opendir\", Pointer[NoneType]](\n            path._as_ptr()\n        )\n\n        if not self._handle:\n            raise \"unable to open the directory '\" + path + \"'\""
+    },
+    {
+        "text": "@always_inline\r\nfn _clock_gettime(clockid: Int) -> _CTimeSpec:\r<FILL_ME> \r\n    var ts = _CTimeSpec()\r\n\r\n    # Call libc's clock_gettime.\r\n    _ = external_call[\"clock_gettime\", Int32](\r\n        Int32(clockid), Pointer.address_of(ts)\r\n    )\r\n\r\n    return ts"
+    },
+    {
+        "text": "@always_inline\r\n<FILL_ME>n _gettime_as_nsec_unix(_CLOCK_REALTIME)"
+    },
+    {
+        "text": "@always_inline\r\nfn _monotonic_nanoseconds() -> Int:\r\n    \r\n\r\n    @parameter\r\n    if os_is_windows():\r\n        var ft = _FILETIME()\r\n        external_call[\"GetSystemTimePreciseAsFileTime\", NoneType](\r\n            Pointer.address_of(ft)\r\n        )\r\n\r\n        return ft.as_nanoseconds()\r\n    else:\r\n        re<FILL_ME>nix(_CLOCK_MONOTONIC)"
+    },
+    {
+        "text": "@a<FILL_ME>Int:\r\n  \r\n\r\n    return _gettime_as_nsec_unix(_CLOCK_MONOTONIC_RAW)"
+    },
+    {
+        "text": "@always_inline\r\nfn _process_cputime_nanoseconds<FILL_ME>s_nsec_unix(_CLOCK_PROCESS_CPUTIME_ID)"
+    },
+    {
+        "text": "@always<FILL_ME>monotonic_nanoseconds()"
+    },
+    {
+        "text": "@alwa<FILL_ME>ameter\n    if os_is_windows():\n        return _time_function_windows[func]()\n\n    var tic = now()\n    func()\n    var toc = now()\n    return toc - tic"
+    },
+    {
+        "text": "fn sleep(sec: Int):\n\n\n    @parame<FILL_ME>)"
+    },
+    {
+        "text": "    @always_inline(\"nodebug\")\r\n    fn __lt__(self, <FILL_ME>\n\r\n        return int(self) < int(rhs)"
+    },
+    {
+        "text": "fn <FILL_ME>\r\n    return base ** exp"
+    }
+]

@@ -1,0 +1,597 @@
+{
+    "text": "<s>[INST] Write a function to calculate the sigmoid of a given number[/INST]fn sigmoid(x: Float64) -> Float64:\r\n    return 1 / (1 + exp(-x))</s>"
+}
+{
+    "text": "<s>[INST] Write a function that calculates gradient descent[/INST]fn gradient_descent(start: Float64, learning_rate: Float64, n_iter: Int=50, tolerance: Float64=1e-06) raises:\r\n    let np = Python.import_module('numpy')\r\n    var vector = start\r\n    for _ in range(n_iter):\r\n        let diff = -learning_rate * 2 * vector\r\n        if np.all(np.abs(diff) <= tolerance):\r\n            break\r\n        vector += diff\r\n    print(vector)</s>"
+}
+{
+    "text": "<s>[INST] Print hello world in mojo[/INST]fn main():\r\n    print(\"Hello, world!\")</s>"
+}
+{
+    "text": "<s>[INST] Write a function to calculate the euclideadn distance between two points[/INST]fn euclidean_dist(x1: Int64, y1: Int64, x2: Int64, y2: Int64):\r\n    let x = x2 - x1\r\n    let y = y2 - y1\r\n    let euclidean_distance = sqrt(pow(x, 2) + pow(y,2))\r\n    print(euclidean_distance)</s>"
+}
+{
+    "text": "<s>[INST] Compute the number of steps to escape.[/INST]def mandelbrot_kernel(c: ComplexFloat64) -> Int:\r\n    z = c\r\n    for i in range(MAX_ITERS):\r\n        z = z * z + c\r\n        if z.squared_norm() > 4:\r\n            return i\r\n    return MAX_ITERS</s>"
+}
+{
+    "text": "<s>[INST] Write a function to compute the mandelbrot set[/INST]def compute_mandelbrot() -> Tensor[float_type]:\n    # create a matrix. Each element of the matrix corresponds to a pixel\n    t = Tensor[float_type](height, width)\n\n    dx = (max_x - min_x) / width\n    dy = (max_y - min_y) / height\n\n    y = min_y\n    for row in range(height):\n        x = min_x\n        for col in range(width):\n            t[Index(row, col)] = mandelbrot_kernel(ComplexFloat64(x, y))\n            x += dx\n        y += dy\n    return t</s>"
+}
+{
+    "text": "<s>[INST] An instance method called is_https that returns a boolean value if the scheme of the request is HTTPS.[/INST]    fn is_https(self) -> Bool:\r\n        return bytes_equal(self.__scheme, strHttps)</s>"
+}
+{
+    "text": "<s>[INST] Returns the original path (as Bytes) of the object without any modifications.[/INST]    fn path_original(self) -> Bytes:\r\n        return self.__path_original</s>"
+}
+{
+    "text": "<s>[INST] Sets the object's path to a new value, given as a String. [/INST]    fn set_path(inout self, path: String) -> Self:\r\n        self.__path = normalise_path(path._buffer, self.__path_original)</s>"
+}
+{
+    "text": "<s>[INST] Similar to set_path, but accepts the new path as a Bytes object. It sets the object's path to this new bytes value after normalizing it. Returns the object itself for chaining.[/INST]    fn set_path_sbytes(inout self, path: Bytes) -> Self:\r\n        self.__path = normalise_path(path, self.__path_original)\r\n        return self</s>"
+}
+{
+    "text": "<s>[INST] Retrieves the current path of the object. If the path is empty, it defaults to a predefined slash string (strSlash). The path is returned as a String.[/INST]    fn path(self) -> String:\n        var processed_path = self.__path\n        if len(processed_path) == 0:\n            processed_path = strSlash\n        return String(processed_path)\n</s>"
+}
+{
+    "text": "<s>[INST] Sets the object's scheme (e.g., \"http\", \"https\") using a String value.[/INST]    fn set_scheme(inout self, scheme: String) -> Self:\r\n        self.__scheme = scheme._buffer\r\n        return self\r\n\r</s>"
+}
+{
+    "text": "<s>[INST] Sets the object's scheme using a Bytes object. Returns the object for further method chaining.[/INST]    fn set_scheme_bytes(inout self, scheme: Bytes) -> Self:\r\n        self.__scheme = scheme\r\n        return self</s>"
+}
+{
+    "text": "<s>[INST] Returns the current scheme of the object as a Bytes object. If no scheme is set (i.e., the scheme is empty), it defaults to \"http\".[/INST]    fn scheme(self) -> Bytes:\r\n        var processed_scheme = self.__scheme\r\n        if len(processed_scheme) == 0:\r\n            processed_scheme = strHttp\r\n        return processed_scheme\r</s>"
+}
+{
+    "text": "<s>[INST] Checks if the current scheme is \"https\" by comparing the scheme's bytes to a predefined strHttps bytes object. Returns True if they match, indicating an HTTPS scheme.[/INST]    fn is_https(self) -> Bool:\r\n        return bytes_equal(self.__scheme, strHttps)</s>"
+}
+{
+    "text": "<s>[INST] Determines whether the current scheme is \"http\". It checks if the scheme matches a predefined strHttp bytes object or if the scheme is empty, implying a default to \"http\". Returns True if either condition is met.[/INST]    fn is_http(self) -> Bool:\r\n        return bytes_equal(self.__scheme, strHttp) or len(self.__scheme) == 0</s>"
+}
+{
+    "text": "<s>[INST] This code snippet defines an ErrorHandler struct and introduces three error aliases related to handling HTTP errors or issues that might arise during HTTP request processing.[/INST]@value\r\nstruct ErrorHandler:\r\n    fn Error(self) -> HTTPResponse:\r\n        return HTTPResponse(ResponseHeader(), String(\"TODO\").as_bytes())\r\n\r\n\r\nalias errNeedMore = Error(\"need more data: cannot find trailing lf\")\r\nalias errInvalidName = Error(\"invalid header name\")\r\nalias errSmallBuffer = Error(\"small read buffer. Increase ReadBufferSize\")</s>"
+}
+{
+    "text": "<s>[INST] This code snippet defines an HTTPResponse struct, which is designed to encapsulate the details and functionality of an HTTP response within a server or client application. The struct contains various fields to represent the components of an HTTP response and provides two constructors (__init__ methods) for creating instances with different initializations.[/INST]@value\nstruct HTTPResponse(Response):\n    var header: ResponseHeader\n    var stream_immediate_header_flush: Bool\n    var stream_body: Bool\n    var body_raw: Bytes\n    var skip_reading_writing_body: Bool\n    var raddr: TCPAddr\n    var laddr: TCPAddr\n\n    fn __init__(inout self, header: ResponseHeader, body_bytes: Bytes):\n        self.header = header\n        self.stream_immediate_header_flush = False\n        self.stream_body = False\n        self.body_raw = body_bytes\n        self.skip_reading_writing_body = False\n        self.raddr = TCPAddr()\n        self.laddr = TCPAddr()</s>"
+}
+{
+    "text": "<s>[INST] A method of the HTTPResponse struct (or a similar entity) designed to update the status code of the HTTP response.[/INST]    fn set_status_code(inout self, status_code: Int) -> Self:\r\n        _ = self.header.set_status_code(status_code)\r\n        return self</s>"
+}
+{
+    "text": "<s>[INST] A method that returns the status code frin the header of the http response[/INST]    fn status_code(self) -> Int:\r\n        return self.header.status_code()</s>"
+}
+{
+    "text": "<s>[INST] Define a function that returns a boolean indicating whether the HTTP response should signal the connection to close. It checks this status by accessing a method on the response header object.[/INST]    fn connection_close(self) -> Bool:\r\n        return self.header.connection_close()</s>"
+}
+{
+    "text": "<s>[INST]  Implement a function that generates an HTTPResponse object with a 200 OK status code and a default Content-Type: text/plain. It accepts a byte array for the body content and uses default values for other headers.[/INST]fn OK(body: Bytes) -> HTTPResponse:\r\n    return HTTPResponse(\r\n        ResponseHeader(\r\n            True, 200, String(\"OK\").as_bytes(), String(\"Content-Type: text/plain\").as_bytes()\r\n        ),\r\n        body,\r\n    )</s>"
+}
+{
+    "text": "<s>[INST] Write a function that given the body of a message and the content type, returns an HTTP response with the header containing the status 200 and the body[/INST]fn OK(body: Bytes, content_type: String) -> HTTPResponse:\r\n    return HTTPResponse(\r\n        ResponseHeader(True, 200, String(\"OK\").as_bytes(), content_type.as_bytes()), body\r\n    )</s>"
+}
+{
+    "text": "<s>[INST] I need to define a struct to represent a TCP address; The attributes of the structure are the ip as string, port as int and zone as string. I also need constructors for the struct, one setting as default values         self.ip = String(\"127.0.0.1\"), self.port = 8000 and self.zone = \"\"  and another one taking custom inputs.[/INST]@value\nstruct TCPAddr(Addr):\n    var ip: String\n    var port: Int\n    var zone: String  # IPv6 addressing zone\n\n    fn __init__(inout self):\n        self.ip = String(\"127.0.0.1\")\n        self.port = 8000\n        self.zone = \"\"\n\n    fn __init__(inout self, ip: String, port: Int):\n        self.ip = ip\n        self.port = port\n        self.zone = \"\"\n\n    fn network(self) -> String:\n        return NetworkType.tcp.value\n\n    fn string(self) -> String:\n        if self.zone != \"\":\n            return join_host_port(String(self.ip) + \"%\" + self.zone, self.port)\n        return join_host_port(self.ip, self.port)\n</s>"
+}
+{
+    "text": "<s>[INST] Write a method that receives two strings, a host and a port. If the last character of the host string is not \":\", return  \"[\" + host + \"]:\" + port. If it is, return host + \":\" + port.[/INST]fn join_host_port(host: String, port: String) -> String:\n    if host.find(\":\") != -1:  # must be IPv6 literal\n        return \"[\" + host + \"]:\" + port\n    return host + \":\" + port</s>"
+}
+{
+    "text": "<s>[INST] Write an instance method that takes a string as input and returns an integer value. This method make an external call to write to a file and, if no error occurs, returns the number of bytes written.[/INST]    fn write(self, data: String) raises -> Int:\r\n        var buffer: Str\r\n        with Str(data) as buffer:\r\n            var write_count: c_ssize_t = external_call[\r\n                \"write\", c_ssize_t, c_int, char_pointer, c_size_t\r\n            ](self.fd, buffer.vector.data, data.__len__())\r\n\r\n            if write_count == -1:\r\n                raise Error(\"Failed to write to file descriptor \" + self.fd.__str__())\r\n\r\n            return write_count</s>"
+}
+{
+    "text": "<s>[INST] Write a struct Printer that takes HTTPService as argument, has a func method that takes an HTTPRequest as input and returns an HTTPResponse OK containing the body of the request as a string.[/INST]@value\r\nstruct Printer(HTTPService):\r\n    fn func(self, req: HTTPRequest) raises -> HTTPResponse:\r\n        var body = req.body_raw\r\n        print(String(body))\r\n\r\n        return OK(body)</s>"
+}
+{
+    "text": "<s>[INST] Write a struct Welcome that has a method that takes an HTTP request, open a file, reads from it into the html variable and returns OK with the html.[/INST]@value\r\nstruct Welcome(HTTPService):\r\n    fn func(self, req: HTTPRequest) raises -> HTTPResponse:\r\n        var html: String\r\n        with open(\"static/lightbug_welcome.html\", \"r\") as f:\r\n            html = f.read()\r\n\r\n        return OK(html.as_bytes(), \"text/html\")</s>"
+}
+{
+    "text": "<s>[INST] This struct takes the HTTPService as a parameters and has an instance method. The insntance method takes an HTTP request as input and analyzes the uri: if the uri path is \"/\", then it prints into the console \"I'm on the index path!\", if the uri path is \"/first\" or \"/second\", it prints into the console\"I'm on /first!\" or \"I'm on /second!\", respectively. If the uri path is \"/echo\", it prints the body of the request as a string. At the end, this method should return an OK with the body of the message.[/INST]@value\nstruct ExampleRouter(HTTPService):\n    fn func(self, req: HTTPRequest) raises -> HTTPResponse:\n        var body = req.body_raw\n        var uri = req.uri()\n\n        if uri.path() == \"/\":\n            print(\"I'm on the index path!\")\n        if uri.path() == \"/first\":\n            print(\"I'm on /first!\")\n        elif uri.path() == \"/second\":\n            print(\"I'm on /second!\")\n        elif uri.path() == \"/echo\":\n            print(String(body))\n\n        return OK(body)</s>"
+}
+{
+    "text": "<s>[INST] A constructor method that allocates a pointer in a variable called data, which is initialized with zero, and returns an instance of the class.[/INST]    @always_inline\n    fn __init__() -> Self:\n        # allocate a DTypePointer on stack that doesn't need to be freed.\n        var data = stack_allocation[width, T]()\n        memset_zero(data, width)\n        return Self {data: data}</s>"
+}
+{
+    "text": "<s>[INST] This is a hack to make sure both SIMD have _width length.\r\n SIMD[T, width] += SIMD[T, _width] is always an error.[/INST]    @always_inline\n    fn accumulate[_width: Int](inout self, val: SIMD[T, _width]) -> None:\n \n        var newVal = self.data.simd_load[_width]() + val\n        self.data.simd_store[_width](newVal)</s>"
+}
+{
+    "text": "<s>[INST] Provides a view into a tensor representing a 1D slice on its first or first 2 dimensions.\r\nSame function signatures as Tensor but without owning the data.[/INST]struct TensorSlice:\r\n    var _data: BufferPtrFloat32\r\n    var _shape: TensorShape\r\n\r\n    fn __init__(inout self, t: TensorF32, layer: Int) raises:\r\n        var elements_per_layer = t.num_elements() // t.dim(0)\r\n        self._data = t.data().offset(layer * elements_per_layer)\r\n        if t.rank() == 2:\r\n            self._shape = TensorShape(t.dim(1))\r\n        elif t.rank() == 3:\r\n            self._shape = TensorShape(t.dim(1), t.dim(2))\r\n        else:\r\n            # Compiler complains if _shape not defined\r\n            self._shape = TensorShape(1)\r\n            raise Error(\"TensorSlice: rank greater than 3 not implemented.\")</s>"
+}
+{
+    "text": "<s>[INST] A function that loads data from an specific index into a SIMD structure that holds a float32 type.[/INST]    fn simd_load[nelts: Int](self, idx: Int) -> SIMD[DType.float32, nelts]:\r\n        return self._data.simd_load[nelts](idx)</s>"
+}
+{
+    "text": "<s>[INST] The read_val_int function reads an integer value from a file buffer (buf) and updates the buffer's offset accordingly and returns the read integer value.[/INST]fn read_val_int(inout buf: FileBuf) raises -> Int:\n    # DTypePointer[DType.ui8](buf.data).bitcast[DType.ui8]()\n    var data = buf.data.offset(buf.get_offset()).bitcast[DType.int32]()\n    var result = data.load(0)\n    buf.move_offset(4)\n    return result.to_int()\n</s>"
+}
+{
+    "text": "<s>[INST] The read_val_int function reads an integer value from a file buffer (buf) and updates the buffer's offset accordingly and returns the read float 32 value.[/INST]fn read_val_float32(inout buf: FileBuf) raises -> Float32:\r\n    # DTypePointer[DType.ui8](buf.data).bitcast[DType.ui8]()\r\n    var val = buf.data.offset(buf.get_offset()).bitcast[DType.float32]().load(0)\r\n    buf.move_offset(4)\r\n    return val</s>"
+}
+{
+    "text": "<s>[INST] The read_val_str reads from a file buffer each character from a string and returns that string.[/INST]fn read_val_str(inout buf: FileBuf, slen: Int) raises -> PointerString:\r\n    var str = PointerString.alloc(slen + 1)\r\n    for i in range(slen):\r\n        str.store(i, buf.data.load(buf.get_offset()))\r\n        buf.move_offset(1)\r\n    str.store(slen, 0)\r\n\r\n    return str</s>"
+}
+{
+    "text": "<s>[INST] Quicksort helper function to find the partition position[/INST]fn partition(\n    inout array: PointerStrings, inout indices: DynamicVector[Int], low: Int, high: Int\n) -> Int:\n    var pivot = array[high]\n    var ii = low - 1\n    for jj in range(low, high):\n        if string_compare(pivot, array[jj]) == 1:\n            # If element smaller than pivot, swap\n            ii = ii + 1\n\n            var tmp = array[ii]\n            var tmp_idx = indices[ii]\n            array.store(ii, array[jj])\n            indices[ii] = indices[jj]\n            array.store(jj, tmp)\n            indices[jj] = tmp_idx\n\n    # Swap the pivot element\n    var tmp = array[ii + 1]\n    var tmp_idx = indices[ii + 1]\n    array.store(ii + 1, array[high])\n    indices[ii + 1] = indices[high]\n    array.store(high, tmp)\n    indices[high] = tmp_idx\n\n    return ii + 1\n</s>"
+}
+{
+    "text": "<s>[INST] Quicksort function[/INST]fn quicksort(\n    inout array: PointerStrings, inout indices: DynamicVector[Int], low: Int, high: Int\n):\n    if low < high:\n        var pi = partition(array, indices, low, high)\n        quicksort(array, indices, low, pi - 1)\n        quicksort(array, indices, pi + 1, high)</s>"
+}
+{
+    "text": "<s>[INST] The function move_offset takes an instance of a class and a integer, creates a variable called new_offset that is the offset of the instance plus the integer passed as argument and if the new_offset in greater than the original offset or less than zero, is raises an error, and if not, the offset of the instance becomes the value of new_offset.[/INST]    fn move_offset(inout self, size: Int) raises:\r\n        var new_offset = self.offset + size\r\n        if new_offset > self.size:\r\n            raise Error(\"Resulting offset will be past the end of the FileBuf\")\r\n        if new_offset < 0:\r\n            raise Error(\"Resulting offset will be before the beginning of the FileBuf\")\r\n        self.offset = new_offset</s>"
+}
+{
+    "text": "<s>[INST] This function, bitcast_offset_f32, performs a series of operations on a data structure to obtain a buffer pointer with a specific data type, while also updating an offset within the data structure. [/INST]    fn bitcast_offset_f32(inout self, size: Int) raises -> BufferPtrFloat32:\r\n        var ret = self.data.offset(self.offset).bitcast[DType.float32]()\r\n        self.move_offset(size * sizeof[DType.float32]())\r\n        return ret</s>"
+}
+{
+    "text": "<s>[INST] This function get_offset is an instance method that returns an integer representing the offset and might raise an error. If the offset of the instance is greater than the size of the instance, if raises an error of \"Offset is past the end of the FileBuf\". If the offset of the instance is less than zero, then it raises an error of \"Offset is before the beginning of the FileBuf\".[/INST]    fn get_offset(self) raises -> Int:\n        if self.offset > self.size:\n            raise Error(\"Offset is past the end of the FileBuf\")\n        if self.offset < 0:\n            raise Error(\"Offset is before the beginning of the FileBuf\")\n        return self.offset\n</s>"
+}
+{
+    "text": "<s>[INST] The Tokenizer struct, along with its __init__ method, sets up an environment for tokenization tasks by initializing various components necessary for the tokenizer's operation. The __init__ method specifically prepares the tokenizer with its vocabulary and associated scores, among other settings, from a provided buffer.[/INST]struct Tokenizer:\n    var vocab: PointerStrings\n    var vocab_scores: BufferPtrFloat32\n    var max_token_length: Int\n    var vocab_size: Int\n    var sorted_vocab: PointerStrings\n    var sorted_indices: DynamicVector[Int]\n\n    fn __init__(inout self, vocab_size: Int, inout buf: FileBuf) raises -> None:\n        self.vocab_size = vocab_size\n        self.max_token_length = read_val_int(buf)\n        self.vocab_scores = BufferPtrFloat32.alloc(self.vocab_size)\n        self.vocab = PointerStrings.alloc(self.vocab_size)\n        self.sorted_vocab = PointerStrings.alloc(0)\n        self.sorted_indices = DynamicVector[Int]()\n\n        for i in range(0, self.vocab_size):\n            var score = read_val_float32(buf)\n            var slen = read_val_int(buf)\n            var token = read_val_str(buf, slen)\n            self.store_token(i, token, score)\n        return None</s>"
+}
+{
+    "text": "<s>[INST] This is an instance method that iterates over a structure (self) and frees the memory that was allocated to that object.[/INST]    fn __del__(owned self):\n        for i in range(0, self.vocab_size):\n            self.vocab[i].free()\n        self.vocab.free()\n        self.vocab_scores.free()\n        self.sorted_vocab.free()\n</s>"
+}
+{
+    "text": "<s>[INST] Sort vocab by string_compare[/INST]fn sort(inout self) -> None:\r\n        if len(self.sorted_indices) < self.vocab_size:\r\n            self.sorted_indices = DynamicVector[Int](capacity=self.vocab_size)\r\n            self.sorted_vocab = PointerStrings.alloc(self.vocab_size)\r\n            for ii in range(self.vocab_size):\r\n                self.sorted_vocab.store(ii, self.vocab[ii])\r\n                self.sorted_indices.push_back(ii)\r\n\r\n        var n = self.vocab_size\r\n        quicksort(self.sorted_vocab, self.sorted_indices, 0, n - 1)\r\n        return None</s>"
+}
+{
+    "text": "<s>[INST] Binary search that returns -1 if string is not found[/INST]\r\n    fn find(inout self, token_o: PointerString) -> Int:\r\n        var token = wrap(token_o)\r\n        var n = self.vocab_size\r\n        if len(self.sorted_indices) < n:\r\n            self.sort()\r\n        var left = 0\r\n        var right = n - 1\r\n        while left <= right:\r\n            var mid = left + (right - left) // 2\r\n            var comparison = string_compare(self.sorted_vocab[mid], token)\r\n            if comparison == 0:\r\n                return self.sorted_indices[mid]\r\n            if comparison < 0:\r\n                left = mid + 1\r\n            else:\r\n                right = mid - 1\r\n        return -1</s>"
+}
+{
+    "text": "<s>[INST] Write a function that takes two tensors of float numbers and sums their elements[/INST]@always_inline\nfn accum(inout a: TensorF32, b: TensorF32) -> None:\n    var size = a.dim(0)\n\n    @parameter\n    fn _acc[_nelts: Int](j: Int):\n        a.simd_store[_nelts](j, a.simd_load[_nelts](j) + b.simd_load[_nelts](j))\n\n    vectorize[_acc, nelts](size)</s>"
+}
+{
+    "text": "<s>[INST] Activation function softmax[/INST]@always_inline\r\nfn softmax(inout x: TensorF32) -> None:\r\n    softmax(x, 0, x.dim(0))</s>"
+}
+{
+    "text": "<s>[INST] Apply RoPE rotation to the q and k vectors for each head\nrotate odd and even dim[/INST]@always_inline\nfn rope_rotation_llama(\n    inout state: RunState,\n    freq_cis_real_row: TensorSlice,\n    freq_cis_imag_row: TensorSlice,\n    config: Config,\n) -> None:\n    # stories model, llama2\n    var head_size = config.head_size</s>"
+}
+{
+    "text": "<s>[INST]         Simple vectorization with (head_size // 2) steps gave junk transformer output.\r\n        Maybe because the nelt ranges end up overlapping between the steps.[/INST]    @parameter\n    fn head_loop(i: Int):\n\n        for j in range(0, config.head_size, 2):\n            var fcr = freq_cis_real_row[j // 2]\n            var fci = freq_cis_imag_row[j // 2]\n            var q0 = state.q[i * head_size + j]\n            var q1 = state.q[i * head_size + j + 1]\n            state.q[i * head_size + j] = q0 * fcr - q1 * fci\n            state.q[i * head_size + j + 1] = q0 * fci + q1 * fcr\n            if i < config.n_kv_heads:\n                var k0 = state.k[i * head_size + j]\n                var k1 = state.k[i * head_size + j + 1]\n                state.k[i * head_size + j] = k0 * fcr - k1 * fci\n                state.k[i * head_size + j + 1] = k0 * fci + k1 * fcr</s>"
+}
+{
+    "text": "<s>[INST]  return argmax of v[/INST]fn argmax(v: TensorF32) -> Int:\n  \n    var max_i: Int = 0\n    var max_p: Float32 = v[0]\n    for i in range(v.dim(0)):\n        if v[i] > max_p:\n            max_i = i\n            max_p = v[i]\n    return max_i\n</s>"
+}
+{
+    "text": "<s>[INST] This function takes a Tensor of float32 and returns an integer. It is declared the value n stating the number for sampling. Then the variable r is defined as a random value within (min, max) float32 range and cdf will accumulate the propabilities of the input tensor. If the loop completes without returning (which might occur due to rounding errors in floating-point addition), the function defaults to returning n - 1, the last index. This is a safety net to ensure the function always returns a valid index.[/INST]fn sample(probabilities: TensorF32) -> Int:\n    var n = probabilities.dim(0)\n    # Sample index from probabilities, they must sum to 1\n    # get random value within (min, max) float32 range\n    var r = rand[DType.float32](1)\n    var cdf: Float32 = 0.0\n    for i in range(n):\n        cdf += probabilities[i]\n        if r[0] < cdf:\n            return i\n    return n - 1  # In case of rounding errors\n</s>"
+}
+{
+    "text": "<s>[INST] This sample implements a simple reduction operation on a\nLarge array of values to produce a single result.\nReductions and scans are common algorithm patterns in parallel computing.[/INST]from time import now\n\nfrom algorithm import sum\nfrom benchmark import Unit, benchmark, keep\nfrom buffer import Buffer\nfrom tensor import Tensor\nfrom python import Python\nfrom tensor import rand\n\nalias size_small: Int = 1 << 21\nalias size_large: Int = 1 << 27\nalias type = DType.float32\n\n\nfn stdlib_reduce_sum[size: Int](array: Tensor[type]) -> Float32:\n    var my_sum = sum(array._to_buffer())\n    return my_sum\n\n\nfn bench[\n    func: fn[size: Int] (array: Tensor[type]) -> Float32,\n    size: Int,\n    name: StringLiteral,\n](array: Tensor[type]) raises:\n    @parameter\n    fn runner():\n        var result = func[size](array)\n        keep(result)\n\n    var ms = benchmark.run[runner](max_runtime_secs=0.5).mean(Unit.ms)\n    pretty_print(name, size, ms)\n\n\nfn main() raises:\n    var small_array = rand[type](size_small)\n    var large_array = rand[type](size_large)\n\n    bench[naive_reduce_sum, size_small, \"naive\"](small_array)\n    bench[naive_reduce_sum, size_large, \"naive\"](large_array)\n\n    bench[stdlib_reduce_sum, size_small, \"stdlib\"](small_array)\n    bench[stdlib_reduce_sum, size_large, \"stdlib\"](large_array)</s>"
+}
+{
+    "text": "<s>[INST] Write a function to format the output on the console that prints the name with padding of 16 to the left, the elements with 11 padded to the right and the time with two decimal places padded to 8.[/INST]fn pretty_print(name: StringLiteral, elements: Int, time: Float64) raises:\r\n    var py = Python.import_module(\"builtins\")\r\n    _ = py.print(\r\n        py.str(\"{:<16} {:>11,} {:>8.2f}ms\").format(\r\n            String(name) + \" elements:\", elements, time\r\n        )\r\n    )</s>"
+}
+{
+    "text": "<s>[INST] Use the https://en.wikipedia.org/wiki/Kahan_summation_algorithm\nSimple summation of the array elements[/INST]\nfn naive_reduce_sum[size: Int](array: Tensor[type]) -> Float32:\n    var A = array\n    var my_sum = array[0]\n    var c: Float32 = 0.0\n    for i in range(array.dim(0)):\n        var y = array[i] - c\n        var t = my_sum + y\n        c = (t - my_sum) - y\n        my_sum = t\n    return my_sum</s>"
+}
+{
+    "text": "<s>[INST] This sample prints the current host system information using APIs from the sys module.[/INST]from sys.info import *\nfrom sys.info import _current_cpu, _current_target, _triple_attr\n\n\ndef main():\n    var os = \"\"\n    if os_is_linux():\n        os = \"linux\"\n    elif os_is_macos():\n        os = \"macOS\"\n    else:\n        os = \"windows\"\n    var cpu = String(_current_cpu())\n    var arch = String(_triple_attr())\n\n    print(\"System information: \")\n    print(\"    OS             : \", os)\n    print(\"    CPU            : \", cpu)\n    print(\"    Arch           : \", arch)\n\n  \n</s>"
+}
+{
+    "text": "<s>[INST] Returns the number of digits in base-radix that can be represented by\n    the type without change.\n\n    For integer types, this is the number of bits not counting the sign bit and\n    the padding bits (if any). For floating-point types, this is the digits of\n    the mantissa (for IEC 559/IEEE 754 implementations, this is the number of\n    digits stored for the mantissa plus one, because the mantissa has an\n    implicit leading 1 and binary point).\n\n    Parameters:\n        type: The type to get the digits for.\n\n    Returns:\n        The number of digits that can be represented by the type without change.\n[/INST]@always_inline(\"nodebug\")\r\nfn _digits[type: DType]() -> Int:\r\n\r\n    alias mlir_type = __mlir_type[`!pop.scalar<`, type.value, `>`]\r\n\r\n    @parameter\r\n    if type == DType.bool:\r\n        return 1\r\n\r\n    @parameter\r\n    if type.is_integral():\r\n        var bitwidth = bitwidthof[mlir_type]()\r\n        return bitwidth - 1 if type.is_signed() else bitwidth\r\n\r\n    @parameter\r\n    if type == DType.float16:\r\n        return 11\r\n\r\n    @parameter\r\n    if type == DType.bfloat16:\r\n        return 8\r\n\r\n    @parameter\r\n    if type == DType.float32:\r\n        return 24\r\n\r\n    @parameter\r\n    if type == DType.float64:\r\n        return 53\r\n    # Unreachable.\r\n    return -1</s>"
+}
+{
+    "text": "<s>[INST] Bitcasts the floating-point value to an integer.\r\n\r\n    Parameters:\r\n        type: The floating-point type.\r\n\r\n    Args:\r\n        value: The value to bitcast.\r\n\r\n    Returns:\r\n        An integer representation of the floating-point value.\r\n [/INST]@always_inline\r\nfn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:\r\n\r\n    alias integer_type = _integral_type_of[type]()\r\n    return int(bitcast[integer_type, 1](value))\r\n</s>"
+}
+{
+    "text": "<s>[INST] Bitcasts the integer value to a floating-point value.\r\n\r\n    Parameters:\r\n        type: The floating-point type.\r\n\r\n    Args:\r\n        value: The value to bitcast.\r\n\r\n    Returns:\r\n        A float-point representation of the integer value.[/INST]@always_inline\r\nfn _fp_bitcast_from_integer[type: DType](value: Int) -> Scalar[type]:\r\n\r\n    alias integer_type = _integral_type_of[type]()\r\n    var int_val = SIMD[integer_type, 1](value)\r\n    return bitcast[type, 1](int_val)</s>"
+}
+{
+    "text": "<s>[INST] Returns the max exponent of a floating point type.\n\n[/INST] @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    fn max_exponent() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n\r\n        @parameter\r\n        if type == DType.float16:\r\n            return 16\r\n        elif type == DType.float32 or type == DType.bfloat16:\r\n            return 128\r\n\r\n        debug_assert(type == DType.float64, \"must be float64\")\r\n        return 1024\r\n</s>"
+}
+{
+    "text": "<s>[INST] Returns the exponent width of a floating point type.\r\n\r\n [/INST] @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    fn exponent_width() -> Int:\r\n        \r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n\r\n        @parameter\r\n        if type == DType.float16:\r\n            return 5\r\n        elif type == DType.float32 or type == DType.bfloat16:\r\n            return 8\r\n\r\n        debug_assert(type == DType.float64, \"must be float64\")\r\n        return 11\r\n</s>"
+}
+{
+    "text": "<s>[INST] Returns the mantissa mask of a floating point type.\r\n[/INST]    @staticmethod\r\n    @always_inline\r\n    fn mantissa_mask() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return (1 << Self.mantissa_width()) - 1</s>"
+}
+{
+    "text": "<s>[INST] Returns the exponent bias of a floating point type.[/INST]    @staticmethod\r\n    @always_inline\r\n    fn exponent_bias() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.max_exponent() - 1</s>"
+}
+{
+    "text": "<s>[INST] Returns the sign mask of a floating point type. It is computed by\r\n        `1 << (exponent_width + mantissa_mask)`.[/INST]    @staticmethod\r\n    @always_inline\r\n    fn sign_mask() -> Int:\r\n\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return 1 << (Self.exponent_width() + Self.mantissa_width())</s>"
+}
+{
+    "text": "<s>[INST] Returns the exponent and mantissa mask of a floating point type. It is\r\n        computed by `exponent_mask + mantissa_mask`.[/INST]    @staticmethod\r\n    @always_inline\r\n    fn exponent_mantissa_mask() -> Int:\r\n\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.exponent_mask() + Self.mantissa_mask()</s>"
+}
+{
+    "text": "<s>[INST] Returns the quiet NaN mask for a floating point type.\n\n        The mask is defined by evaluating:\n\n        ```\n        (1<<exponent_width-1)<<mantissa_width + 1<<(mantissa_width-1)\n        ```\n\n        Returns:\n            The quiet NaN mask.\n[/INST]    @staticmethod\r\n    @always_inline\r\n    fn quiet_nan_mask() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        var mantissa_width_val = Self.mantissa_width()\r\n        return (1 << Self.exponent_width() - 1) << mantissa_width_val + (\r\n            1 << (mantissa_width_val - 1)\r\n        )</s>"
+}
+{
+    "text": "<s>[INST] Bitcasts the floating-point value to an integer.\r\n\r\n        Args:\r\n            value: The floating-point type.\r\n\r\n        Returns:\r\n            An integer representation of the floating-point value.\r\n    [/INST]    @staticmethod\r\n    @always_inline\r\n    fn bitcast_to_integer(value: Scalar[type]) -> Int:\r\n\r\n        return _fp_bitcast_to_integer[type](value)</s>"
+}
+{
+    "text": "<s>[INST] Bitcasts the floating-point value from an integer.\r\n\r\n        Args:\r\n            value: The int value.\r\n\r\n        Returns:\r\n            An floating-point representation of the Int.\r\n       [/INST]    @staticmethod\r\n    @always_inline\r\n    fn bitcast_from_integer(value: Int) -> Scalar[type]:\r\n\r\n        return _fp_bitcast_from_integer[type](value)</s>"
+}
+{
+    "text": "<s>[INST] Returns the sign of the floating point value. True if the sign is set\r\n        and False otherwise.\r\n\r\n        Args:\r\n            value: The floating-point type.\r\n\r\n        Returns:\r\n            Returns True if the sign is set and False otherwise.\r\n [/INST]    @staticmethod\r\n    @always_inline\r\n    fn get_sign(value: Scalar[type]) -> Bool:\r\n\r\n\r\n        return (Self.bitcast_to_integer(value) & Self.sign_mask()) != 0</s>"
+}
+{
+    "text": "<s>[INST] Sets the sign of the floating point value.\n\n        Args:\n            value: The floating-point value.\n            sign: True to set the sign and false otherwise.\n\n        Returns:\n            Returns the floating point value with the sign set.\n    [/INST]    @staticmethod\r\n    @always_inline\r\n    fn set_sign(value: Scalar[type], sign: Bool) -> Scalar[type]:\r\n\r\n        var bits = Self.bitcast_to_integer(value)\r\n        var sign_bits = Self.sign_mask()\r\n        bits &= ~sign_bits\r\n        if sign:\r\n            bits |= sign_bits\r\n        return Self.bitcast_from_integer(bits)</s>"
+}
+{
+    "text": "<s>[INST] Returns the exponent bits of the floating-point value.\r\n\r\n        Args:\r\n            value: The floating-point value.\r\n\r\n        Returns:\r\n            Returns the exponent bits.\r\n       [/INST]    @staticmethod\r\n    @always_inline\r\n    fn get_exponent_without_bias(value: Scalar[type]) -> Int:\r\n\r\n\r\n        return Self.get_exponent(value) - Self.exponent_bias()</s>"
+}
+{
+    "text": "<s>[INST] Sets the exponent bits of the floating-point value.\r\n\r\n        Args:\r\n            value: The floating-point value.\r\n            exponent: The exponent bits.\r\n\r\n        Returns:\r\n            Returns the floating-point value with the exponent bits set.\r\n        [/INST]    @staticmethod\n    @always_inline\n    fn set_exponent(value: Scalar[type], exponent: Int) -> Scalar[type]:\n\n        var bits = Self.bitcast_to_integer(value)\n        bits &= ~Self.exponent_mask()\n        bits |= (exponent << Self.mantissa_width()) & Self.exponent_mask()\n        return Self.bitcast_from_integer(bits)</s>"
+}
+{
+    "text": "<s>[INST] Checks if the value is infinite.\r\n\r\n    This is always False for non-FP data types.\r\n\r\n    Parameters:\r\n        type: The value dtype.\r\n        simd_width: The width of the SIMD vector.\r\n\r\n    Args:\r\n        val: The value to check.\r\n\r\n    Returns:\r\n        True if val is infinite and False otherwise.\r\n   [/INST]@always_inline(\"nodebug\")\r\nfn isinf[\r\n    type: DType, simd_width: Int\r\n](val: SIMD[type, simd_width]) -> SIMD[DType.bool, simd_width]:\r\n\r\n\r\n    @parameter\r\n    if not type.is_floating_point():\r\n        return False\r\n\r\n    alias negative_infinity_test: UInt32 = 0x0004\r\n    alias positive_infinity_test: UInt32 = 0x0200\r\n    return llvm_intrinsic[\"llvm.is.fpclass\", SIMD[DType.bool, simd_width]](\r\n        val.value, (negative_infinity_test | positive_infinity_test).value\r\n    )</s>"
+}
+{
+    "text": "<s>[INST] Checks if the value is Not a Number (NaN).\r\n\r\n    Parameters:\r\n        type: The value dtype.\r\n        simd_width: The width of the SIMD vector.\r\n\r\n    Args:\r\n        val: The value to check.\r\n\r\n    Returns:\r\n        True if val is NaN and False otherwise.\r\n[/INST]@always_inline(\"nodebug\")\r\nfn isnan[\r\n    type: DType, simd_width: Int\r\n](val: SIMD[type, simd_width]) -> SIMD[DType.bool, simd_width]:\r\n\r\n\r\n    @parameter\r\n    if not type.is_floating_point():\r\n        return False\r\n\r\n    @parameter\r\n    if type == DType.bfloat16:\r\n        alias int_dtype = _integral_type_of[type]()\r\n        var int_val = bitcast[int_dtype, simd_width](val)\r\n        return int_val & SIMD[int_dtype, simd_width](0x7FFF) > SIMD[\r\n            int_dtype, simd_width\r\n        ](0x7F80)\r\n\r\n    alias signaling_nan_test: UInt32 = 0x0001\r\n    alias quiet_nan_test: UInt32 = 0x0002\r\n    return llvm_intrinsic[\"llvm.is.fpclass\", SIMD[DType.bool, simd_width]](\r\n        val.value, (signaling_nan_test | quiet_nan_test).value\r\n    )\r\n</s>"
+}
+{
+    "text": "<s>[INST] Performs AND operation on two boolean inputs.\r\n\r\n    Args:\r\n        a: The first boolean input.\r\n        b: The second boolean input.\r\n\r\n    Returns:\r\n        The result of AND operation on the inputs.\r\n [/INST]@always_inline\nfn _reduce_and_fn(a: Bool, b: Bool) -> Bool:\n\n    return a and b</s>"
+}
+{
+    "text": "<s>[INST] Applies a given element binary function to each pair of corresponding\r\n    elements in two tuples.\r\n\r\n    Example Usage:\r\n        var a: StaticTuple[Int, size]\r\n        var b: StaticTuple[Int, size]\r\n        var c = _int_tuple_binary_apply[size, Int.add](a, b)\r\n\r\n    Parameters:\r\n        size: Static size of the operand and result tuples.\r\n        binary_fn: Binary function to apply to tuple elements.\r\n\r\n    Args:\r\n        a: Tuple containing lhs operands of the elementwise binary function.\r\n        b: Tuple containing rhs operands of the elementwise binary function.\r\n\r\n    Returns:\r\n        Tuple containing the result.\r\n [/INST]@always_inline\r\nfn _int_tuple_binary_apply[\r\n    size: Int,\r\n    binary_fn: fn (Int, Int) -> Int,\r\n](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[\r\n    Int, size\r\n]:\r\n\r\n\r\n    var c = StaticTuple[Int, size]()\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_apply[idx: Int]():\r\n        var a_elem: Int = a.__getitem__[idx]()\r\n        var b_elem: Int = b.__getitem__[idx]()\r\n        c.__setitem__[idx](binary_fn(a_elem, b_elem))\r\n\r\n    unroll[do_apply, size]()\r\n\r\n    return c</s>"
+}
+{
+    "text": "<s>[INST] Applies a given element compare function to each pair of corresponding\r\n    elements in two tuples and produces a tuple of Bools containing result.\r\n\r\n    Example Usage:\r\n        var a: StaticTuple[Int, size]\r\n        var b: StaticTuple[Int, size]\r\n        var c = _int_tuple_compare[size, Int.less_than](a, b)\r\n\r\n    Parameters:\r\n        size: Static size of the operand and result tuples.\r\n        comp_fn: Compare function to apply to tuple elements.\r\n\r\n    Args:\r\n        a: Tuple containing lhs operands of the elementwise compare function.\r\n        b: Tuple containing rhs operands of the elementwise compare function.\r\n\r\n    Returns:\r\n        Tuple containing the result.\r\n   [/INST]@always_inline\r\nfn _int_tuple_compare[\r\n    size: Int,\r\n    comp_fn: fn (Int, Int) -> Bool,\r\n](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[\r\n    mlir_bool,\r\n    size,\r\n]:\r\n\r\n\r\n    var c = StaticTuple[mlir_bool, size]()\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_compare[idx: Int]():\r\n        var a_elem: Int = a.__getitem__[idx]()\r\n        var b_elem: Int = b.__getitem__[idx]()\r\n        c.__setitem__[idx](comp_fn(a_elem, b_elem).value)\r\n\r\n    unroll[do_compare, size]()\r\n\r\n    return c\r\n</s>"
+}
+{
+    "text": "<s>[INST] Constructs a static int tuple of the given size.\r\n\r\n        Returns:\r\n            The constructed tuple.\r\n       [/INST] @always_inline\n    fn __init__() -> Self:\n\n        return 0\n</s>"
+}
+{
+    "text": "<s>[INST]        Constructs a sized 1 static int tuple of given the element value.\r\n\r\n        Args:\r\n            value: The initial value.\r\n\r\n        Returns:\r\n            The constructed tuple.\r\n       [/INST]    @always_inline\r\n    fn __init__(value: __mlir_type.index) -> Self:\r\n\r\n        constrained[size == 1]()\r\n        return Int(value)</s>"
+}
+{
+    "text": "<s>[INST] Constructs a static int tuple given a tuple of integers.\r\n\r\n        Args:\r\n            elems: The tuple to copy from.\r\n\r\n        Returns:\r\n            The constructed tuple.\r\n        [/INST] @always_inline\r\n    fn __init__(elems: Tuple[Int, Int]) -> Self:\r\n\r\n\r\n        var num_elements = len(elems)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @parameter\r\n        fn fill[idx: Int]():\r\n            tup[idx] = elems.get[idx, Int]()\r\n\r\n        unroll[fill, 2]()\r\n\r\n        return tup</s>"
+}
+{
+    "text": "<s>[INST] Constructs a static int tuple given a tuple of integers.\r\n\r\n        Args:\r\n            elems: The tuple to copy from.\r\n\r\n        Returns:\r\n            The constructed tuple.\r\n        [/INST]@always_inline\r\n    fn __init__(elems: Tuple[Int, Int, Int, Int]) -> Self:\r\n\r\n\r\n        var num_elements = len(elems)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @parameter\r\n        fn fill[idx: Int]():\r\n            tup[idx] = elems.get[idx, Int]()\r\n\r\n        unroll[fill, 4]()\r\n\r\n        return tup\r\n</s>"
+}
+{
+    "text": "<s>[INST] Constructs a 3-D Index from the given values.\r\n\r\n    Parameters:\r\n        T0: The type of the 1st argument.\r\n        T1: The type of the 2nd argument.\r\n        T2: The type of the 3rd argument.\r\n\r\n    Args:\r\n        x: The 1st initial value.\r\n        y: The 2nd initial value.\r\n        z: The 3nd initial value.\r\n\r\n    Returns:\r\n        The constructed StaticIntTuple.\r\n    [/INST]@always_inline\nfn Index[\n    T0: Intable, T1: Intable, T2: Intable\n](x: T0, y: T1, z: T2) -> StaticIntTuple[3]:\n\n    return StaticIntTuple[3](int(x), int(y), int(z))</s>"
+}
+{
+    "text": "<s>[INST] Constructs a 4-D Index from the given values.\n\n    Parameters:\n        T0: The type of the 1st argument.\n        T1: The type of the 2nd argument.\n        T2: The type of the 3rd argument.\n        T3: The type of the 4th argument.\n\n    Args:\n        x: The 1st initial value.\n        y: The 2nd initial value.\n        z: The 3nd initial value.\n        w: The 4th initial value.\n\n    Returns:\n        The constructed StaticIntTuple.\n[/INST]@always_inline\nfn Index[\n    T0: Intable, T1: Intable, T2: Intable, T3: Intable\n](x: T0, y: T1, z: T2, w: T3) -> StaticIntTuple[4]:\n\n    return StaticIntTuple[4](int(x), int(y), int(z), int(w))</s>"
+}
+{
+    "text": "<s>[INST] Constructs a 5-D Index from the given values.\r\n\r\n    Parameters:\r\n        T0: The type of the 1st argument.\r\n        T1: The type of the 2nd argument.\r\n        T2: The type of the 3rd argument.\r\n        T3: The type of the 4th argument.\r\n        T4: The type of the 5th argument.\r\n\r\n    Args:\r\n        x: The 1st initial value.\r\n        y: The 2nd initial value.\r\n        z: The 3nd initial value.\r\n        w: The 4th initial value.\r\n        v: The 5th initial value.\r\n\r\n    Returns:\r\n        The constructed StaticIntTuple.\r\n    [/INST]@always_inline\r\nfn Index[\r\n    T0: Intable, T1: Intable, T2: Intable, T3: Intable, T4: Intable\r\n](x: T0, y: T1, z: T2, w: T3, v: T4) -> StaticIntTuple[5]:\r\n\r\n    return StaticIntTuple[5](int(x), int(y), int(z), int(w), int(v))</s>"
+}
+{
+    "text": "<s>[INST] Returns the current monotonic time time in nanoseconds. This function\r\n    queries the current platform's monotonic clock, making it useful for\r\n    measuring time differences, but the significance of the returned value\r\n    varies depending on the underlying implementation.\r\n\r\n    Returns:\r\n        The current time in ns.\r\n    [/INST]@always_inline\r\nfn now() -> Int:\r\n\r\n    return _monotonic_nanoseconds()\r\n</s>"
+}
+{
+    "text": "<s>[INST] Measures the time spent in the function.\r\n\r\n    Parameters:\r\n        func: The function to time.\r\n\r\n    Returns:\r\n        The time elapsed in the function in ns.\r\n   [/INST]@always_inline\r\n@parameter\r\nfn time_function[func: fn () capturing -> None]() -> Int:\r\n\r\n\r\n    @parameter\r\n    if os_is_windows():\r\n        return _time_function_windows[func]()\r\n\r\n    var tic = now()\r\n    func()\r\n    var toc = now()\r\n    return toc - tic</s>"
+}
+{
+    "text": "<s>[INST] Suspends the current thread for the seconds specified.\r\n\r\n    Args:\r\n        sec: The number of seconds to sleep for.\r\n   [/INST]fn sleep(sec: Float64):\r\n\r\n    alias NANOSECONDS_IN_SECOND = 1_000_000_000\r\n    var total_secs = _floor(sec)\r\n    var tv_spec = _CTimeSpec(\r\n        int(total_secs.cast[DType.index]()),\r\n        int((sec - total_secs) * NANOSECONDS_IN_SECOND),\r\n    )\r\n    var req = Pointer[_CTimeSpec].address_of(tv_spec)\r\n    var rem = Pointer[_CTimeSpec].get_null()\r\n    _ = external_call[\"nanosleep\", Int32](req, rem)</s>"
+}
+{
+    "text": "<s>[INST] Suspends the current thread for the seconds specified.\r\n\r\n    Args:\r\n        sec: The number of seconds to sleep for.\r\n    [/INST]fn sleep(sec: Int):\r\n\r\n\r\n    @parameter\r\n    if os_is_windows():\r\n        # In Windows the argument is in milliseconds.\r\n        external_call[\"Sleep\", NoneType](sec * 1000)\r\n    else:\r\n        external_call[\"sleep\", NoneType](sec)</s>"
+}
+{
+    "text": "<s>[INST] Performs base64 encoding on the input string.\r\n\r\n    Args:\r\n      str: The input string.\r\n\r\n    Returns:\r\n      Base64 encoding of the input string.\r\n [/INST]fn b64encode(str: String) -> String:\n\n    alias lookup = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\"\n    var b64chars = lookup.data()\n\n    var length = len(str)\n    var out = List[Int8](capacity=length + 1)\n\n    @parameter\n    @always_inline\n    fn s(idx: Int) -> Int:\n        return int(str._buffer[idx])\n\n    var end = length - (length % 3)\n    for i in range(0, end, 3):\n        var si = s(i)\n        var si_1 = s(i + 1)\n        var si_2 = s(i + 2)\n        out.append(b64chars.load(si // 4))\n        out.append(b64chars.load(((si * 16) % 64) + si_1 // 16))\n        out.append(b64chars.load(((si_1 * 4) % 64) + si_2 // 64))\n        out.append(b64chars.load(si_2 % 64))\n\n    var i = end\n    if i < length:\n        var si = s(i)\n        out.append(b64chars.load(si // 4))\n        if i == length - 1:\n            out.append(b64chars.load((si * 16) % 64))\n            out.append(ord(\"=\"))\n        elif i == length - 2:\n            var si_1 = s(i + 1)\n            out.append(b64chars.load(((si * 16) % 64) + si_1 // 16))\n            out.append(b64chars.load((si_1 * 4) % 64))\n        out.append(ord(\"=\"))\n    out.append(0)\n    return String(out ^)</s>"
+}
+{
+    "text": "<s>[INST] Iterator over immutable Dict key references.\r\n\r\n    Parameters:\r\n        K: The key type of the elements in the dictionary.\r\n        V: The value type of the elements in the dictionary.\r\n        dict_mutability: Whether the reference to the vector is mutable.\r\n        dict_lifetime: The lifetime of the List\r\n  [/INST]@value\nstruct _DictKeyIter[\n    K: KeyElement,\n    V: CollectionElement,\n    dict_mutability: __mlir_type.`i1`,\n    dict_lifetime: AnyLifetime[dict_mutability].type,\n]:\n\n\n    alias imm_dict_lifetime = __mlir_attr[\n        `#lit.lifetime.mutcast<`, dict_lifetime, `> : !lit.lifetime<1>`\n    ]\n    alias ref_type = Reference[K, __mlir_attr.`0: i1`, Self.imm_dict_lifetime]\n\n    var iter: _DictEntryIter[K, V, dict_mutability, dict_lifetime]\n\n    fn __iter__(self) -> Self:\n        return self\n\n    fn __next__(inout self) -> Self.ref_type:\n        var entry_ref = self.iter.__next__()\n        var mlir_ptr = __mlir_op.`lit.ref.to_pointer`(\n            Reference(entry_ref[].key).value\n        )\n        var key_ptr = AnyPointer[K] {\n            value: __mlir_op.`pop.pointer.bitcast`[\n                _type = AnyPointer[K].pointer_type\n            ](mlir_ptr)\n        }\n        return __mlir_op.`lit.ref.from_pointer`[\n            _type = Self.ref_type.mlir_ref_type\n        ](key_ptr.value)\n\n    fn __len__(self) -> Int:\n        return self.iter.__len__()</s>"
+}
+{
+    "text": "<s>[INST] Iterator over Dict value references. These are mutable if the dict\r\n    is mutable.\r\n\r\n    Parameters:\r\n        K: The key type of the elements in the dictionary.\r\n        V: The value type of the elements in the dictionary.\r\n        dict_mutability: Whether the reference to the vector is mutable.\r\n        dict_lifetime: The lifetime of the List\r\n    [/INST]@value\nstruct _DictValueIter[\n    K: KeyElement,\n    V: CollectionElement,\n    dict_mutability: __mlir_type.`i1`,\n    dict_lifetime: AnyLifetime[dict_mutability].type,\n]:\n\n\n    alias ref_type = Reference[V, dict_mutability, dict_lifetime]\n\n    var iter: _DictEntryIter[K, V, dict_mutability, dict_lifetime]\n\n    fn __iter__(self) -> Self:\n        return self\n\n    fn __next__(inout self) -> Self.ref_type:\n        var entry_ref = self.iter.__next__()\n        var mlir_ptr = __mlir_op.`lit.ref.to_pointer`(\n            Reference(entry_ref[].value).value\n        )\n        var value_ptr = AnyPointer[V] {\n            value: __mlir_op.`pop.pointer.bitcast`[\n                _type = AnyPointer[V].pointer_type\n            ](mlir_ptr)\n        }\n        return __mlir_op.`lit.ref.from_pointer`[\n            _type = Self.ref_type.mlir_ref_type\n        ](value_ptr.value)\n\n    fn __len__(self) -> Int:\n        return self.iter.__len__()</s>"
+}
+{
+    "text": "<s>[INST] Create an entry from a key and value, computing the hash and storing the key-value pair entry inside a dictionary.\n\n    Parameters:\n        K: The key type of the dict. Must be Hashable+EqualityComparable.\n        V: The value type of the dict.\n[/INST]@value\nstruct DictEntry[K: KeyElement, V: CollectionElement](CollectionElement):\n\n    var hash: Int\n    var key: K \n    var value: V\n  \n\n    fn __init__(inout self, owned key: K, owned value: V):\n        self.hash = hash(key)\n        self.key = key ^\n        self.value = value ^\n</s>"
+}
+{
+    "text": "<s>[INST] A constructor method that allocates a DTypePointer of size defined by the input reserved, which would represent values of type int8, int16, int32 or int64.[/INST]    fn __init__(inout self, reserved: Int):\n        if reserved <= 128:\n            var data = DTypePointer[DType.int8].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()\n        elif reserved <= 2**16 - 2:\n            var data = DTypePointer[DType.int16].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()\n        elif reserved <= 2**32 - 2:\n            var data = DTypePointer[DType.int32].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()\n        else:\n            var data = DTypePointer[DType.int64].alloc(reserved)\n            for i in range(reserved):\n                data[i] = _EMPTY\n            self.data = data.bitcast[DType.invalid]()</s>"
+}
+{
+    "text": "<s>[INST] A method to create a copy of the object passed as argument and return it.[/INST]    fn copy(self, reserved: Int) -> Self:\n        var index = Self(reserved)\n        if reserved <= 128:\n            var data = self.data.bitcast[DType.int8]()\n            var new_data = index.data.bitcast[DType.int8]()\n            memcpy(new_data, data, reserved)\n        elif reserved <= 2**16 - 2:\n            var data = self.data.bitcast[DType.int16]()\n            var new_data = index.data.bitcast[DType.int16]()\n            memcpy(new_data, data, reserved)\n        elif reserved <= 2**32 - 2:\n            var data = self.data.bitcast[DType.int32]()\n            var new_data = index.data.bitcast[DType.int32]()\n            memcpy(new_data, data, reserved)\n        else:\n            var data = self.data.bitcast[DType.int64]()\n            var new_data = index.data.bitcast[DType.int64]()\n            memcpy(new_data, data, reserved)\n        return index ^</s>"
+}
+{
+    "text": "<s>[INST] This function is used to calculate the position of a given index in a data structure. The method has two integer arguments, reserved and slot. The self.data.bitcast[DType.int8]() is performing a bitcast operation on the data contained in self.data, converting it to an array of signed 8-bit integers (int8), and this is done as well for the 16 bit, 32 bit and 64 bit integers.[/INST]    fn get_index(self, reserved: Int, slot: Int) -> Int:\n        if reserved <= 128:\n            var data = self.data.bitcast[DType.int8]()\n            return data.load(slot % reserved).to_int()\n        elif reserved <= 2**16 - 2:\n            var data = self.data.bitcast[DType.int16]()\n            return data.load(slot % reserved).to_int()\n        elif reserved <= 2**32 - 2:\n            var data = self.data.bitcast[DType.int32]()\n            return data.load(slot % reserved).to_int()\n        else:\n            var data = self.data.bitcast[DType.int64]()\n            return data.load(slot % reserved).to_int()</s>"
+}
+{
+    "text": "<s>[INST] The set_index function is designed to set a value in a data structure (self.data) at a specified index (slot). The choice of the data type to use for storing the value depends on the reserved parameter, which determines the maximum capacity of the data structure.[/INST]    fn set_index(inout self, reserved: Int, slot: Int, value: Int):\r\n        if reserved <= 128:\r\n            var data = self.data.bitcast[DType.int8]()\r\n            return data.store(slot % reserved, value)\r\n        elif reserved <= 2**16 - 2:\r\n            var data = self.data.bitcast[DType.int16]()\r\n            return data.store(slot % reserved, value)\r\n        elif reserved <= 2**32 - 2:\r\n            var data = self.data.bitcast[DType.int32]()\r\n            return data.store(slot % reserved, value)\r\n        else:\r\n            var data = self.data.bitcast[DType.int64]()\r\n            return data.store(slot % reserved, value)</s>"
+}
+{
+    "text": "<s>[INST] The number of elements currently stored in the dict.[/INST]var size: Int</s>"
+}
+{
+    "text": "<s>[INST] \"The number of entries currently allocated.\"[/INST]var _n_entries: Int</s>"
+}
+{
+    "text": "<s>[INST] The current reserved size of the dictionary.[/INST]var _reserved: Int</s>"
+}
+{
+    "text": "<s>[INST] Initialize an empty dictiontary.[/INST]    fn __init__(inout self):\n\n        self.size = 0\n        self._n_entries = 0\n        self._reserved = 8\n        self._index = _DictIndex(self._reserved)\n        self._entries = Self._new_entries(self._reserved)</s>"
+}
+{
+    "text": "<s>[INST] Copy an existing dictiontary.\r\n\r\n        Args:\r\n            existing: The existing dict.\r\n        [/INST]    fn __init__(inout self, existing: Self):\n\n        self.size = existing.size\n        self._n_entries = existing._n_entries\n        self._reserved = existing._reserved\n        self._index = existing._index.copy(existing._reserved)\n        self._entries = existing._entries</s>"
+}
+{
+    "text": "<s>[INST] Copy an existing dictiontary.\r\n\r\n        Args:\r\n            existing: The existing dict.\r\n        [/INST]    fn __copyinit__(inout self, existing: Self):\n\n        self.size = existing.size\n        self._n_entries = existing._n_entries\n        self._reserved = existing._reserved\n        self._index = existing._index.copy(existing._reserved)\n        self._entries = existing._entries</s>"
+}
+{
+    "text": "<s>[INST] Move data of an existing dict into a new one.\r\n\r\n        Args:\r\n            existing: The existing dict.\r\n        [/INST]    fn __moveinit__(inout self, owned existing: Self):\n\n        self.size = existing.size\n        self._n_entries = existing._n_entries\n        self._reserved = existing._reserved\n        self._index = existing._index ^\n        self._entries = existing._entries ^</s>"
+}
+{
+    "text": "<s>[INST] Retrieve a value out of the dictionary.\r\n\r\n        Args:\r\n            key: The key to retrieve.\r\n\r\n        Returns:\r\n            The value associated with the key, if it's present.\r\n\r\n        Raises:\r\n            \"KeyError\" if the key isn't present.\r\n        [/INST]    fn __getitem__(self, key: K) raises -> V:\n\n        var value = self.find(key)\n        if value:\n            return value.value()\n        raise \"KeyError\"</s>"
+}
+{
+    "text": "<s>[INST]  Set a value in the dictionary by key.\r\n\r\n        Args:\r\n            key: The key to associate with the specified value.\r\n            value: The data to store in the dictionary.\r\n        [/INST]    fn __setitem__(inout self, key: K, value: V):\r\n\r\n        self._insert(key, value)</s>"
+}
+{
+    "text": "<s>[INST] Check if a given value is in the dictionary or not.\n\n        Args:\n            key: The key to check.\n\n        Returns:\n            True if there key exists in the dictionary, False otherwise.\r\n       [/INST]    fn __contains__(self, key: K) -> Bool:\n\n        return self.find(key).__bool__()</s>"
+}
+{
+    "text": "<s>[INST] The number of elements currenly stored in the dictionary.[/INST]    fn __len__(self) -> Int:\r\n       \r\n        return self.size</s>"
+}
+{
+    "text": "<s>[INST] Find a value in the dictionary by key.\r\n\r\n        Args:\r\n            key: The key to search for in the dictionary.\r\n\r\n        Returns:\r\n            An optional value containing a copy of the value if it was present,\r\n            otherwise an empty Optional.\r\n        [/INST]    fn find(self, key: K) -> Optional[V]:\r\n \r\n        var hash = hash(key)\r\n        var found: Bool\r\n        var slot: Int\r\n        var index: Int\r\n        found, slot, index = self._find_index(hash, key)\r\n        if found:\r\n            var ev = self._entries.__get_ref(index)[]\r\n            debug_assert(ev.__bool__(), \"entry in index must be full\")\r\n            return ev.value().value\r\n        return None</s>"
+}
+{
+    "text": "<s>[INST]  Remove a value from the dictionary by key.\r\n\r\n        Args:\r\n            key: The key to remove from the dictionary.\r\n            default: Optionally provide a default value to return if the key\r\n                was not found instead of raising.\r\n\r\n        Returns:\r\n            The value associated with the key, if it was in the dictionary.\r\n            If it wasn't, return the provided default value instead.\r\n\r\n        Raises:\r\n            \"KeyError\" if the key was not present in the dictionary and no\r\n            default value was provided.\r\n       [/INST]    fn pop(inout self, key: K, owned default: Optional[V] = None) raises -> V:\r\n \r\n        var hash = hash(key)\r\n        var found: Bool\r\n        var slot: Int\r\n        var index: Int\r\n        found, slot, index = self._find_index(hash, key)\r\n        if found:\r\n            self._set_index(slot, Self.REMOVED)\r\n            var entry = self._entries.__get_ref(index)[]\r\n            self._entries[index] = None\r\n            self.size -= 1\r\n            debug_assert(entry.__bool__(), \"entry in index must be full\")\r\n            return entry.value().value\r\n        elif default:\r\n            return default.value()\r\n        raise \"KeyError\"</s>"
+}
+{
+    "text": "<s>[INST] Iterate over the dict's keys as immutable references.\r\n\r\n        Parameters:\r\n            mutability: Whether the dict is mutable.\r\n            self_life: The dict's lifetime.\r\n\r\n        Returns:\r\n            An iterator of immutable references to the dictionary keys.\r\n        [/INST]    fn __iter__[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _DictKeyIter[K, V, mutability, self_life]:\r\n\r\n        return _DictKeyIter(\r\n            _DictEntryIter[K, V, mutability, self_life](0, 0, Reference(self))\r\n        )</s>"
+}
+{
+    "text": "<s>[INST] Iterate over the dict's keys as immutable references.\r\n\r\n        Parameters:\r\n            mutability: Whether the dict is mutable.\r\n            self_life: The dict's lifetime.\r\n\r\n        Returns:\r\n            An iterator of immutable references to the dictionary keys.\r\n        [/INST]    fn keys[\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\n    ](\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\n    ) -> _DictKeyIter[K, V, mutability, self_life]:\n\n        return Self.__iter__(self)</s>"
+}
+{
+    "text": "<s>[INST] Iterate over the dict's values as references.\r\n\r\n        Parameters:\r\n            mutability: Whether the dict is mutable.\r\n            self_life: The dict's lifetime.\r\n\r\n        Returns:\r\n            An iterator of references to the dictionary values.\r\n        [/INST]    fn values[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _DictValueIter[K, V, mutability, self_life]:\r\n\r\n        return _DictValueIter(\r\n            _DictEntryIter[K, V, mutability, self_life](0, 0, Reference(self))\r\n        )</s>"
+}
+{
+    "text": "<s>[INST] Iterate over the dict's entries as immutable references.\r\n\r\n        These can't yet be unpacked like Python dict items, but you can\r\n        access the key and value as attributes ie.\r\n\r\n        ```mojo\r\n        for e in dict.items():\r\n            print(e[].key, e[].value)\r\n        ```\r\n\r\n        Parameters:\r\n            mutability: Whether the dict is mutable.\r\n            self_life: The dict's lifetime.\r\n\r\n        Returns:\r\n            An iterator of immutable references to the dictionary entries.\r\n      [/INST]    fn items[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _DictEntryIter[K, V, mutability, self_life]:\r\n\r\n        return _DictEntryIter[K, V, mutability, self_life](\r\n            0, 0, Reference(self)\r\n        )</s>"
+}
+{
+    "text": "<s>[INST] Write a function called new_entries, which is a static method, that takes an integer as input and returns a list. [/INST]    @staticmethod\r\n    fn _new_entries(reserved: Int) -> List[Optional[DictEntry[K, V]]]:\r\n        var entries = List[Optional[DictEntry[K, V]]](capacity=reserved)\r\n        for i in range(reserved):\r\n            entries.append(None)\r\n        return entries</s>"
+}
+{
+    "text": "<s>[INST] A method to insert a key and a value to a dictionary structure.[/INST]    fn _insert(inout self, owned key: K, owned value: V):\r\n        self._insert(DictEntry[K, V](key ^, value ^))</s>"
+}
+{
+    "text": "<s>[INST] The _insert method is responsible for inserting a dictionary entry into the data structure.[/INST]    fn _insert(inout self, owned entry: DictEntry[K, V]):\r\n        self._maybe_resize()\r\n        var found: Bool\r\n        var slot: Int\r\n        var index: Int\r\n        found, slot, index = self._find_index(entry.hash, entry.key)\r\n\r\n        self._entries[index] = entry ^\r\n        if not found:\r\n            self._set_index(slot, index)\r\n            self.size += 1\r\n            self._n_entries += 1</s>"
+}
+{
+    "text": "<s>[INST] A method that returns the index of a given slot.[/INST]    fn _get_index(self, slot: Int) -> Int:\r\n        return self._index.get_index(self._reserved, slot)</s>"
+}
+{
+    "text": "<s>[INST] The _set_index function serves as a proxy method to set an index value within another data structure _index by calling its set_index method. Params _reserved: The maximum capacity of the data structure, necessary for determining the appropriate data type for storage.\r\nslot: The index where the value will be set within the _index data structure.\r\nindex: The integer value to be stored at the specified slot.[/INST]    fn _set_index(inout self, slot: Int, index: Int):\n        return self._index.set_index(self._reserved, slot, index)</s>"
+}
+{
+    "text": "<s>[INST] The _next_index_slot method is responsible for computing the next index slot within the data structure, considering the current slot and perturbation value.[/INST]    fn _next_index_slot(self, inout slot: Int, inout perturb: Int):\r\n        alias PERTURB_SHIFT = 5\r\n        perturb >>= PERTURB_SHIFT\r\n        slot = ((5 * slot) + perturb + 1) % self._reserved</s>"
+}
+{
+    "text": "<s>[INST] The _find_empty_index method is responsible for locating an empty index within the data structure based on a given hash value. [/INST]    fn _find_empty_index(self, hash: Int) -> Int:\r\n        var slot = hash % self._reserved\r\n        var perturb = hash\r\n        for _ in range(self._reserved):\r\n            var index = self._get_index(slot)\r\n            if index == Self.EMPTY:\r\n                return slot\r\n            self._next_index_slot(slot, perturb)\r\n        abort(\"Dict: no empty index in _find_empty_index\")\r\n        return 0\r</s>"
+}
+{
+    "text": "<s>[INST] An instance method that returns true if the data structure is more than 150% loaded.[/INST]    fn _over_load_factor(self) -> Bool:\r\n        return 3 * self.size > 2 * self._reserved\r</s>"
+}
+{
+    "text": "<s>[INST] An instance method that returns a boolean value if the object's attribute _n_entries is greater than 3/4 of the reserved size of the structure.[/INST]    fn _over_compact_factor(self) -> Bool:\r\n        return 4 * self._n_entries > 3 * self._reserved</s>"
+}
+{
+    "text": "<s>[INST] The _maybe_resize method is responsible for potentially resizing the data structure if it exceeds certain load or compact factors.The method first checks whether the load factor exceeds a certain threshold by calling the _over_load_factor method. If it doesn't, it proceeds to check the compact factor. If the load factor is acceptable but the compact factor is exceeded, it calls the _compact method to compact the data structure. If the load factor is exceeded, the method doubles the reserved capacity (self._reserved *= 2), effectively increasing the space available for entries. It resets the size and number of entries and it transfers the old data to the new entries.[/INST]    fn _maybe_resize(inout self):\n        if not self._over_load_factor():\n            if self._over_compact_factor():\n                self._compact()\n            return\n        self._reserved *= 2\n        self.size = 0\n        self._n_entries = 0\n        self._index = _DictIndex(self._reserved)\n        var old_entries = self._entries ^\n        self._entries = self._new_entries(self._reserved)\n\n        for i in range(len(old_entries)):\n            var entry = old_entries.__get_ref(i)[]\n            if entry:\n                self._insert(entry.value())</s>"
+}
+{
+    "text": "<s>[INST] The _compact method is responsible for compacting the data structure by removing any gaps caused by previously removed or overwritten entries. [/INST]    fn _compact(inout self):\n        self._index = _DictIndex(self._reserved)\n        var right = 0\n        for left in range(self.size):\n            while not self._entries.__get_ref(right)[]:\n                right += 1\n                debug_assert(right < self._reserved, \"Invalid dict state\")\n            var entry = self._entries.__get_ref(right)[]\n            debug_assert(entry.__bool__(), \"Logic error\")\n            var slot = self._find_empty_index(entry.value().hash)\n            self._set_index(slot, left)\n            if left != right:\n                self._entries[left] = entry\n                self._entries[right] = None\n\n        self._n_entries = self.size</s>"
+}
+{
+    "text": "<s>[INST] The underlying storage for the list.[/INST]var data: AnyPointer[T]</s>"
+}
+{
+    "text": "<s>[INST] The number of elements in the list.[/INST]var size: Int</s>"
+}
+{
+    "text": "<s>[INST] The amount of elements that can fit in the list without resizing it.[/INST]var capacity: Int</s>"
+}
+{
+    "text": "<s>[INST] Constructs an empty list.[/INST]    fn __init__(inout self):\r\n       \r\n        self.data = AnyPointer[T]()\r\n        self.size = 0\r\n        self.capacity = 0</s>"
+}
+{
+    "text": "<s>[INST] Creates a deep copy of the given list.\r\n\r\n        Args:\r\n            existing: The list to copy.\r\n        [/INST]    fn __init__(inout self, existing: Self):\r\n\r\n        self.__init__(capacity=existing.capacity)\r\n        for e in existing:\r\n            self.append(e[])</s>"
+}
+{
+    "text": "<s>[INST] Constructs a list with the given capacity.\r\n\r\n        Args:\r\n            capacity: The requested capacity of the list.\r\n        [/INST]    fn __init__(inout self, *, capacity: Int):\n\n        self.data = AnyPointer[T].alloc(capacity)\n        self.size = 0\n        self.capacity = capacity</s>"
+}
+{
+    "text": "<s>[INST] Constructs a list from the given values.\r\n\r\n        Args:\r\n            values: The values to populate the list with.[/INST]    fn __init__(inout self, *values: T):\r\n\r\n        self = Self(capacity=len(values))\r\n        for value in values:\r\n            self.append(value[])</s>"
+}
+{
+    "text": "<s>[INST] Move data of an existing list into a new one.\r\n\r\n        Args:\r\n            existing: The existing list.\r\n[/INST]    fn __moveinit__(inout self, owned existing: Self):\n \n        self.data = existing.data\n        self.size = existing.size\n        self.capacity = existing.capacity</s>"
+}
+{
+    "text": "<s>[INST] Creates a deepcopy of the given list.\r\n\r\n        Args:\r\n            existing: The list to copy.\r\n[/INST]    fn __copyinit__(inout self, existing: Self):\r\n\r\n        self = Self(capacity=existing.capacity)\r\n        for i in range(len(existing)):\r\n            self.append(existing[i])</s>"
+}
+{
+    "text": "<s>[INST] Destroy all elements in the list and free its memory.[/INST]    fn __del__(owned self):\r\n\r\n        for i in range(self.size):\r\n            _ = (self.data + i).take_value()\r\n        if self.data:\r\n            self.data.free()</s>"
+}
+{
+    "text": "<s>[INST] Gets the number of elements in the list.\r\n\r\n        Returns:\r\n            The number of elements in the list.\r\n        [/INST]    fn __len__(self) -> Int:\r\n\r\n        return self.size</s>"
+}
+{
+    "text": "<s>[INST] he _realloc method is responsible for reallocating memory for the data structure to accommodate a new capacity. [/INST]    fn _realloc(inout self, new_capacity: Int):\r\n        var new_data = AnyPointer[T].alloc(new_capacity)\r\n\r\n        for i in range(self.size):\r\n            (new_data + i).emplace_value((self.data + i).take_value())\r\n\r\n        if self.data:\r\n            self.data.free()\r\n        self.data = new_data\r\n        self.capacity = new_capacity</s>"
+}
+{
+    "text": "<s>[INST] Appends a value to this list.\r\n\r\n        Args:\r\n            value: The value to append.\r\n[/INST]    fn append(inout self, owned value: T):\r\n\r\n        if self.size >= self.capacity:\r\n            self._realloc(_max(1, self.capacity * 2))\r\n        (self.data + self.size).emplace_value(value ^)\r\n        self.size += 1</s>"
+}
+{
+    "text": "<s>[INST] Pops a value from the back of this list.\r\n\r\n        Returns:\r\n            The popped value.\r\n[/INST]    fn pop_back(inout self) -> T:\r\n\r\n        var ret_val = (self.data + (self.size - 1)).take_value()\r\n        self.size -= 1\r\n        if self.size * 4 < self.capacity:\r\n            if self.capacity > 1:\r\n                self._realloc(self.capacity // 2)\r\n        return ret_val ^</s>"
+}
+{
+    "text": "<s>[INST] Reserves the requested capacity.\r\n\r\n        If the current capacity is greater or equal, this is a no-op.\r\n        Otherwise, the storage is reallocated and the date is moved.\r\n\r\n        Args:\r\n            new_capacity: The new capacity.\r\n        [/INST]    fn reserve(inout self, new_capacity: Int):\r\n\r\n        if self.capacity >= new_capacity:\r\n            return\r\n        self._realloc(new_capacity)</s>"
+}
+{
+    "text": "<s>[INST] Reverses the elements of the list.[/INST]    fn reverse(inout self):\r\n          self._reverse()</s>"
+}
+{
+    "text": "<s>[INST] Clears the elements in the list.[/INST]    fn clear(inout self):        for i in range(self.size):\n            _ = (self.data + i).take_value()\n        self.size = 0</s>"
+}
+{
+    "text": "<s>[INST] Take ownership of the underlying pointer from the list.\r\n\r\n        Returns:\r\n            The underlying data.\r\n        [/INST]    fn steal_data(inout self) -> AnyPointer[T]:\r\n\r\n        var ptr = self.data\r\n        self.data = AnyPointer[T]()\r\n        self.size = 0\r\n        self.capacity = 0\r\n        return ptr</s>"
+}
+{
+    "text": "<s>[INST] Sets a list element at the given index.\r\n\r\n        Args:\r\n            i: The index of the element.\r\n            value: The value to assign.\r\n        [/INST]    fn __setitem__(inout self, i: Int, owned value: T):\r\n       \r\n        debug_assert(-self.size <= i < self.size, \"index must be within bounds\")\r\n\r\n        var normalized_idx = i\r\n        if i < 0:\r\n            normalized_idx += len(self)\r\n\r\n        _ = (self.data + normalized_idx).take_value()\r\n        (self.data + normalized_idx).emplace_value(value ^)</s>"
+}
+{
+    "text": "<s>[INST] Adjusts the span based on the list length.[/INST]    @always_inline\r\n    fn _adjust_span(self, span: Slice) -> Slice:\r\n      \r\n        var adjusted_span = span\r\n\r\n        if adjusted_span.start < 0:\r\n            adjusted_span.start = len(self) + adjusted_span.start\r\n\r\n        if not adjusted_span._has_end():\r\n            adjusted_span.end = len(self)\r\n        elif adjusted_span.end < 0:\r\n            adjusted_span.end = len(self) + adjusted_span.end\r\n\r\n        if span.step < 0:\r\n            var tmp = adjusted_span.end\r\n            adjusted_span.end = adjusted_span.start - 1\r\n            adjusted_span.start = tmp - 1\r\n\r\n        return adjusted_span</s>"
+}
+{
+    "text": "<s>[INST] Gets the sequence of elements at the specified positions.\r\n\r\n        Args:\r\n            span: A slice that specifies positions of the new list.\r\n\r\n        Returns:\r\n            A new list containing the list at the specified span.\r\n[/INST]    @always_inline\r\n    fn __getitem__(self, span: Slice) -> Self:\r\n        \r\n\r\n        var adjusted_span = self._adjust_span(span)\r\n        var adjusted_span_len = len(adjusted_span)\r\n\r\n        if not adjusted_span_len:\r\n            return Self()\r\n\r\n        var res = Self(capacity=len(adjusted_span))\r\n        for i in range(len(adjusted_span)):\r\n            res.append(self[adjusted_span[i]])\r\n\r\n        return res ^</s>"
+}
+{
+    "text": "<s>[INST] Iterate over elements of the list, returning immutable references.\r\n\r\n        Returns:\r\n            An iterator of immutable references to the list elements.\r\n[/INST]    fn __iter__[\r\n        mutability: __mlir_type.`i1`, self_life: AnyLifetime[mutability].type\r\n    ](\r\n        self: Reference[Self, mutability, self_life].mlir_ref_type,\r\n    ) -> _ListIter[\r\n        T, mutability, self_life\r\n    ]:\r\n       \r\n        return _ListIter[T, mutability, self_life](0, Reference(self))</s>"
+}
+{
+    "text": "<s>[INST] A set data type.[/INST]struct Set[T: KeyElement](Sized, EqualityComparable, Hashable, Boolable):\r\n    </s>"
+}
+{
+    "text": "<s>[INST] Construct a set from initial elements.\r\n\r\n        Args:\r\n            ts: Variadic of elements to add to the set.\r\n[/INST]fn __init__(inout self, *ts: T):\r\n\r\n        self._data = Dict[T, NoneType]()\r\n        for t in ts:\r\n            self.add(t[])</s>"
+}
+{
+    "text": "<s>[INST] Explicitly copy another Set instance.\r\n\r\n        Args:\r\n            elements: An existing set to copy.\r\n[/INST]    fn __init__(inout self, elements: Self):\r\n \r\n        self.__init__()\r\n        for e in elements:\r\n            self.add(e[])</s>"
+}
+{
+    "text": "<s>[INST] Construct a set from a List of elements.\n\n        Args:\n            elements: A vector of elements to add to the set.\n[/INST]    fn __init__(inout self, elements: List[T]):\r\n\r\n        self.__init__()\r\n        for e in elements:\r\n            self.add(e[])\r\n</s>"
+}
+{
+    "text": "<s>[INST] Move constructor.\r\n\r\n        Args:\r\n            other: The existing Set instance to move from.\r\n[/INST]    fn __moveinit__(inout self, owned other: Self):\r\n\r\n        self._data = other._data ^</s>"
+}
+{
+    "text": "<s>[INST] Whether or not the set contains an element.\r\n\r\n        Args:\r\n            t: The element to check membership in the set.\r\n\r\n        Returns:\r\n            Whether or not the set contains the element.\r\n [/INST]    fn __contains__(self, t: T) -> Bool:\r\n \r\n        return t in self._data</s>"
+}
+{
+    "text": "<s>[INST] Whether the set is non-empty or not.\r\n\r\n        Returns:\r\n            True if the set is non-empty, False if it is empty.\r\n       [/INST]    fn __bool__(self) -> Bool:\r\n\r\n        return len(self).__bool__()</s>"
+}
+{
+    "text": "<s>[INST] A hash value of the elements in the set.\n\n        The hash value is order independent, so s1 == s2 -> hash(s1) == hash(s2).\n\n        Returns:\n            A hash value of the set suitable for non-cryptographic purposes.\r\n   [/INST]    fn __hash__(self) -> Int:\n\n        var hash_value = 0\n        # Hash combination needs to be commutative so iteration order\n        # doesn't impact the hash value.\n        for e in self:\n            hash_value ^= hash(e[])\n        return hash_value</s>"
+}
+{
+    "text": "<s>[INST] The set intersection operator.\n\n        Args:\n            other: Another Set instance to intersect with this one.\n\n        Returns:\n            A new set containing only the elements which appear in both\n            this set and the `other` set.\r\n        [/INST]    fn __and__(self, other: Self) -> Self:\n\n        return self.intersection(other)</s>"
+}
+{
+    "text": "<s>[INST] The set union operator.\r\n\r\n        Args:\r\n            other: Another Set instance to union with this one.\r\n\r\n        Returns:\r\n            A new set containing any elements which appear in either\r\n            this set or the `other` set.\r\n[/INST]    fn __or__(self, other: Self) -> Self:\r\n       \r\n        return self.union(other)</s>"
+}
+{
+    "text": "<s>[INST] In-place set union.\r\n\r\n        Updates the set to contain all elements in the `other` set\r\n        as well as all elements it already contained.\r\n\r\n        Args:\r\n            other: Another Set instance to union with this one.\r\n [/INST]    fn __ior__(inout self, other: Self):\r\n\r\n        for e in other:\r\n            self.add(e[])</s>"
+}
+{
+    "text": "<s>[INST] Set subtraction.\r\n\r\n        Args:\r\n            other: Another Set instance to subtract from this one.\r\n\r\n        Returns:\r\n            A new set containing elements of this set, but not containing\r\n            any elements which were in the `other` set.\r\n        [/INST]    fn __sub__(self, other: Self) -> Self:\r\n\r\n        var result = Set[T]()\r\n        for e in self:\r\n            if e[] not in other:\r\n                result.add(e[])\r\n        return result ^\r\n</s>"
+}
+{
+    "text": "<s>[INST] In-place set subtraction.\r\n\r\n        Updates the set to remove any elements from the `other` set.\r\n\r\n        Args:\r\n            other: Another Set instance to subtract from this one.\r\n       [/INST]    fn __isub__(inout self, other: Self):\n\n        self.remove_all(other)</s>"
+}
+{
+    "text": "<s>[INST] Add an element to the set.\r\n\r\n        Args:\r\n            t: The element to add to the set.\r\n        [/INST]    fn add(inout self, t: T):\n\n        self._data[t] = None</s>"
+}
+{
+    "text": "<s>[INST] Remove an element from the set.\r\n\r\n        Args:\r\n            t: The element to remove from the set.\r\n\r\n        Raises:\r\n            If the element isn't in the set to remove.\r\n\r\n[/INST]    fn remove(inout self, t: T) raises:\n        self._data.pop(t)</s>"
+}
+{
+    "text": "<s>[INST] Remove any one item from the set, and return it.\r\n\r\n        As an implementation detail this will remove the first item\r\n        according to insertion order. This is practically useful\r\n        for breadth-first search implementations.\r\n\r\n        Returns:\r\n            The element which was removed from the set.\r\n\r\n        Raises:\r\n            If the set is empty.\r\n[/INST]    fn pop(inout self) raises -> T:\n\n        if not self:\n            raise \"Pop on empty set\"\n        var iter = self.__iter__()\n        var first = iter.__next__()[]\n        self.remove(first)\n        return first</s>"
+}
+{
+    "text": "<s>[INST] Set union.\r\n\r\n        Args:\r\n            other: Another Set instance to union with this one.\r\n\r\n        Returns:\r\n            A new set containing any elements which appear in either\r\n            this set or the `other` set.\r\n[/INST]    fn union(self, other: Self) -> Self:\n\n        var result = Set(self)\n        for o in other:\n            result.add(o[])\n\n        return result ^</s>"
+}
+{
+    "text": "<s>[INST] Set intersection.\r\n\r\n        Args:\r\n            other: Another Set instance to intersect with this one.\r\n\r\n        Returns:\r\n            A new set containing only the elements which appear in both\r\n            this set and the `other` set.\r\n[/INST]    fn intersection(self, other: Self) -> Self:\n\n        var result = Set[T]()\n        for v in self:\n            if v[] in other:\n                result.add(v[])\n\n        return result ^</s>"
+}
+{
+    "text": "<s>[INST] In-place set subtraction.\r\n\r\n        Updates the set to remove any elements from the `other` set.\r\n\r\n        Args:\r\n            other: Another Set instance to subtract from this one.\r\n[/INST]    fn remove_all(inout self, other: Self):\n\n        for o in other:\n            try:\n                self.remove(o[])\n            except:\n                pass</s>"
+}
+{
+    "text": "<s>[INST] Create a 2D convolutional layer with kernel of 3, stride of 1, padding of 0 and relu activation function.[/INST]    var conv_layer_one = Conv2D[\r\n        in_channels=1,\r\n        kernel_width=3,\r\n        kernel_height=3,\r\n        stride=1,\r\n        padding=0,\r\n        weight_initializer = HeUniform[1],\r\n        activation=\"relu\",\r\n    ]()</s>"
+}
+{
+    "text": "<s>[INST] Implement a dense layer with input size of 100 and output size of 10 and that uses the sigmoid activation function.[/INST]    var dense2 = Dense[\r\n        in_neurons=100,\r\n        out_neurons=10,\r\n        activation=\"sigmoid\",\r\n    ]()</s>"
+}
+{
+    "text": "<s>[INST] Create a variable to hold the values of a tensor structure. The tensor is defined with a shape specified by TensorShape(batches, 10) and is filled with zeros.[/INST]var true_vals = Tensor[TensorShape(batches, 10), Zeros]()</s>"
+}
+{
+    "text": "<s>[INST] The tensor is structured with a specific shape and filled with zeros.[/INST] var input = Tensor[TensorShape(batches, channels, width, height), Zeros]()</s>"
+}
+{
+    "text": "<s>[INST] Create a variable to store the start time of an epoch.[/INST]var epoch_start = now()</s>"
+}
+{
+    "text": "<s>[INST] A for loop that iterates over the number if epochs, then another another for loop to iterate over the batches. A variable called image is declared and initialized with the training image data corresponding to the current index in the dataset for the current epoch. The true_vals are the true values of the train set. The two inner most loops iterate over each pixel of the image and convert it to an integer value.[/INST]    for epoch in range(1, num_epochs + 1):\n        for i in range(batches):\n            var image = dataset.train_images[i + epoch * batches]\n            var label = dataset.train_labels[i + epoch * batches].to_int()\n            true_vals[i * 10 + label] = 1.0\n            for j in range(width):\n                for k in range(height):\n                    input[i * channels * width * height + j * width + k] = image[\n                        j * width + k\n                    ].to_int()</s>"
+}
+{
+    "text": "<s>[INST] Constructs a new atomic value.\r\n\r\n        Args:\r\n            value: Initial value represented as `Scalar[type]` type.\r\n        [/INST]    @always_inline\n    fn __init__(inout self, value: Scalar[type]):\n\n        self.value = value</s>"
+}
+{
+    "text": "<s>[INST] Constructs a new atomic value.\r\n\r\n        Args:\r\n            value: Initial value represented as `mlir.index` type.\r\n        [/INST]    @always_inline\r\n    fn __init__(inout self, value: Int):\r\n \r\n        self.__init__(Scalar[type](value))</s>"
+}
+{
+    "text": "<s>[INST] Performs atomic in-place add.\r\n\r\n        Atomically replaces the current value with the result of arithmetic\r\n        addition of the value and arg. That is, it performs atomic\r\n        post-increment. The operation is a read-modify-write operation. Memory\r\n        is affected according to the value of order which is sequentially\r\n        consistent.\r\n\r\n        Args:\r\n            ptr: The source pointer.\r\n            rhs: Value to add.\r\n\r\n        Returns:\r\n            The original value before addition.\r\n        [/INST]    @staticmethod\n    @always_inline\n    fn _fetch_add(\n        ptr: Pointer[Scalar[type]], rhs: Scalar[type]\n    ) -> Scalar[type]:\n\n        return __mlir_op.`pop.atomic.rmw`[\n            bin_op = __mlir_attr.`#pop<bin_op add>`,\n            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,\n            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],\n        ](\n            bitcast[__mlir_type[`!pop.scalar<`, type.value, `>`]](ptr).address,\n            rhs.value,\n        )</s>"
+}
+{
+    "text": "<s>[INST]  Performs atomic in-place add.\r\n\r\n        Atomically replaces the current value with the result of arithmetic\r\n        addition of the value and arg. That is, it performs atomic\r\n        post-increment. The operation is a read-modify-write operation. Memory\r\n        is affected according to the value of order which is sequentially\r\n        consistent.\r\n\r\n        Args:\r\n            rhs: Value to add.\r\n\r\n        Returns:\r\n            The original value before addition.\r\n        [/INST]    @always_inline\r\n    fn fetch_add(inout self, rhs: Scalar[type]) -> Scalar[type]:\r\n\r\n        var value_addr = Pointer.address_of(self.value)\r\n        return Self._fetch_add(value_addr, rhs)</s>"
+}
+{
+    "text": "<s>[INST]  Performs atomic in-place add.\r\n\r\n        Atomically replaces the current value with the result of arithmetic\r\n        addition of the value and arg. That is, it performs atomic\r\n        post-increment. The operation is a read-modify-write operation. Memory\r\n        is affected according to the value of order which is sequentially\r\n        consistent.\r\n\r\n        Args:\r\n            rhs: Value to add.\r\n        [/INST]    @always_inline\r\n    fn __iadd__(inout self, rhs: Scalar[type]):\r\n\r\n        _ = self.fetch_add(rhs)</s>"
+}
+{
+    "text": "<s>[INST] Performs atomic in-place sub.\n\n        Atomically replaces the current value with the result of arithmetic\n        subtraction of the value and arg. That is, it performs atomic\n        post-decrement. The operation is a read-modify-write operation. Memory\n        is affected according to the value of order which is sequentially\n        consistent.\n\n        Args:\n            rhs: Value to subtract.\n\n        Returns:\n            The original value before subtraction.\n[/INST]    @always_inline\r\n    fn fetch_sub(inout self, rhs: Scalar[type]) -> Scalar[type]:\r\n\r\n        var value_addr = Pointer.address_of(self.value.value)\r\n        return __mlir_op.`pop.atomic.rmw`[\r\n            bin_op = __mlir_attr.`#pop<bin_op sub>`,\r\n            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,\r\n            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],\r\n        ](value_addr.address, rhs.value)</s>"
+}
+{
+    "text": "<s>[INST] Performs atomic in-place sub.\r\n\r\n        Atomically replaces the current value with the result of arithmetic\r\n        subtraction of the value and arg. That is, it performs atomic\r\n        post-decrement. The operation is a read-modify-write operation. Memory\r\n        is affected according to the value of order which is sequentially\r\n        consistent.\r\n\r\n        Args:\r\n            rhs: Value to subtract.\r\n        [/INST]    @always_inline\r\n    fn __isub__(inout self, rhs: Scalar[type]):\r\n\r\n        _ = self.fetch_sub(rhs)</s>"
+}
+{
+    "text": "<s>[INST] Performs atomic in-place max.\r\n\r\n        Atomically replaces the current value with the result of max of the\r\n        value and arg. The operation is a read-modify-write operation perform\r\n        according to sequential consistency semantics.\r\n\r\n        Constraints:\r\n            The input type must be either integral or floating-point type.\r\n\r\n\r\n        Args:\r\n            rhs: Value to max.\r\n        [/INST]    @always_inline\r\n    fn max(inout self, rhs: Scalar[type]):\r\n\r\n        constrained[\r\n            type.is_integral() or type.is_floating_point(),\r\n            \"the input type must be arithmetic\",\r\n        ]()\r\n\r\n        var value_addr = Pointer.address_of(self.value.value)\r\n        _ = __mlir_op.`pop.atomic.rmw`[\r\n            bin_op = __mlir_attr.`#pop<bin_op max>`,\r\n            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,\r\n            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],\r\n        ](value_addr.address, rhs.value)</s>"
+}
+{
+    "text": "<s>[INST] Performs atomic in-place min.\r\n\r\n        Atomically replaces the current value with the result of min of the\r\n        value and arg. The operation is a read-modify-write operation. The\r\n        operation is a read-modify-write operation perform according to\r\n        sequential consistency semantics.\r\n\r\n        Constraints:\r\n            The input type must be either integral or floating-point type.\r\n\r\n        Args:\r\n            rhs: Value to min.\r\n [/INST]    @always_inline\r\n    fn min(inout self, rhs: Scalar[type]):\r\n\r\n\r\n        constrained[\r\n            type.is_integral() or type.is_floating_point(),\r\n            \"the input type must be arithmetic\",\r\n        ]()\r\n\r\n        var value_addr = Pointer.address_of(self.value.value)\r\n        _ = __mlir_op.`pop.atomic.rmw`[\r\n            bin_op = __mlir_attr.`#pop<bin_op min>`,\r\n            ordering = __mlir_attr.`#pop<atomic_ordering seq_cst>`,\r\n            _type = __mlir_type[`!pop.scalar<`, type.value, `>`],\r\n        ](value_addr.address, rhs.value)</s>"
+}
+{
+    "text": "<s>[INST] Changes or adds an environment variable.\r\n\r\n    Constraints:\r\n      The function only works on macOS or Linux and returns False otherwise.\r\n\r\n    Args:\r\n      name: The name of the environment variable.\r\n      value: The value of the environment variable.\r\n      overwrite: If an environment variable with the given name already exists,\r\n        its value is not changed unless `overwrite` is True.\r\n\r\n    Returns:\r\n      False if the name is empty or contains an `=` character. In any other\r\n      case, True is returned.\r\n    [/INST]fn setenv(name: String, value: String, overwrite: Bool = True) -> Bool:\r\n\r\n    alias os_is_supported = os_is_linux() or os_is_macos()\r\n    if not os_is_supported:\r\n        return False\r\n\r\n    var status = external_call[\"setenv\", Int32](\r\n        name._as_ptr(), value._as_ptr(), Int32(1 if overwrite else 0)\r\n    )\r\n    return status == 0</s>"
+}
+{
+    "text": "<s>[INST] Returns the value of the given environment variable.\r\n\r\n    Constraints:\r\n      The function only works on macOS or Linux and returns an empty string\r\n      otherwise.\r\n\r\n    Args:\r\n      name: The name of the environment variable.\r\n      default: The default value to return if the environment variable\r\n        doesn't exist.\r\n\r\n    Returns:\r\n      The value of the environment variable.\r\n[/INST]fn getenv(name: String, default: String = \"\") -> String:\r\n\r\n    alias os_is_supported = os_is_linux() or os_is_macos()\r\n\r\n    if not os_is_supported:\r\n        return default\r\n\r\n    var ptr = external_call[\"getenv\", DTypePointer[DType.int8]](name._as_ptr())\r\n    if not ptr:\r\n        return default\r\n    return String(StringRef(ptr))</s>"
+}
+{
+    "text": "<s>[INST] Get the status of a file or a file descriptor.\r\n\r\n    Parameters:\r\n      pathlike: The a type conforming to the os.PathLike trait.\r\n\r\n    Args:\r\n      path: The path to the directory.\r\n\r\n    Returns:\r\n      Returns the stat_result on the path.\r\n    [/INST]fn stat[pathlike: os.PathLike](path: pathlike) raises -> stat_result:\r\n\r\n    return stat(path.__fspath__())\r\n</s>"
+}
+{
+    "text": "<s>[INST] Reads all the data from the handle.\r\n\r\n        Returns:\r\n          A string containing the output of running the command.\r\n       [/INST]fn list(self) -> List[String]:\r\n\r\n\r\n        @parameter\r\n        if os_is_linux():\r\n            return self._list_linux()\r\n        else:\r\n            return self._list_macos()</s>"
+}
+{
+    "text": "<s>[INST] Closes the handle opened via popen.[/INST]    fn __del__(owned self):\r\n      \r\n        _ = external_call[\"closedir\", Int32](self._handle)</s>"
+}
+{
+    "text": "<s>[INST] Gets the list of entries contained in the path provided.\r\n\r\n    Args:\r\n      path: The path to the directory.\r\n\r\n    Returns:\r\n      Returns the list of entries in the path provided.\r\n    [/INST]fn listdir(path: String = \"\") raises -> List[String]:\r\n\r\n\r\n    var dir = _DirHandle(path)\r\n    return dir.list()</s>"
+}
+{
+    "text": "<s>[INST] Gets the list of entries contained in the path provided.\r\n\r\n    Parameters:\r\n      pathlike: The a type conforming to the os.PathLike trait.\r\n\r\n    Args:\r\n      path: The path to the directory.\r\n\r\n\r\n    Returns:\r\n      Returns the list of entries in the path provided.\r\n    [/INST]fn listdir[pathlike: os.PathLike](path: pathlike) raises -> List[String]:\r\n\r\n    return listdir(path.__fspath__())</s>"
+}
+{
+    "text": "<s>[INST] Calls a target dependent trap instruction if available.\r\n\r\n    Parameters:\r\n        result: The result type.\r\n\r\n    Returns:\r\n        A null result type.\r\n    [/INST]@always_inline(\"nodebug\")\r\nfn abort[result: Movable = NoneType]() -> result:\r\n\r\n\r\n    __mlir_op.`llvm.intr.trap`()\r\n\r\n    return AnyPointer[result]().take_value()</s>"
+}
+{
+    "text": "<s>[INST] Calls a target dependent trap instruction if available.\r\n\r\n    Parameters:\r\n        result: The result type.\r\n        stringable: The Stringable type.\r\n\r\n    Args:\r\n        message: The message to include when aborting.\r\n\r\n    Returns:\r\n        A null result type.[/INST]@always_inline(\"nodebug\")\r\nfn abort[\r\n    result: Movable = NoneType, *, stringable: Stringable\r\n](message: stringable) -> result:\r\n \r\n\r\n    @parameter\r\n    if not triple_is_nvidia_cuda():\r\n        print(message, flush=True)\r\n\r\n    return abort[result]()</s>"
+}
+{
+    "text": "<s>[INST] Construct the _DirHandle using the path provided.\r\n\r\n        Args:\r\n          path: The path to open.\r\n        [/INST]    fn __init__(inout self, path: String) raises:\n\n        constrained[\n            not os_is_windows(), \"operation is only available on unix systems\"\n        ]()\n\n        if not isdir(path):\n            raise \"the directory '\" + path + \"' does not exist\"\n\n        self._handle = external_call[\"opendir\", Pointer[NoneType]](\n            path._as_ptr()\n        )\n\n        if not self._handle:\n            raise \"unable to open the directory '\" + path + \"'\"</s>"
+}
+{
+    "text": "<s>[INST] Low-level call to the clock_gettime libc function[/INST]@always_inline\r\nfn _clock_gettime(clockid: Int) -> _CTimeSpec:\r\n  \r\n    var ts = _CTimeSpec()\r\n\r\n    # Call libc's clock_gettime.\r\n    _ = external_call[\"clock_gettime\", Int32](\r\n        Int32(clockid), Pointer.address_of(ts)\r\n    )\r\n\r\n    return ts</s>"
+}
+{
+    "text": "<s>[INST] Returns the current realtime time in nanoseconds[/INST]@always_inline\r\nfn _realtime_nanoseconds() -> Int:\r\n   \r\n    return _gettime_as_nsec_unix(_CLOCK_REALTIME)</s>"
+}
+{
+    "text": "<s>[INST] Returns the current monotonic time in nanoseconds[/INST]@always_inline\r\nfn _monotonic_nanoseconds() -> Int:\r\n    \r\n\r\n    @parameter\r\n    if os_is_windows():\r\n        var ft = _FILETIME()\r\n        external_call[\"GetSystemTimePreciseAsFileTime\", NoneType](\r\n            Pointer.address_of(ft)\r\n        )\r\n\r\n        return ft.as_nanoseconds()\r\n    else:\r\n        return _gettime_as_nsec_unix(_CLOCK_MONOTONIC)</s>"
+}
+{
+    "text": "<s>[INST] Returns the current monotonic time in nanoseconds[/INST]@always_inline\r\nfn _monotonic_raw_nanoseconds() -> Int:\r\n  \r\n\r\n    return _gettime_as_nsec_unix(_CLOCK_MONOTONIC_RAW)</s>"
+}
+{
+    "text": "<s>[INST] Returns the high-resolution per-process timer from the CPU[/INST]@always_inline\r\nfn _process_cputime_nanoseconds() -> Int:\r\n   \r\n\r\n    return _gettime_as_nsec_unix(_CLOCK_PROCESS_CPUTIME_ID)</s>"
+}
+{
+    "text": "<s>[INST] Returns the current monotonic time time in nanoseconds. This function\n    queries the current platform's monotonic clock, making it useful for\n    measuring time differences, but the significance of the returned value\n    varies depending on the underlying implementation.\n\n    Returns:\n        The current time in ns.\r\n   [/INST]@always_inline\nfn now() -> Int:\n\n    return _monotonic_nanoseconds()</s>"
+}
+{
+    "text": "<s>[INST] Measures the time spent in the function.\r\n\r\n    Parameters:\r\n        func: The function to time.\r\n\r\n    Returns:\r\n        The time elapsed in the function in ns.\r\n    [/INST]@always_inline\n@parameter\nfn time_function[func: fn () capturing -> None]() -> Int:\n\n\n    @parameter\n    if os_is_windows():\n        return _time_function_windows[func]()\n\n    var tic = now()\n    func()\n    var toc = now()\n    return toc - tic</s>"
+}
+{
+    "text": "<s>[INST] Suspends the current thread for the seconds specified.\r\n\r\n    Args:\r\n        sec: The number of seconds to sleep for.\r\n    [/INST]fn sleep(sec: Int):\n\n\n    @parameter\n    if os_is_windows():\n        external_call[\"Sleep\", NoneType](sec * 1000)\n    else:\n        external_call[\"sleep\", NoneType](sec)</s>"
+}
+{
+    "text": "<s>[INST] Returns True if this pointer represents a lower address than rhs.\r\n\r\n        Args:\r\n            rhs: The value of the other pointer.\r\n\r\n        Returns:\r\n            True if this pointer represents a lower address and False otherwise.\r\n        [/INST]    @always_inline(\"nodebug\")\r\n    fn __lt__(self, rhs: Self) -> Bool:\r\n\r\n        return int(self) < int(rhs)</s>"
+}
+{
+    "text": "<s>[INST] Create a function that calculates a base number raised to the power of a given exponent.[/INST]fn pow(base: Int, exp: Int = 2) -> Int:\r\n    return base ** exp</s>"
+}

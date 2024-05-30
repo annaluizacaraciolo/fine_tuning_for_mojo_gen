@@ -1,0 +1,122 @@
+[
+    {
+        "text": "@always_inline\r\nfn assert_true[\r\n    T: Boolab<FILL_ME>expectedly False\") raises:\r\n\r\n    if not val:\r\n        raise Error(\"AssertionError: \" + msg)"
+    },
+    {
+        "text": "@always_inline\r\nfn assert_false[<FILL_ME>raises:\r\n\r\n    if val:\r\n        raise Error(\"AssertionError: \" + msg)"
+    },
+    {
+        "text": "@alway<FILL_ME>t, msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n        raise _assert_equal_error(str(lhs), str(rhs), msg=msg)"
+    },
+    {
+        "text": "@always_inline\r\nfn assert_equal(lhs: String, r<FILL_ME>   raise _assert_equal_error(lhs, rhs, msg=msg)"
+    },
+    {
+        "text": "@a<FILL_ME>r(lhs), str(rhs), msg=msg)"
+    },
+    {
+        "text": "@always_inline\r\nfn assert_not_equal(lhs: Int, rhs: Int, m<FILL_ME> str(rhs), msg=msg)"
+    },
+    {
+        "text": "@a<FILL_ME>rt_not_equal_error(str(lhs), str(rhs), msg=msg)"
+    },
+    {
+        "text": "@always_inline\r\nfn asse<FILL_ME>s: SIMD[type, size], rhs: SIMD[type, size], msg: String = \"\") raises:\r\n\r\n    if lhs == rhs:\r\n        raise _assert_not_equal_error(str(lhs), str(rhs), msg=msg)"
+    },
+    {
+        "text": "@always_inline\nfn assert_almost_equal[\n    type: DType, size: Int\n](\n    lhs: SIMD[type, size],\n    rhs: SIMD[type, size],\n    /,\n    *,\n    msg: String = \"\",\n    atol: Scalar[type] = 1e-08,\n    rtol: Scalar[type] = 1e-05,\n) raises:\n\n    var almost_equal = _isclose(lhs, rhs, atol=atol, rtol=rtol)\n    if not almost_equal:\n        var err = \"AssertionError: \" + str(lhs) + \" is not close to \" + str(\n         <FILL_ME>\" + msg + \")\"\n        raise err\n"
+    },
+    {
+        "text": "    fn __init__(inout self, *, contains: Stri<FILL_ME>        self.message_contains = contains"
+    },
+    {
+        "text": "    fn __exit__(self) raises:\r\n\r\n   <FILL_ME>rtionError: Didn't raise\")\r\n"
+    },
+    {
+        "text": "fn is_defined[name: StringL<FILL_ME> `, name.value, `> : i1`\r\n    ]\r\n    return result"
+    },
+    {
+        "text": "fn env_get_int[name: StringLiteral, default: Int]() -> Int:\n\n\n    @parameter\n <FILL_ME>\n    else:\n        return default"
+    },
+    {
+        "text": "@always_inline\r\nfn _int_tuple_binary_apply[\r\n<FILL_ME>em__[idx](binary_fn(a_elem, b_elem))\r\n\r\n    unroll[do_apply, size]()\r\n\r\n    return c"
+    },
+    {
+        "text": "@always_inline\r\nfn _bool_tuple_reduce[\r\n    size: Int,\r\n    reduce_fn: fn (Bool, Bool) -> Bo<FILL_ME>r c: Bool = init\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_reduce[idx: Int]():\r\n        c = reduce_fn(c, a.__getitem__[idx]())\r\n\r\n    unroll[do_reduce, size]()\r\n\r\n    return c"
+    },
+    {
+        "text": "@value\n@registe<FILL_ME>[size: Int](Sized, Stringable, EqualityComparable):\n\n\n    var data: StaticTuple[Int, size]\n\n    @always_inline\n    fn __init__() -> Self:\n\n        return 0"
+    },
+    {
+        "text": "    @always_inline<FILL_ME>\r\n\r\n        constrained[size == 1]()\r\n        return Int(value)"
+    },
+    {
+        "text": "    @always_inline\r\n    fn __init__(elems: Tup<FILL_ME>\n            tup[idx] = elems.get[idx, Int]()\r\n\r\n        unroll[fill, 2]()\r\n\r\n        return tup"
+    },
+    {
+        "text": "    @always_inline\r\n    fn __init<FILL_ME>   @unroll\r\n        for idx in range(size):\r\n            tup[idx] = elems[idx]\r\n\r\n        return tup"
+    },
+    {
+        "text": "    @always_inline\n    fn __init__(values: VariadicList[Int]) -> Self:\n\n   <FILL_ME> return Self {data: values}\n\n"
+    },
+    {
+        "text": "    <FILL_ME>urn size"
+    },
+    {
+        "text": "@always_inline\r\nfn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:\r\n\r\n    alias integer_type = <FILL_ME>))"
+    },
+    {
+        "text": "    @staticmethod\r\n    @<FILL_ME>  \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.exponent_mask() + Self.mantissa_mask()"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn bitcast_to_integer(value: Scalar[type]) <FILL_ME>urn _fp_bitcast_to_integer[type](value)"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn bitcast_from_intege<FILL_ME>turn _fp_bitcast_from_integer[type](value)"
+    },
+    {
+        "text": "    @stat<FILL_ME>sign(value: Scalar[type]) -> Bool:\r\n\r\n\r\n        return (Self.bitcast_to_integer(value) & Self.sign_mask()) != 0"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn get_exponent(value: Scalar[type]) -> Int:\r\n \r\n        return (\r\n            Self.bitcast_to_integ<FILL_ME>antissa_width()"
+    },
+    {
+        "text": "@always_inline\r\n <FILL_ME>elf:\r\n      \r\n        return Self {value: value}"
+    },
+    {
+        "text": "    @st<FILL_ME>_from_index(\r\n            int(_malloc[Int8](sizeof[T]() * count, alignment=alignof[T]()))\r\n        )"
+    },
+    {
+        "text": "    @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    fn address_of(inout arg: T) -> <FILL_ME>itcast`[_type = Self.pointer_type](\r\n            __get_lvalue_as_address(arg)\r\n        )"
+    },
+    {
+        "text": "    @always_inline\r\n    fn free(self):\r\n        \r\n        Pointer[Int8].__from_index(i<FILL_ME>e()"
+    },
+    {
+        "text": "    @always_inline\r\n  <FILL_ME>       return __get_address_as_owned_value(self.value)"
+    },
+    {
+        "text": "    @always_inline\n    fn emplace_value(self, ow<FILL_ME>it_lvalue(self.value) = value ^"
+    },
+    {
+        "text": "    @always_inline\n    fn move_in<FILL_ME>est: AnyPointer[T]):\n\n        __get_address_as_uninit_lvalue(\n            dest.value\n        ) = __get_address_as_owned_value(self.value)\n"
+    },
+    {
+        "text": "    @always_inline\r\n    fn __int__(self) -> Int:\r\n\r\n        re<FILL_ME>      ](self.value)"
+    },
+    {
+        "text": "    @always_i<FILL_ME>\r\n\r\n        return int(self) != 0"
+    },
+    {
+        "text": "    @always_inline\r\n    fn _<FILL_ME>elf, offset: Int) -> Self:\r\n\r\n        return Self.__from_index(int(self) + offset * sizeof[T]())"
+    },
+    {
+        "text": "    @always_inline\r\n    fn<FILL_ME>: Int) -> Self:\r\n\r\n        return self + (-offset)"
+    },
+    {
+        "text": "    @always_inline(\"nodebug<FILL_ME>ol:\r\n\r\n        return int(self) == int(rhs)"
+    },
+    {
+        "text": "    @alw<FILL_ME>fn __ne__(self, rhs: Self) -> Bool:\r\n\r\n        return not (self == rhs)"
+    }
+]
