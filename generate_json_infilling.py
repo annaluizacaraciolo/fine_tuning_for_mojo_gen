@@ -9,14 +9,14 @@ def split_text_randomly_and_write(file_path, output_path):
     
     for item in data:
         text = item["text"]
-        if len(text) > 2:
+        if len(text) > 2:  # Ensure there's enough length to split into three parts
             split_points = sorted(random.sample(range(1, len(text)), 2))
             part1 = text[:split_points[0]]
-            part2 = "<FILL_ME>"
+            part2 = text[split_points[0]:split_points[1]]
             part3 = text[split_points[1]:]
-            results.append({"text": part1 + part2 + part3})
-
-    # Write results to a new JSON file
+            # prefix-suffix-middle format
+            results.append({"text": "<PRE>" + part1 + "<SUF>" + part3 + "<MID>" + part2})
+    
     with open(output_path, 'w') as outfile:
         json.dump(results, outfile, indent=4)
     
@@ -34,11 +34,10 @@ def split_user_input_randomly(file_path, output_path):
         if len(text) > 2:  # Ensure there's enough length to split into three parts
             split_points = sorted(random.sample(range(1, len(text)), 2))
             part1 = text[:split_points[0]]
-            part2 ="<FILL_ME>"
-            part3 = text[split_points[1]:]
-            results.append({"user_input": part1 + part2 + part3, "system_answer": item["system_answer"]})
+            part2 = text[split_points[1]:]
+            # prefix-suffix-middle format
+            results.append({"user_input": "<PRE>" + part1 + "<SUF>" + part2 + "<MID>", "system_answer": item["system_answer"]})
     
-    # Write results to a new JSON file
     with open(output_path, 'w') as outfile:
         json.dump(results, outfile, indent=4)
     

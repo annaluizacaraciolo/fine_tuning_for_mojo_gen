@@ -1,26 +1,26 @@
 [
     {
-        "user_input": "@al<FILL_ME>types[i.value]](self.get_element[i]()[])\n\n     ",
+        "user_input": "<PRE>@always_inline\n <SUF>     fn unrolled[i: Int]():\n            func[i, element_types[i.value]](self.get_element[i]()[])\n\n     <MID>",
         "system_answer": "@always_inline\n    fn each_idx[\n        func: fn[idx: Int, T: element_trait] (T) capturing -> None\n    ](self): @parameter\n        fn unrolled[i: Int]():\n            func[i, element_types[i.value]](self.get_element[i]()[])\n\n        unroll[unrolled, Self.__len__()]()"
     },
     {
-        "user_input": "    @a<FILL_ME>> Vec3f:\n        ",
+        "user_input": "<PRE>    @always_i<SUF>  <MID>",
         "system_answer": "    @always_inline\r\n    fn normalize(self) -> Vec3f:\r\n        return self.data * rsqrt(self @ self))"
     },
     {
-        "user_input": "fn reversed[\n    mutability: __mlir_type.`i1`,\n    self_life:<FILL_ME>onElement,\n](\n    value: Reference[Dict[K, V], mutability, self_life]._mlir_type,\n) -> _DictKeyIter[K, V, mutability, self_life, False]:\n  \n",
+        "user_input": "<PRE>fn revers<SUF>ctKeyIter[K, V, mutability, self_life, False]:\n  \n<MID>",
         "system_answer": "fn reversed[\r\n    mutability: __mlir_type.`i1`,\r\n    self_life: AnyLifetime[mutability].type,\r\n    K: KeyElement,\r\n    V: CollectionElement,\r\n](\r\n    value: Reference[Dict[K, V], mutability, self_life]._mlir_type,\r\n) -> _DictKeyIter[K, V, mutability, self_life, False]:\r\n  \r\n    return Reference(value)[].__reversed__[mutability, self_life]()"
     },
     {
-        "user_input": "@always_inline\nfn _max(a: Int, b: Int) -> Int:\n  <FILL_ME> else b",
+        "user_input": "<PRE>@always_inline\nfn _max(a: Int, b: Int) -> Int:\n  <SUF>b else b<MID>",
         "system_answer": "@always_inline\r\nfn _max(a: Int, b: Int) -> Int:\r\n    return a if a > b else b"
     },
     {
-        "user_input": "fn mandelbrot_kernel_SIMD[\n    simd_width: Int\n](c: ComplexSIMD[float_type, simd_width]) -> SIMD[int_type, simd_width]:\n    \"\"\"A vectorized implementation of the inner mandelbrot computation.\"\"\"\n    var cx = c.re\n    var cy = c.im\n    var x = SIMD[float_type, sim<FILL_ME>ol, simd_width] = True\n",
+        "user_input": "<PRE>fn mandelbrot_kernel_SIMD[\n    simd_width: Int\n<SUF>cy = c.im\n    var x = SIMD[float_type, simd_width](0)\n    var y = SIMD[float_type, simd_width](0)\n    var y2 = SIMD[float_type, simd_width](0)\n    var iters = SIMD[int_type, simd_width](0)\n\n    var t: SIMD[DType.bool, simd_width] = True\n<MID>",
         "system_answer": "fn mandelbrot_kernel_SIMD[\r\n    simd_width: Int\r\n](c: ComplexSIMD[float_type, simd_width]) -> SIMD[int_type, simd_width]:\r\n    \"\"\"A vectorized implementation of the inner mandelbrot computation.\"\"\"\r\n    var cx = c.re\r\n    var cy = c.im\r\n    var x = SIMD[float_type, simd_width](0)\r\n    var y = SIMD[float_type, simd_width](0)\r\n    var y2 = SIMD[float_type, simd_width](0)\r\n    var iters = SIMD[int_type, simd_width](0)\r\n\r\n    var t: SIMD[DType.bool, simd_width] = True\r\n    for i in range(MAX_ITERS):\r\n        if not t.reduce_or():\r\n            break\r\n        y2 = y * y\r\n        y = x.fma(y + y, cy)\r\n        t = x.fma(x, y2) <= 4\r\n        x = x.fma(x, cx - y2)\r\n        iters = t.select(iters + 1, iters)\r\n    return iters"
     },
     {
-        "user_input": "from math import tan, acos\nfrom algorithm import parallelize\n\n\nfn create_image_with_sphere(sphere: Sphere, height: Int, width: Int<FILL_ME>e = Image(height, width)\n\n    @parameter\n    fn _process_row(row: Int):\n        var y = -((2.0 * row + 1) / height - 1)\n        for col in range(width):\n            var x = ((2.0 * col + 1) / width - 1) * width / height\n            var dir = Vec3f(x, y, -1).normalize()\n",
+        "user_input": "<PRE>from math import tan, acos\nfrom algorithm import parallelize\n\n\nfn create_image_with_sphere(sphere: Sphere, height: Int, width: Int) -> Image:\n    var image = Image(height, width)\n\n    @parameter\n    fn _process_row(row: Int):\n   <SUF>).normalize()\n<MID>",
         "system_answer": "from math import tan, acos\r\nfrom algorithm import parallelize\r\n\r\n\r\nfn create_image_with_sphere(sphere: Sphere, height: Int, width: Int) -> Image:\r\n    var image = Image(height, width)\r\n\r\n    @parameter\r\n    fn _process_row(row: Int):\r\n        var y = -((2.0 * row + 1) / height - 1)\r\n        for col in range(width):\r\n            var x = ((2.0 * col + 1) / width - 1) * width / height\r\n            var dir = Vec3f(x, y, -1).normalize()\r\n            image.set(row, col, cast_ray(Vec3f.zero(), dir, sphere))\r\n\r\n    parallelize[_process_row](height)\r\n\r\n    return image"
     }
 ]

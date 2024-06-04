@@ -1,6 +1,5 @@
 user_input,system_answer
-"Apply a function to each element of the pack in order.  This applies the specified function (which must be parametric on the element type) to
-each element of the pack, from the first element to the last, passing in each element as a borrowed argument.","@always_inline
+Write a function to iterate over a collection and perform an operation on each element,"@always_inline
     fn each_idx[
         func: fn[idx: Int, T: element_trait] (T) capturing -> None
     ](self): @parameter
@@ -8,23 +7,55 @@ each element of the pack, from the first element to the last, passing in each el
             func[i, element_types[i.value]](self.get_element[i]()[])
 
         unroll[unrolled, Self.__len__()]()"
-"Write a function that returns True if the type is a half-precision floating point type,
-either fp16 or bf16.","@always_inline(""nodebug"")
-    fn is_half_float(self) -> Bool: return self.is_float16() or self.is_bfloat16()"
-Get a reversed iterator of the input dict.,"fn reversed[
-    mutability: __mlir_type.`i1`,
-    self_life: AnyLifetime[mutability].type,
-    K: KeyElement,
-    V: CollectionElement,
-](
-    value: Reference[Dict[K, V], mutability, self_life]._mlir_type,
-) -> _DictKeyIter[K, V, mutability, self_life, False]:
-  
-    return Reference(value)[].__reversed__[mutability, self_life]()"
+Write a function to normalize a vector into a unit vector.,"    @always_inline
+    fn normalize(self) -> Vec3f:
+        return self.data * rsqrt(self @ self))"
+Write a struct for Pet with a constructor containing parameters for name and age.,"struct MyPet:
+    var name: String
+    var age: Int
+
+    fn __init__(inout self, owned name: String, age: Int):
+        self.name = name^
+        self.age = age"
 Write a function that returns the greatest between two integers.,"@always_inline
 fn _max(a: Int, b: Int) -> Int:
     return a if a > b else b"
-How can I get the bool representation of the `None` type?,"@always_inline
-fn bool(value: None) -> Bool:
-  
-    return False"
+Write a function for a vectorized implementation of the inner mandelbrot computation.,"fn mandelbrot_kernel_SIMD[
+    simd_width: Int
+](c: ComplexSIMD[float_type, simd_width]) -> SIMD[int_type, simd_width]:
+   
+    var cx = c.re
+    var cy = c.im
+    var x = SIMD[float_type, simd_width](0)
+    var y = SIMD[float_type, simd_width](0)
+    var y2 = SIMD[float_type, simd_width](0)
+    var iters = SIMD[int_type, simd_width](0)
+
+    var t: SIMD[DType.bool, simd_width] = True
+    for i in range(MAX_ITERS):
+        if not t.reduce_or():
+            break
+        y2 = y * y
+        y = x.fma(y + y, cy)
+        t = x.fma(x, y2) <= 4
+        x = x.fma(x, cx - y2)
+        iters = t.select(iters + 1, iters)
+    return iters"
+Write a function two create an image of a sphere using ray tracing.,"from math import tan, acos
+from algorithm import parallelize
+
+
+fn create_image_with_sphere(sphere: Sphere, height: Int, width: Int) -> Image:
+    var image = Image(height, width)
+
+    @parameter
+    fn _process_row(row: Int):
+        var y = -((2.0 * row + 1) / height - 1)
+        for col in range(width):
+            var x = ((2.0 * col + 1) / width - 1) * width / height
+            var dir = Vec3f(x, y, -1).normalize()
+            image.set(row, col, cast_ray(Vec3f.zero(), dir, sphere))
+
+    parallelize[_process_row](height)
+
+    return image"

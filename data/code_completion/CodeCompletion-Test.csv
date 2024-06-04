@@ -16,37 +16,30 @@ user_input,system_answer
         unroll[unrolled, Self.__len__()]()"
 "    @always_inline
     fn normalize(self) -> Vec3f:
-        ","    @always_inline
+        return self.data * rsqrt(self @ self))","    @always_inline
     fn normalize(self) -> Vec3f:
         return self.data * rsqrt(self @ self))"
-"fn reversed[
-    mutability: __mlir_type.`i1`,
-    self_life: AnyLifetime[mutability].type,
-    K: KeyElement,
-    V: CollectionElement,
-](
-    value: Reference[Dict[K, V], mutability, self_life]._mlir_type,
-) -> _DictKeyIter[K, V, mutability, self_life, False]:
-  
-","fn reversed[
-    mutability: __mlir_type.`i1`,
-    self_life: AnyLifetime[mutability].type,
-    K: KeyElement,
-    V: CollectionElement,
-](
-    value: Reference[Dict[K, V], mutability, self_life]._mlir_type,
-) -> _DictKeyIter[K, V, mutability, self_life, False]:
-  
-    return Reference(value)[].__reversed__[mutability, self_life]()"
+"struct MyPet:
+    var name: String
+    var age: Int
+
+    fn __init__(inout self, owned name: String, age: Int):
+      ","struct MyPet:
+    var name: String
+    var age: Int
+
+    fn __init__(inout self, owned name: String, age: Int):
+        self.name = name^
+        self.age = age"
 "@always_inline
 fn _max(a: Int, b: Int) -> Int:
-    return a if a > b else b","@always_inline
+    ","@always_inline
 fn _max(a: Int, b: Int) -> Int:
     return a if a > b else b"
 "fn mandelbrot_kernel_SIMD[
     simd_width: Int
 ](c: ComplexSIMD[float_type, simd_width]) -> SIMD[int_type, simd_width]:
-    """"""A vectorized implementation of the inner mandelbrot computation.""""""
+   
     var cx = c.re
     var cy = c.im
     var x = SIMD[float_type, simd_width](0)
@@ -55,10 +48,13 @@ fn _max(a: Int, b: Int) -> Int:
     var iters = SIMD[int_type, simd_width](0)
 
     var t: SIMD[DType.bool, simd_width] = True
-","fn mandelbrot_kernel_SIMD[
+    for i in range(MAX_ITERS):
+        if not t.reduce_or():
+            break
+  ","fn mandelbrot_kernel_SIMD[
     simd_width: Int
 ](c: ComplexSIMD[float_type, simd_width]) -> SIMD[int_type, simd_width]:
-    """"""A vectorized implementation of the inner mandelbrot computation.""""""
+   
     var cx = c.re
     var cy = c.im
     var x = SIMD[float_type, simd_width](0)
@@ -87,9 +83,7 @@ fn create_image_with_sphere(sphere: Sphere, height: Int, width: Int) -> Image:
     fn _process_row(row: Int):
         var y = -((2.0 * row + 1) / height - 1)
         for col in range(width):
-            var x = ((2.0 * col + 1) / width - 1) * width / height
-            var dir = Vec3f(x, y, -1).normalize()
-","from math import tan, acos
+ ","from math import tan, acos
 from algorithm import parallelize
 
 

@@ -1,22 +1,26 @@
 [
     {
-        "user_input": "Apply a function to each element of the pack in order.  This applies the specified function (which must be parametric on the element type) to each element of the pack, from the first element to the last, passing in each element as a borrowed argument.",
+        "user_input": "Write a function to iterate over a collection and perform an operation on each element",
         "system_answer": "@always_inline\n    fn each_idx[\n        func: fn[idx: Int, T: element_trait] (T) capturing -> None\n    ](self): @parameter\n        fn unrolled[i: Int]():\n            func[i, element_types[i.value]](self.get_element[i]()[])\n\n        unroll[unrolled, Self.__len__()]()"
     },
     {
-        "user_input": "Write a function that returns True if the type is a half-precision floating point type,either fp16 or bf16.",
-        "system_answer": "@always_inline(\"nodebug\")\n    fn is_half_float(self) -> Bool: return self.is_float16() or self.is_bfloat16()"
+        "user_input": "Write a function to normalize a vector into a unit vector.",
+        "system_answer": "    @always_inline\n    fn normalize(self) -> Vec3f:\n        return self.data * rsqrt(self @ self))"
     },
     {
-        "user_input": "Get a reversed iterator of the input dict.",
-        "system_answer": "fn reversed[\r\n    mutability: __mlir_type.i1,\r\n    self_life: AnyLifetime[mutability].type,\r\n    K: KeyElement,\r\n    V: CollectionElement,\r\n](\r\n    value: Reference[Dict[K, V], mutability, self_life]._mlir_type,\r\n) -> _DictKeyIter[K, V, mutability, self_life, False]:\r\n  \r\n    return Reference(value)[].__reversed__[mutability, self_life]()"
+        "user_input": "Write a struct for Pet with a constructor containing parameters for name and age.",
+        "system_answer": "struct MyPet:\r\n    var name: String\r\n    var age: Int\r\n\r\n    fn __init__(inout self, owned name: String, age: Int):\r\n        self.name = name^\r\n        self.age = age"
     },
     {
         "user_input": "Write a function that returns the greatest between two integers.",
         "system_answer": "@always_inline\r\nfn _max(a: Int, b: Int) -> Int:\r\n    return a if a > b else b"
     },
     {
-        "user_input": "How can I get the bool representation of the None type?",
-        "system_answer": "@always_inline\nfn bool(value: None) -> Bool:\n  return False"
+        "user_input": "Write a function for a vectorized implementation of the inner mandelbrot computation.",
+        "system_answer": "fn mandelbrot_kernel_SIMD[\n    simd_width: Int\n](c: ComplexSIMD[float_type, simd_width]) -> SIMD[int_type, simd_width]:\n   \n    var cx = c.re\n    var cy = c.im\n    var x = SIMD[float_type, simd_width](0)\n    var y = SIMD[float_type, simd_width](0)\n    var y2 = SIMD[float_type, simd_width](0)\n    var iters = SIMD[int_type, simd_width](0)\n\n    var t: SIMD[DType.bool, simd_width] = True\n    for i in range(MAX_ITERS):\n        if not t.reduce_or():\n            break\n        y2 = y * y\n        y = x.fma(y + y, cy)\n        t = x.fma(x, y2) <= 4\n        x = x.fma(x, cx - y2)\n        iters = t.select(iters + 1, iters)\n    return iters"
+    },
+    {
+        "user_input": "Write a function two create an image of a sphere using ray tracing.",
+        "system_answer": "from math import tan, acos\r\nfrom algorithm import parallelize\r\n\r\n\r\nfn create_image_with_sphere(sphere: Sphere, height: Int, width: Int) -> Image:\r\n    var image = Image(height, width)\r\n\r\n    @parameter\r\n    fn _process_row(row: Int):\r\n        var y = -((2.0 * row + 1) / height - 1)\r\n        for col in range(width):\r\n            var x = ((2.0 * col + 1) / width - 1) * width / height\r\n            var dir = Vec3f(x, y, -1).normalize()\r\n            image.set(row, col, cast_ray(Vec3f.zero(), dir, sphere))\r\n\r\n    parallelize[_process_row](height)\r\n\r\n    return image"
     }
 ]
