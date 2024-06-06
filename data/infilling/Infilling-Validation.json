@@ -1,122 +1,122 @@
 [
     {
-        "text": "<PRE>@always_inline\r\nfn assert_true[\r\n    T: Boolable\r\n](val: T, msg: String = \"condition was unexpectedly False\") raises:\r<SUF>\" + msg)<MID>\n\r\n    if not val:\r\n        raise Error(\"AssertionError: "
+        "text": "@always_inline\r\nfn assert_true[\r\n    T: Boolable\r\n](val: T, msg: String = \"condition was unexpectedly False\") raises:\r\n\r\n    if not val:\r\n        raise Error(\"AssertionError: \" + msg)"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn assert_false[\r\n<SUF>    raise Error(\"AssertionError: \" + msg)<MID>    T: Boolable\r\n](val: T, msg: String = \"condition was unexpectedly True\") raises:\r\n\r\n    if val:\r\n    "
+        "text": "@always_inline\r\nfn assert_false[\r\n    T: Boolable\r\n](val: T, msg: String = \"condition was unexpectedly True\") raises:\r\n\r\n    if val:\r\n        raise Error(\"AssertionError: \" + msg)"
     },
     {
-        "text": "<PRE>@a<SUF>line\r\nfn assert_equal(lhs: Int, rhs: Int, msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n        raise _assert_equal_error(str(lhs), str(rhs), msg=msg)<MID>lways_in"
+        "text": "@always_inline\r\nfn assert_equal(lhs: Int, rhs: Int, msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n        raise _assert_equal_error(str(lhs), str(rhs), msg=msg)"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn<SUF>ror(lhs, rhs, msg=msg)<MID> assert_equal(lhs: String, rhs: String, msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n        raise _assert_equal_er"
+        "text": "@always_inline\r\nfn assert_equal(lhs: String, rhs: String, msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n        raise _assert_equal_error(lhs, rhs, msg=msg)"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn assert_equal[\r\n    type: DType, size: Int\r\n](lhs: SIMD[type, size], rhs: SIMD[type, size], msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n   <SUF> str(rhs), msg=msg)<MID>     raise _assert_equal_error(str(lhs),"
+        "text": "@always_inline\r\nfn assert_equal[\r\n    type: DType, size: Int\r\n](lhs: SIMD[type, size], rhs: SIMD[type, size], msg: String = \"\") raises:\r\n\r\n    if lhs != rhs:\r\n        raise _assert_equal_error(str(lhs), str(rhs), msg=msg)"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn assert<SUF>  if lhs == rhs:\r\n        raise _assert_not_equal_error(str(lhs), str(rhs), msg=msg)<MID>_not_equal(lhs: Int, rhs: Int, msg: String = \"\") raises:\r\n\r\n  "
+        "text": "@always_inline\r\nfn assert_not_equal(lhs: Int, rhs: Int, msg: String = \"\") raises:\r\n\r\n    if lhs == rhs:\r\n        raise _assert_not_equal_error(str(lhs), str(rhs), msg=msg)"
     },
     {
-        "text": "<PRE>@<SUF>rhs: String, msg: String = \"\") raises:\r\n\r\n    if lhs == rhs:\r\n        raise _assert_not_equal_error(str(lhs), str(rhs), msg=msg)<MID>always_inline\r\nfn assert_not_equal(lhs: String, "
+        "text": "@always_inline\r\nfn assert_not_equal(lhs: String, rhs: String, msg: String = \"\") raises:\r\n\r\n    if lhs == rhs:\r\n        raise _assert_not_equal_error(str(lhs), str(rhs), msg=msg)"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn assert_not_equal[\r\n    type: DType, size: Int\r\n](lhs: SIMD[type, size], rhs: SIMD[type, size], msg: S<SUF>_error(str(lhs), str(rhs), msg=msg)<MID>tring = \"\") raises:\r\n\r\n    if lhs == rhs:\r\n        raise _assert_not_equal"
+        "text": "@always_inline\r\nfn assert_not_equal[\r\n    type: DType, size: Int\r\n](lhs: SIMD[type, size], rhs: SIMD[type, size], msg: String = \"\") raises:\r\n\r\n    if lhs == rhs:\r\n        raise _assert_not_equal_error(str(lhs), str(rhs), msg=msg)"
     },
     {
-        "text": "<PRE>@always_inline\nfn assert_almost_equal[\n    type: DType, size: Int\n](\n    lhs: SIMD[type, size],\n    rhs: SIMD[type, size],\n    /,\n    *,\n    msg: String = \"\",\n    atol: Scalar[type] = 1e-08,\n    rtol: Scalar[type] = 1e-05,\n) raises:\n\n   <SUF>of \" + _abs(lhs - rhs)\n        if msg:\n            err += \" (\" + msg + \")\"\n        raise err\n<MID> var almost_equal = _isclose(lhs, rhs, atol=atol, rtol=rtol)\n    if not almost_equal:\n        var err = \"AssertionError: \" + str(lhs) + \" is not close to \" + str(\n            rhs\n        ) + \" with a diff "
+        "text": "@always_inline\nfn assert_almost_equal[\n    type: DType, size: Int\n](\n    lhs: SIMD[type, size],\n    rhs: SIMD[type, size],\n    /,\n    *,\n    msg: String = \"\",\n    atol: Scalar[type] = 1e-08,\n    rtol: Scalar[type] = 1e-05,\n) raises:\n\n    var almost_equal = _isclose(lhs, rhs, atol=atol, rtol=rtol)\n    if not almost_equal:\n        var err = \"AssertionError: \" + str(lhs) + \" is not close to \" + str(\n            rhs\n        ) + \" with a diff of \" + _abs(lhs - rhs)\n        if msg:\n            err += \" (\" + msg + \")\"\n        raise err\n"
     },
     {
-        "text": "<PRE>    fn __init__(in<SUF>ns: String):\n\n        self.message_contains = contains<MID>out self, *, contai"
+        "text": "    fn __init__(inout self, *, contains: String):\n\n        self.message_contains = contains"
     },
     {
-        "text": "<PRE> <SUF>ise\")\r\n<MID>   fn __exit__(self) raises:\r\n\r\n        raise Error(\"AssertionError: Didn't ra"
+        "text": "    fn __exit__(self) raises:\r\n\r\n        raise Error(\"AssertionError: Didn't raise\")\r\n"
     },
     {
-        "text": "<PRE>fn is_defined[name: StringLiteral]() -> Bool:\r\n\r\n    al<SUF>    return result<MID>ias result = __mlir_attr[\r\n        `#kgen.param.expr<get_env, `, name.value, `> : i1`\r\n    ]\r\n"
+        "text": "fn is_defined[name: StringLiteral]() -> Bool:\r\n\r\n    alias result = __mlir_attr[\r\n        `#kgen.param.expr<get_env, `, name.value, `> : i1`\r\n    ]\r\n    return result"
     },
     {
-        "text": "<PRE>fn env_get_int[name: StringLiteral, default: Int]() -><SUF>ult<MID> Int:\n\n\n    @parameter\n    if is_defined[name]():\n        return env_get_int[name]()\n    else:\n        return defa"
+        "text": "fn env_get_int[name: StringLiteral, default: Int]() -> Int:\n\n\n    @parameter\n    if is_defined[name]():\n        return env_get_int[name]()\n    else:\n        return default"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn _int_tuple_binary_apply[\r\n    size: Int,\r\n    binary_fn: fn (Int, Int) -> Int,\r\n](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[\r\n    Int, size\r\n]:\r\n\r\n\r\n    var c = StaticTuple[Int, size]()\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_apply[idx: Int]():\r\n        var a_elem: Int = a.__getitem__[idx]()\r\n        var b_elem: Int <SUF> return c<MID>= b.__getitem__[idx]()\r\n        c.__setitem__[idx](binary_fn(a_elem, b_elem))\r\n\r\n    unroll[do_apply, size]()\r\n\r\n   "
+        "text": "@always_inline\r\nfn _int_tuple_binary_apply[\r\n    size: Int,\r\n    binary_fn: fn (Int, Int) -> Int,\r\n](a: StaticTuple[Int, size], b: StaticTuple[Int, size]) -> StaticTuple[\r\n    Int, size\r\n]:\r\n\r\n\r\n    var c = StaticTuple[Int, size]()\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_apply[idx: Int]():\r\n        var a_elem: Int = a.__getitem__[idx]()\r\n        var b_elem: Int = b.__getitem__[idx]()\r\n        c.__setitem__[idx](binary_fn(a_elem, b_elem))\r\n\r\n    unroll[do_apply, size]()\r\n\r\n    return c"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn _<SUF>ool:\r\n\r\n\r\n    var c: Bool = init\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_reduce[idx: Int]():\r\n        c = reduce_fn(c, a.__getitem__[idx]())\r\n\r\n    unroll[do_reduce, size]()\r\n\r\n    return c<MID>bool_tuple_reduce[\r\n    size: Int,\r\n    reduce_fn: fn (Bool, Bool) -> Bool,\r\n](a: StaticTuple[mlir_bool, size], init: Bool) -> B"
+        "text": "@always_inline\r\nfn _bool_tuple_reduce[\r\n    size: Int,\r\n    reduce_fn: fn (Bool, Bool) -> Bool,\r\n](a: StaticTuple[mlir_bool, size], init: Bool) -> Bool:\r\n\r\n\r\n    var c: Bool = init\r\n\r\n    @always_inline\r\n    @parameter\r\n    fn do_reduce[idx: Int]():\r\n        c = reduce_fn(c, a.__getitem__[idx]())\r\n\r\n    unroll[do_reduce, size]()\r\n\r\n    return c"
     },
     {
-        "text": "<PRE>@value\n@<SUF>truct StaticIntTuple[size: Int](Sized, Stringable, EqualityComparable):\n\n\n    var data: StaticTuple[Int, size]\n\n    @always_inline\n    fn __init__() -> Self:\n\n        return 0<MID>register_passable(\"trivial\")\ns"
+        "text": "@value\n@register_passable(\"trivial\")\nstruct StaticIntTuple[size: Int](Sized, Stringable, EqualityComparable):\n\n\n    var data: StaticTuple[Int, size]\n\n    @always_inline\n    fn __init__() -> Self:\n\n        return 0"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn __init__(value: <SUF> Int(value)<MID>__mlir_type.index) -> Self:\r\n\r\n        constrained[size == 1]()\r\n        return"
+        "text": "    @always_inline\r\n    fn __init__(value: __mlir_type.index) -> Self:\r\n\r\n        constrained[size == 1]()\r\n        return Int(value)"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn __init__(elems: Tuple[Int, Int]) -> Self:\r\n \r\n\r\n        var num_elements = len(elems)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @parameter\r\n        fn fill[idx: Int]():\r\n            tup[idx] = elems.get[idx, Int]()\r\n\r\n       <SUF>tup<MID> unroll[fill, 2]()\r\n\r\n        return "
+        "text": "    @always_inline\r\n    fn __init__(elems: Tuple[Int, Int]) -> Self:\r\n \r\n\r\n        var num_elements = len(elems)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @parameter\r\n        fn fill[idx: Int]():\r\n            tup[idx] = elems.get[idx, Int]()\r\n\r\n        unroll[fill, 2]()\r\n\r\n        return tup"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn __ini<SUF>]\r\n\r\n        return tup<MID>t__(*elems: Int) -> Self:\r\n        var num_elements = len(elems)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @unroll\r\n        for idx in range(size):\r\n            tup[idx] = elems[idx"
+        "text": "    @always_inline\r\n    fn __init__(*elems: Int) -> Self:\r\n        var num_elements = len(elems)\r\n\r\n        debug_assert(\r\n            size == num_elements,\r\n            \"[StaticIntTuple] mismatch in the number of elements\",\r\n        )\r\n\r\n        var tup = Self()\r\n\r\n        @unroll\r\n        for idx in range(size):\r\n            tup[idx] = elems[idx]\r\n\r\n        return tup"
     },
     {
-        "text": "<PRE>    @<SUF>constrained[size > 0]()\n        return Self {data: values}\n\n<MID>always_inline\n    fn __init__(values: VariadicList[Int]) -> Self:\n\n        "
+        "text": "    @always_inline\n    fn __init__(values: VariadicList[Int]) -> Self:\n\n        constrained[size > 0]()\n        return Self {data: values}\n\n"
     },
     {
-        "text": "<PRE>  <SUF>f) -> Int:\n        return size<MID>  @always_inline(\"nodebug\")\n    fn __len__(sel"
+        "text": "    @always_inline(\"nodebug\")\n    fn __len__(self) -> Int:\n        return size"
     },
     {
-        "text": "<PRE>@always_inline\r\nfn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:\r\n\r\n    alia<SUF>type]()\r\n    return int(bitcast[integer_type, 1](value))<MID>s integer_type = _integral_type_of["
+        "text": "@always_inline\r\nfn _fp_bitcast_to_integer[type: DType](value: Scalar[type]) -> Int:\r\n\r\n    alias integer_type = _integral_type_of[type]()\r\n    return int(bitcast[integer_type, 1](value))"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline\r\n    fn ex<SUF>int(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.exponent_mask() + Self.mantissa_mask()<MID>ponent_mantissa_mask() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_po"
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn exponent_mantissa_mask() -> Int:\r\n\r\n        constrained[\r\n            type.is_floating_point(),\r\n            \"dtype must be a floating point type\",\r\n        ]()\r\n        return Self.exponent_mask() + Self.mantissa_mask()"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline\r\n    fn bitcast_to<SUF>bitcast_to_integer[type](value)<MID>_integer(value: Scalar[type]) -> Int:\r\n\r\n        return _fp_"
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn bitcast_to_integer(value: Scalar[type]) -> Int:\r\n\r\n        return _fp_bitcast_to_integer[type](value)"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline<SUF>value: Int) -> Scalar[type]:\r\n\r\n        return _fp_bitcast_from_integer[type](value)<MID>\r\n    fn bitcast_from_integer("
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn bitcast_from_integer(value: Int) -> Scalar[type]:\r\n\r\n        return _fp_bitcast_from_integer[type](value)"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline\r\n    fn get_sign(v<SUF> != 0<MID>alue: Scalar[type]) -> Bool:\r\n\r\n\r\n        return (Self.bitcast_to_integer(value) & Self.sign_mask())"
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn get_sign(value: Scalar[type]) -> Bool:\r\n\r\n\r\n        return (Self.bitcast_to_integer(value) & Self.sign_mask()) != 0"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline\r\n    fn get_<SUF>    Self.bitcast_to_integer(value) & Self.exponent_mask()\r\n        ) >> Self.mantissa_width()<MID>exponent(value: Scalar[type]) -> Int:\r\n \r\n        return (\r\n        "
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn get_exponent(value: Scalar[type]) -> Int:\r\n \r\n        return (\r\n            Self.bitcast_to_integer(value) & Self.exponent_mask()\r\n        ) >> Self.mantissa_width()"
     },
     {
-        "text": "<PRE>@always_inline\r\n    fn __init__(value: Self.pointer_type) -><SUF>value: value}<MID> Self:\r\n      \r\n        return Self {"
+        "text": "@always_inline\r\n    fn __init__(value: Self.pointer_type) -> Self:\r\n      \r\n        return Self {value: value}"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline\r\n    fn alloc(<SUF>]()))\r\n        )<MID>count: Int) -> Self:\r\n\r\n        return Self.__from_index(\r\n            int(_malloc[Int8](sizeof[T]() * count, alignment=alignof[T"
+        "text": "    @staticmethod\r\n    @always_inline\r\n    fn alloc(count: Int) -> Self:\r\n\r\n        return Self.__from_index(\r\n            int(_malloc[Int8](sizeof[T]() * count, alignment=alignof[T]()))\r\n        )"
     },
     {
-        "text": "<PRE>    @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    <SUF>er_type](\r\n            __get_lvalue_as_address(arg)\r\n        )<MID>fn address_of(inout arg: T) -> Self:\r\n\r\n        return __mlir_op.`pop.pointer.bitcast`[_type = Self.point"
+        "text": "    @staticmethod\r\n    @always_inline(\"nodebug\")\r\n    fn address_of(inout arg: T) -> Self:\r\n\r\n        return __mlir_op.`pop.pointer.bitcast`[_type = Self.pointer_type](\r\n            __get_lvalue_as_address(arg)\r\n        )"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn free(self):\r\n        \r\n        Pointer[Int8].__from_index(in<SUF>lf)).free()<MID>t(se"
+        "text": "    @always_inline\r\n    fn free(self):\r\n        \r\n        Pointer[Int8].__from_index(int(self)).free()"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn take_value(self) -> T:\r\n\r\n        return __get_address_as_own<SUF>alue(self.value)<MID>ed_v"
+        "text": "    @always_inline\r\n    fn take_value(self) -> T:\r\n\r\n        return __get_address_as_owned_value(self.value)"
     },
     {
-        "text": "<PRE>    @alw<SUF>e(self.value) = value ^<MID>ays_inline\n    fn emplace_value(self, owned value: T):\n\n        __get_address_as_uninit_lvalu"
+        "text": "    @always_inline\n    fn emplace_value(self, owned value: T):\n\n        __get_address_as_uninit_lvalue(self.value) = value ^"
     },
     {
-        "text": "<PRE>    @always_inline\n    fn m<SUF>)\n<MID>ove_into(self, dest: AnyPointer[T]):\n\n        __get_address_as_uninit_lvalue(\n            dest.value\n        ) = __get_address_as_owned_value(self.value"
+        "text": "    @always_inline\n    fn move_into(self, dest: AnyPointer[T]):\n\n        __get_address_as_uninit_lvalue(\n            dest.value\n        ) = __get_address_as_owned_value(self.value)\n"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn __int__(self) -> Int:\r\n\r\n        return __mlir_op.`pop.pointer_to_index`[\r\n            _type <SUF> ](self.value)<MID>= __mlir_type.`!pop.scalar<index>`\r\n       "
+        "text": "    @always_inline\r\n    fn __int__(self) -> Int:\r\n\r\n        return __mlir_op.`pop.pointer_to_index`[\r\n            _type = __mlir_type.`!pop.scalar<index>`\r\n        ](self.value)"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn <SUF>_(self) -> Bool:\r\n\r\n        return int(self) != 0<MID>__bool_"
+        "text": "    @always_inline\r\n    fn __bool__(self) -> Bool:\r\n\r\n        return int(self) != 0"
     },
     {
-        "text": "<PRE>    @always_inline\r\n   <SUF>T]())<MID> fn __add__(self, offset: Int) -> Self:\r\n\r\n        return Self.__from_index(int(self) + offset * sizeof["
+        "text": "    @always_inline\r\n    fn __add__(self, offset: Int) -> Self:\r\n\r\n        return Self.__from_index(int(self) + offset * sizeof[T]())"
     },
     {
-        "text": "<PRE>    @always_inline\r\n    fn __sub<SUF>Self:\r\n\r\n        return self + (-offset)<MID>__(self, offset: Int) -> "
+        "text": "    @always_inline\r\n    fn __sub__(self, offset: Int) -> Self:\r\n\r\n        return self + (-offset)"
     },
     {
-        "text": "<PRE>    @always_inline(\"nodebug\")\r\n    fn __eq__(self, r<SUF>-> Bool:\r\n\r\n        return int(self) == int(rhs)<MID>hs: Self) "
+        "text": "    @always_inline(\"nodebug\")\r\n    fn __eq__(self, rhs: Self) -> Bool:\r\n\r\n        return int(self) == int(rhs)"
     },
     {
-        "text": "<PRE>    @always_inline(\"nodebug\")\r\n   <SUF> (self == rhs)<MID> fn __ne__(self, rhs: Self) -> Bool:\r\n\r\n        return not"
+        "text": "    @always_inline(\"nodebug\")\r\n    fn __ne__(self, rhs: Self) -> Bool:\r\n\r\n        return not (self == rhs)"
     }
 ]
