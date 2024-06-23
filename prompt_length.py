@@ -26,7 +26,36 @@ if __name__ == '__main__':
                 Mojo provides a benchmark and testing modules.
                 Mojo decorator is a higher-order function that modifies or extends the behavior of a struct, a function, or some other code. Instead of actually calling the higher-order function, you simply add the decorator (such as the @value decorator) above your code (such as a struct). The Mojo compiler then uses the decorator function to modify your code at compile time. Example: You can add the @always_inline decorator on any function to make the Mojo compiler inline the body of the function directly into the body of the calling function."""
 
-    prompt = "Can you write a program to perform matrix multiplication between two matrices?"
+    prompt =    '''fn difference(self, other: Self) -> Self:
+                    if e[] not in other:
+                        result.add(e[])
+                    return result^
+                ''' 
+
+    # Prompts for Instruct
+    # "Write a function to calculate the sum of two integers."
+    # "Write a function to calculate the nth fibonacci number."
+    # "Write a function to calculate the difference between two set structures."
+
+    # Prompts for Infilling
+    # '''fn sum(a: Int, b: Int)'''
+
+    # ''' fn fibonacci(
+    # return fibonacci(n - 2) + fibonacci(n - 1)
+    # '''
+
+    # '''fn difference(self, other: Self) -> Self:
+    #       if e[] not in other:
+    #           result.add(e[])
+    #       return result^
+    # '''
+
+    # Prompts for Completion
+    # "fn sum(a: Int, b: Int)"
+    # 'fn fibonacci('
+    # '''fn difference(self, other: Self) -> Self:
+	#	    var result = Set[T]()
+    #       for e in self:'''
 
     print(len(context))
     print("total length: {}".format(len(context) + len(prompt)))
