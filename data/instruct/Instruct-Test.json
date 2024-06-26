@@ -5,7 +5,7 @@
     },
     {
         "user_input": "Write a function to normalize a vector into a unit vector.",
-        "system_answer": "    @always_inline\n    fn normalize(self) -> Vec3f:\n        return self.data * rsqrt(self @ self))"
+        "system_answer": "@always_inline\n    fn normalize(self) -> Vec3f:\n        return self.data * rsqrt(self @ self))"
     },
     {
         "user_input": "Write a struct for Pet with a constructor containing parameters for name and age.",
