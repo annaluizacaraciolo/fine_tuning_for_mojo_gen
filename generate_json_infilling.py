@@ -10,7 +10,7 @@ def split_user_input_randomly(file_path, output_path):
     
     for item in data:
         text = item["user_input"]
-        if len(text) > 2:  # Ensure there's enough length to split into three parts
+        if len(text) > 2:
             split_points = sorted(random.sample(range(1, len(text)), 2))
             part1 = text[:split_points[0]]
             part2 = text[split_points[1]:]
@@ -21,7 +21,7 @@ def split_user_input_randomly(file_path, output_path):
     
     return output_path
 
-# generate train
+# Generate train
 with open('data/code_completion/CodeCompletion-Train.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     data = [row for row in reader]
@@ -29,7 +29,7 @@ with open('data/code_completion/CodeCompletion-Train.csv', newline='') as csvfil
 with open('data/infilling/Infilling-Train.json', 'w') as jsonfile:
     json.dump(data, jsonfile)
     
-# generate validation
+# Generate validation
 with open('data/code_completion/CodeCompletion-Validation.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     data = [row for row in reader]

@@ -38,13 +38,14 @@ if __name__ == '__main__':
     # "Write a function to calculate the difference between two set structures."
 
     # Prompts for Infilling
-    # '''fn sum(a: Int, b: Int)'''
+    # '''fn sum(a: Int, b: Int) <FILL_ME>'''
 
-    # ''' fn fibonacci(
+    # ''' fn fibonacci( <FILLE_ME>
     # return fibonacci(n - 2) + fibonacci(n - 1)
     # '''
 
     # '''fn difference(self, other: Self) -> Self:
+    #   <FILL_ME>
     #       if e[] not in other:
     #           result.add(e[])
     #       return result^
