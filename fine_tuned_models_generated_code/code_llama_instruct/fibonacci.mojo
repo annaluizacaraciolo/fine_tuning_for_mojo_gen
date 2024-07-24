@@ -8,7 +8,7 @@ fn fib[n: Int]() -> Int:
 # Some modifications were done in order to test it
 
 # 1. The first modification done in order to try to run this mojo program was to remove square
-#    brackets and define the argument of the functino inside parentheses.
+#    brackets and define the argument of the function inside parentheses.
 
 # fn fib(n: Int) -> Int:
 #     if n < 2:
